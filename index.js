@@ -49,7 +49,7 @@ productos.addProduct('Acer 15','i5 8gb 265gb', 950000,"UrlImagen", 150443, 5);
 productos.addProduct('HP Gamer','i7 8gb 512gb 4060ti', 750000,"UrlImagen", 150453, 3);
 
 
-let opcion = parseInt(prompt("Ingrese una opción: 1)Agregar producto\n2)Mostrar productos\n3)Buscar producto por su id\n4)Salir"));
+let opcion = parseInt(prompt("Ingrese una opción:\n1)Agregar producto\n2)Mostrar productos\n3)Buscar producto por su id\n4)Salir"));
 while(opcion != 4){
 
     switch(opcion){
