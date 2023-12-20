@@ -17,25 +17,29 @@ class ProductManager{
 
     addProduct(title, description, price, thumbnail, code, stock){
 
-        const existsCode = this.products.find((p) => p.code === code);
-
-        if(!existsCode){
-            const prod = {
-                id: ProductManager.id,
-                title: title,
-                description: description,
-                price: price,
-                thumbnail: thumbnail,
-                code: code,
-                stock: stock
-            }
-    
-            this.products.push(prod);
-    
-            ProductManager.id++;
-            console.log('Producto agregado ☑️');
+        if(!title || !description || !price || !thumbnail || !code || !stock){
+            console.log("Todos los campos son obligatorios");
         }else{
-            console.log('El código que ingresó pertenece a un producto existente');
+            const existsCode = this.products.find((p) => p.code === code);
+            console.log("existsCode:",existsCode)
+            if(!existsCode){
+                const prod = {
+                    id: ProductManager.id,
+                    title: title,
+                    description: description,
+                    price: price,
+                    thumbnail: thumbnail,
+                    code: code,
+                    stock: stock
+                }
+        
+                this.products.push(prod);
+        
+                ProductManager.id++;
+                console.log('Producto agregado ☑️');
+            }else{
+                console.log('El código que ingresó pertenece a un producto existente');
+            }
         }
     }
 
@@ -58,7 +62,7 @@ while(opcion != 4){
         const description=prompt("Ingrese la descripción:")
         const price=parseFloat(prompt("Ingrese el precio:"));
         const thumbnail=prompt("Ingrese la ruta de imagen:");
-        const code=prompt("Ingrese el código:");
+        const code=parseInt(prompt("Ingrese el código:"));
         const stock=parseInt(prompt("Ingrese la cantidad:"));
         productos.addProduct(title, description, price, thumbnail, code, stock);
         break;
@@ -77,5 +81,5 @@ while(opcion != 4){
         break;
     }
 
-    opcion = parseInt(prompt("Ingrese una opción: 1)Agregar producto\n2)Mostrar productos\n3)Buscar producto por su id\n4)Salir "));
+    opcion = parseInt(prompt("Ingrese una opción:\n1)Agregar producto\n2)Mostrar productos\n3)Buscar producto por su id\n4)Salir "));
 } 
