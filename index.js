@@ -21,7 +21,7 @@ class ProductManager{
             console.log("Todos los campos son obligatorios");
         }else{
             const existsCode = this.products.find((p) => p.code === code);
-            console.log("existsCode:",existsCode)
+            
             if(!existsCode){
                 const prod = {
                     id: ProductManager.id,
@@ -58,12 +58,12 @@ while(opcion != 4){
 
     switch(opcion){
         case 1:
-        const title=prompt("Ingrese el título del producto:");
-        const description=prompt("Ingrese la descripción:")
-        const price=parseFloat(prompt("Ingrese el precio:"));
-        const thumbnail=prompt("Ingrese la ruta de imagen:");
-        const code=parseInt(prompt("Ingrese el código:"));
-        const stock=parseInt(prompt("Ingrese la cantidad:"));
+        const title = prompt("Ingrese el título del producto:");
+        const description = prompt("Ingrese la descripción:")
+        const price = parseFloat(prompt("Ingrese el precio:"));
+        const thumbnail = prompt("Ingrese la ruta de imagen:");
+        const code = parseInt(prompt("Ingrese el código:"));
+        const stock = parseInt(prompt("Ingrese la cantidad:"));
         productos.addProduct(title, description, price, thumbnail, code, stock);
         break;
         
