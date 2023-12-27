@@ -1,8 +1,11 @@
+const fs = require('fs');
+
 class ProductManager{
     static id = 1;
 
-    constructor(){
+    constructor(path){//
         this.products = [];
+        this.path = path;
     }
 
     getProductById(id){
@@ -43,17 +46,119 @@ class ProductManager{
         }
     }
 
-    getProducts(){
-        return this.products;
+    async getProducts(){
+        let productos = JSON.parse(await fs.promises.readFile('productos.json', 'utf-8'));
+
+        console.log(productos);
+
+        //devolver productos en formato de arreglo
+        return productos;
     } 
 }
 
-const productos = new ProductManager(); 
+const productos = new ProductManager('/productos.json'); /* 
 productos.addProduct('Acer 15','i5 8gb 265gb', 950000,"UrlImagen", 150443, 5);
-productos.addProduct('HP Gamer','i7 8gb 512gb 4060ti', 750000,"UrlImagen", 150453, 3);
+productos.addProduct('HP Gamer','i7 8gb 512gb 4060ti', 750000,"UrlImagen", 150453, 3); */
+productos.getProducts();
 
 
-let opcion = parseInt(prompt("Ingrese una opción:\n1)Agregar producto\n2)Mostrar productos\n3)Buscar producto por su id\n4)Salir"));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* let opcion = parseInt(prompt("Ingrese una opción:\n1)Agregar producto\n2)Mostrar productos\n3)Buscar producto por su id\n4)Salir"));
 while(opcion != 4){
 
     switch(opcion){
@@ -82,4 +187,5 @@ while(opcion != 4){
     }
 
     opcion = parseInt(prompt("Ingrese una opción:\n1)Agregar producto\n2)Mostrar productos\n3)Buscar producto por su id\n4)Salir "));
-} 
+} */
+ 
