@@ -8,19 +8,27 @@ class ProductManager{
     }
 
     deleteProduct(id){
+        return fs.promises.readFile(this.path, 'utf-8')
+            .then(data => {
+                const productos = JSON.parse(data);
+                const prodsFiltrados = productos.filter((prod) => prod.id !== id);
+                return fs.promises.writeFile(this.path, JSON.stringify(prodsFiltrados));
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     getProductById(id){
         return fs.promises.readFile(this.path, 'utf-8')
-        .then(data => {
-            const productos = JSON.parse(data);
-            const prodFiltrado = productos.find((prod) => prod.id === id)
-            return prodFiltrado;
-        })
-        .catch(error => {
-            console.log(error);
-            return [];
-        })
+            .then(data => {
+                const productos = JSON.parse(data);
+                const prodFiltrado = productos.find((prod) => prod.id === id)
+                return prodFiltrado;
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     addProduct(title, description, price, thumbnail, code, stock){
@@ -51,8 +59,7 @@ class ProductManager{
         }
     }
 
-     /*getProducts(){ 
-       const productos = JSON.parse(await fs.promises.readFile('productos.json', 'utf-8')); 
+    getProducts(){ 
         return fs.promises.readFile(this.path, 'utf-8')
             .then(data => {
                 const productos = JSON.parse(data);
@@ -62,20 +69,7 @@ class ProductManager{
                 console.log(error);
                 return [];
             })
-    }*/
-
-       getProducts(){ 
-       /*const productos = JSON.parse(await fs.promises.readFile('productos.json', 'utf-8')); */
-        return fs.promises.readFile(this.path, 'utf-8')
-            .then(data => {
-                const productos = JSON.parse(data);
-                return productos;
-            })
-            .catch(error => {
-                console.log(error);
-                return [];
-            })
-        }
+    }
 }
 
 const productos = new ProductManager('productos.json'); /* 
@@ -86,9 +80,24 @@ console.log(prods); -> Promise pending
 productos.getProducts().then(prods => {
     console.log(prods);
 })*/
+console.log('GetProds: ')
+productos.getProducts().then(productos => {
+    console.log(productos);
+})
 
+
+console.log('GetProdById 4: ')
 productos.getProductById(4).then(prod =>{
     console.log(prod);
+})
+
+console.log('Delete: ')
+productos.deleteProduct(4);
+
+
+console.log('GetProds: ')
+productos.getProducts().then(productos => {
+    console.log(productos);
 })
 
 
