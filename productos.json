@@ -1,67 +1,65 @@
 [
 	{
 		"id": 2,
-		"nombre": "Baby Groot",
-		"foto": "https://cdn.thingiverse.com/assets/b7/d9/9d/98/c2/featured_preview_photo_2019-11-26_13-02-55.jpg",
-		"category": "Marvel",
-		"precio": 2569.79,
-		"cantidad": 33
+		"title": "Baby Groot",
+		"thumbnail": "https://cdn.thingiverse.com/assets/b7/d9/9d/98/c2/featured_preview_photo_2019-11-26_13-02-55.jpg",
+		"description": "Marvel",
+		"price": 2569.79,
+		"stock": 33,
+		"code": 1010
 	},
 	{
 		"id": 3,
-		"nombre": "Pulpo",
-		"foto": "https://cdn.thingiverse.com/renders/fa/b4/ff/c7/da/b65d3ab42f4cefee601419962cfb4a50_preview_featured.JPG",
-		"category": "-",
-		"precio": 3286.76,
-		"cantidad": 24
+		"title": "Pulpo",
+		"thumbnail": "https://cdn.thingiverse.com/renders/fa/b4/ff/c7/da/b65d3ab42f4cefee601419962cfb4a50_preview_featured.JPG",
+		"description": "-",
+		"price": 3286.76,
+		"stock": 24,
+		"code": 1011
 	},
 	{
 		"id": 6,
-		"nombre": "Pulpo Chico",
-		"foto": "https://cdn.thingiverse.com/renders/5b/ec/f1/12/97/7e7fe39c69e6ab74ec0fe0387b2cc5ac_preview_featured.jpg",
-		"category": "-",
-		"precio": 646.32,
-		"cantidad": 26
+		"title": "Pulpo",
+		"thumbnail": "https://cdn.thingiverse.com/renders/5b/ec/f1/12/97/7e7fe39c69e6ab74ec0fe0387b2cc5ac_preview_featured.jpg",
+		"description": "-",
+		"price": 646.32,
+		"stock": 20,
+		"code": 1012
 	},
 	{
 		"id": 7,
-		"nombre": "Hulk",
-		"foto": "https://cdn.wallapop.com/images/10420/dh/m2/__/c10420p815643074/i2815782179.jpg?pictureSize=W640",
-		"category": "Marvel",
-		"precio": 1319.36,
-		"cantidad": 13
+		"title": "Hulk",
+		"thumbnail": "https://cdn.wallapop.com/images/10420/dh/m2/__/c10420p815643074/i2815782179.jpg?pictureSize=W640",
+		"description": "Marvel",
+		"price": 1319.36,
+		"stock": 13,
+		"code": 1013
 	},
 	{
 		"id": 8,
-		"nombre": "Bart Simpson",
-		"foto": "https://cdn.threeding.com/pi/QugC/4YbvVRDZUyLbMEyoItQugC-161LF.webp",
-		"category": "LosSimpson",
-		"precio": 2089.52,
-		"cantidad": 15
+		"title": "Bart Simpson",
+		"thumbnail": "https://cdn.threeding.com/pi/QugC/4YbvVRDZUyLbMEyoItQugC-161LF.webp",
+		"description": "LosSimpson",
+		"price": 2089.52,
+		"stock": 15,
+		"code": 1014
 	},
 	{
 		"id": 9,
-		"nombre": "Iron Man",
-		"foto": "https://cdn.myminifactory.com/assets/object-assets/5ed14acd5fcd1/images/resize-img-4852.JPG",
-		"category": "Marvel",
-		"precio": 421.35,
-		"cantidad": 6
+		"title": "Iron Man",
+		"thumbnail": "https://cdn.myminifactory.com/assets/object-assets/5ed14acd5fcd1/images/resize-img-4852.JPG",
+		"description": "Marvel",
+		"price": 421.35,
+		"stock": 6,
+		"code": 1015
 	},
 	{
 		"id": 10,
-		"nombre": "Harry Potter",
-		"foto": "https://img1.cgtrader.com/items/3323407/83e613fb3a/harry-potter-print-ready-3d-model-3d-model-obj-stl-ztl.jpg",
-		"category": "HarryPotter",
-		"precio": 2529.51,
-		"cantidad": 29
-	},
-	{
-		"id": 11,
-		"title": "Acer 15",
-		"description": "i5 8gb 265gb",
-		"price": 950000,
-		"thumbnail": "UrlImagen",
-		"code": 152443,
-		"stock": 5
+		"title": "Hola",
+		"thumbnail": "https://img1.cgtrader.com/items/3323407/83e613fb3a/harry-potter-print-ready-3d-model-3d-model-obj-stl-ztl.jpg",
+		"description": "HarryPotter",
+		"price": 2529.51,
+		"stock": 15,
+		"code": 1016
 	}
 ]
