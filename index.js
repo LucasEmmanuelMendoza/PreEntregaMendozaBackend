@@ -11,8 +11,8 @@ class ProductManager{
         return fs.promises.readFile(this.path, 'utf-8')
             .then(data => {
                 const productos = JSON.parse(data);
-                const prodsFiltrados = productos.filter((prod) => prod.id !== id);
-                return fs.promises.writeFile(this.path, JSON.stringify(prodsFiltrados));
+                const prodsFiltrados = productos.filter((prod) => prod.id !== id); 
+                return fs.promises.writeFile(this.path, JSON.stringify(prodsFiltrados, null, '\t')); 
             })
             .catch(error => {
                 console.log(error);
@@ -75,114 +75,17 @@ class ProductManager{
 const productos = new ProductManager('productos.json'); /* 
 productos.addProduct('Acer 15','i5 8gb 265gb', 950000,"UrlImagen", 150443, 5);
 productos.addProduct('HP Gamer','i7 8gb 512gb 4060ti', 750000,"UrlImagen", 150453, 3); */
-/* const prods = productos.getProducts();
-console.log(prods); -> Promise pending
+
+console.log("================================================================================")
+
+productos.getProducts().then(productos => {
+    console.log("getProducts:");
+    console.log(productos);
+})
+
 productos.getProducts().then(prods => {
     console.log(prods);
-})*/
-console.log('GetProds: ')
-productos.getProducts().then(productos => {
-    console.log(productos);
 })
-
-
-console.log('GetProdById 4: ')
-productos.getProductById(4).then(prod =>{
-    console.log(prod);
-})
-
-console.log('Delete: ')
-productos.deleteProduct(4);
-
-
-console.log('GetProds: ')
-productos.getProducts().then(productos => {
-    console.log(productos);
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
