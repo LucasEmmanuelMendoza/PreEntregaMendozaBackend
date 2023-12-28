@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 class ProductManager{
-    static id = 1;
+    static id = 0;
 
     constructor(path){//
         this.path = path;
@@ -31,32 +31,42 @@ class ProductManager{
             })
     }
 
-    addProduct(title, description, price, thumbnail, code, stock){
 
-        if(!title || !description || !price || !thumbnail || !code || !stock){
-            console.log("Todos los campos son obligatorios");
-        }else{
-            const existsCode = this.products.find((p) => p.code === code);
-            
-            if(!existsCode){
-                const prod = {
-                    id: ProductManager.id,
-                    title: title,
-                    description: description,
-                    price: price,
-                    thumbnail: thumbnail,
-                    code: code,
-                    stock: stock
-                }
-        
-                this.products.push(prod);
-        
-                ProductManager.id++;
-                console.log('Producto agregado ☑️');
+    addProduct(title, description, price, thumbnail, code, stock){
+        //Leo el archivo para obtener el mayor id
+        return fs.promises.readFile(this.path, 'utf-8')
+        .then(data => {
+            const productos = JSON.parse(data);
+            let mayorId = productos.reduce((id, prodId) => Number(id) > Number(prodId.id)? id : prodId.id, productos[0].id)
+            console.log("MaryorId:", mayorId);
+            ProductManager.id = mayorId + 1;
+
+            if(!title || !description || !price || !thumbnail || !code || !stock){
+                console.log("Todos los campos son obligatorios");
             }else{
-                console.log('El código que ingresó pertenece a un producto existente');
+                const existsCode = productos.find((p) => p.code === code);
+                
+                if(!existsCode){
+                    const prod = {
+                        id: ProductManager.id,
+                        title: title,
+                        description: description,
+                        price: price,
+                        thumbnail: thumbnail,
+                        code: code,
+                        stock: stock
+                    }
+                    productos.push(prod);
+                    fs.promises.writeFile(this.path, JSON.stringify(productos, null, '\t')); 
+                    return "Producto agregado☑️";
+                }else{
+                    console.log('El código que ingresó pertenece a un producto existente');
+                }
             }
-        }
+        })
+        .catch(error => {
+            console.log(error);
+        })
     }
 
     getProducts(){ 
@@ -87,9 +97,9 @@ productos.getProducts().then(prods => {
     console.log(prods);
 })
 
-
-
-
+productos.addProduct('Acer 15','i5 8gb 265gb', 950000,"UrlImagen", 152443, 5).then(retornoAdd => {
+    console.log(retornoAdd)
+})
 
 /* let opcion = parseInt(prompt("Ingrese una opción:\n1)Agregar producto\n2)Mostrar productos\n3)Buscar producto por su id\n4)Salir"));
 while(opcion != 4){

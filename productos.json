@@ -54,5 +54,14 @@
 		"category": "HarryPotter",
 		"precio": 2529.51,
 		"cantidad": 29
+	},
+	{
+		"id": 11,
+		"title": "Acer 15",
+		"description": "i5 8gb 265gb",
+		"price": 950000,
+		"thumbnail": "UrlImagen",
+		"code": 152443,
+		"stock": 5
 	}
 ]
