@@ -4,18 +4,23 @@ class ProductManager{
     static id = 1;
 
     constructor(path){//
-        this.products = [];
         this.path = path;
     }
 
-    getProductById(id){
-        const prod = this.products.find((p) => p.id === id)
+    deleteProduct(id){
+    }
 
-        if(prod){
-            console.log(prod);
-        }else{
-            console.log('Not found');
-        }
+    getProductById(id){
+        return fs.promises.readFile(this.path, 'utf-8')
+        .then(data => {
+            const productos = JSON.parse(data);
+            const prodFiltrado = productos.find((prod) => prod.id === id)
+            return prodFiltrado;
+        })
+        .catch(error => {
+            console.log(error);
+            return [];
+        })
     }
 
     addProduct(title, description, price, thumbnail, code, stock){
@@ -46,29 +51,45 @@ class ProductManager{
         }
     }
 
-    async getProducts(){
-        let productos = JSON.parse(await fs.promises.readFile('productos.json', 'utf-8'));
+     /*getProducts(){ 
+       const productos = JSON.parse(await fs.promises.readFile('productos.json', 'utf-8')); 
+        return fs.promises.readFile(this.path, 'utf-8')
+            .then(data => {
+                const productos = JSON.parse(data);
+                return productos;
+            })
+            .catch(error => {
+                console.log(error);
+                return [];
+            })
+    }*/
 
-        console.log(productos);
-
-        //devolver productos en formato de arreglo
-        return productos;
-    } 
+       getProducts(){ 
+       /*const productos = JSON.parse(await fs.promises.readFile('productos.json', 'utf-8')); */
+        return fs.promises.readFile(this.path, 'utf-8')
+            .then(data => {
+                const productos = JSON.parse(data);
+                return productos;
+            })
+            .catch(error => {
+                console.log(error);
+                return [];
+            })
+        }
 }
 
-const productos = new ProductManager('/productos.json'); /* 
+const productos = new ProductManager('productos.json'); /* 
 productos.addProduct('Acer 15','i5 8gb 265gb', 950000,"UrlImagen", 150443, 5);
 productos.addProduct('HP Gamer','i7 8gb 512gb 4060ti', 750000,"UrlImagen", 150453, 3); */
-productos.getProducts();
+/* const prods = productos.getProducts();
+console.log(prods); -> Promise pending
+productos.getProducts().then(prods => {
+    console.log(prods);
+})*/
 
-
-
-
-
-
-
-
-
+productos.getProductById(4).then(prod =>{
+    console.log(prod);
+})
 
 
 
