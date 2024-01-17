@@ -1,27 +1,9 @@
 import { Router } from "express";
-import ProductManager from "..";
+import ProductManager from "../src/productManager";
 
 const productManager = new ProductManager('./productos.json')
 
 const routerProduct = Router()
-
-//última pre entrega
-/* app.get("/products", async (req, res) => {
-    try {
-      let limit = req.query.limit;
-      let productos = await product.getProducts();
-      if (limit && parseInt(limit) > 0) {
-        limit = parseInt(limit);
-        productos = productos.slice(0, limit);
-      }
-
-      res.send(productos);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-      res.status(500).send("Internal Server Error");
-    }
-}); */
-//========================
 
 routerProduct.get('/', async(req, res) => {
     const products = await productManager.getProducts()
@@ -40,13 +22,18 @@ routerProduct.get('/:pid', async(req, res) => {
   productFound ? res.status(200).send(productFound) : res.status(400).send('No se encontró el producto')
 })
 
-
 routerProduct.post('/', async(req, res) => {
   //obtengo el producto de req.body
 })
 
+routerProduct.put('/pid', async(req, res) => {
+  const id = req.query.pid
+
+
+})
+
 routerProduct.delete('/:pid', async(req, res) => {
   const id = req.params.pid
-  
+  await productManager.deleteProduct(id)
 })
 
