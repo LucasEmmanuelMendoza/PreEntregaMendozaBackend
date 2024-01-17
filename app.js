@@ -44,5 +44,5 @@ app.listen(PORT, ()=> {
     console.log('Server run on port', PORT)
 }) */
 
-/* Todas estas rutas que hice en app.js sobre los productos ahora va a estar en products.routes.js
+/* Todas estas rutas que hice en app.js sobre los productos ahora van a estar en products.routes.js
 Lo mismo para las rutas de carts */
