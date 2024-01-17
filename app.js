@@ -1,14 +1,21 @@
-const express = require('express');
-const ProductManager = require('./index.js')
+import { routerProduct } from './routes/products.routes.js'
+import { express } from 'express';
+import {__dirname} from './paths'
+import path from 'path'
+
+/* const express = require('express');
+const ProductManager = require('./index.js') */
 
 const app = express();
 app.use(express.urlencoded({extended:true}))
-const PORT = 8081
+const PORT = 8080
+
+app.use('/api/products', routerProduct)
 
 //instancio
-let product = new ProductManager();
+/*let product = new ProductManager();
 
-app.get('/', async(req, res) => {
+ app.get('/', async(req, res) => {
     res.send("Bienvenido al E-Commerce") 
 })
 
@@ -35,4 +42,7 @@ app.get("/products/:pid", async(req, res) => {
 
 app.listen(PORT, ()=> {
     console.log('Server run on port', PORT)
-})
+}) */
+
+/* Todas estas rutas que hice en app.js sobre los productos ahora va a estar en products.routes.js
+Lo mismo para las rutas de carts */
