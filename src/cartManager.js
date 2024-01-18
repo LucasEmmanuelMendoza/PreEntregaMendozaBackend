@@ -3,9 +3,7 @@ const uuid = require('uuid');
 
 class CartManager{
     constructor(){
-        this.path = '../cart.json'/* 
-        this.id = uuid.v4()
-        this.products = [] */
+        this.path = '../cart.json'
     }
 
     async createCart(){
@@ -19,11 +17,11 @@ class CartManager{
             }
 
             const data = await fs.promises.readFile(this.path, 'utf-8')
-            const carritos = JSON.parse(data)
+            const carts = JSON.parse(data)
 
-            carritos.push(newCart)
+            carts.push(newCart)
 
-            await fs.promises.writeFile(this.path, JSON.stringify(carritos, null, '\t'))
+            await fs.promises.writeFile(this.path, JSON.stringify(carts, null, '\t'))
             console.log('Producto agregado al carro')
 
             return true
@@ -50,7 +48,7 @@ class CartManager{
             const data = await fs.promises.readFile(this.path, 'utf-8')
             const carts = JSON.parse(data)
 
-            const foundCart = carts.find(cart => cart.id === cartId)
+            let foundCart = carts.find(cart => cart.id === cartId)
 
             if(foundCart){//si existe el carrito
                 const existsProd = foundCart.some((prod) => prod.product === productId)
