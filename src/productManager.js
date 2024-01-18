@@ -1,8 +1,7 @@
 const fs = require('fs'); 
+const uuid = require('uuid')
 
 class ProductManager{
-    static id = 0;
-
     constructor(path){//
         this.path = './productos.json';
     }
@@ -39,7 +38,6 @@ class ProductManager{
                         ...valor,
                         id: id,
                     }
-                    ProductManager.id++;
 
                     //agrego el producto al array
                     prodsFiltrados2.push(newProd);
@@ -80,29 +78,31 @@ class ProductManager{
         }
     }
 
-    async addProduct(title, description, price, thumbnail, code, stock){
+    async addProduct(title, description, price, thumbnail, code, stock, category){
         try{
             //Leo el archivo para obtener el mayor id
             const data = await fs.promises.readFile(this.path, 'utf-8')
             const productos = JSON.parse(data);
             let mayorId = productos.reduce((id, prodId) => Number(id) > Number(prodId.id)? id : prodId.id, productos[0].id)
             console.log("MaryorId:", mayorId);
-            ProductManager.id = mayorId + 1;
+            const newId = uuid.v4();
 
-            if(!title || !description || !price || !thumbnail || !code || !stock){
-                console.log("Todos los campos son obligatorios");
+            if(!title || !description || !price || !code || !stock ||!category){
+                console.log("Excepto 'thumbnail', todos los campos son obligatorios");
             }else{
                 const existsCode = productos.find((p) => p.code === code);
                 
                 if(!existsCode){
                     const prod = {
-                        id: ProductManager.id,
+                        id: newId,
                         title: title,
                         description: description,
                         price: price,
                         thumbnail: thumbnail,
                         code: code,
-                        stock: stock
+                        category: category,
+                        stock: stock,
+                        status: true
                     }
                     productos.push(prod);
                     await fs.promises.writeFile(this.path, JSON.stringify(productos, null, '\t')); 
@@ -125,7 +125,6 @@ class ProductManager{
             return productos;
         }catch(error){
             console.log(error);
-            return [];
         }
     }
 }
