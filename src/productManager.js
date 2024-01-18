@@ -26,7 +26,6 @@ class ProductManager{
                 })
                 //guardo en fs los prodsFiltrados
                 await fs.promises.writeFile(this.path, JSON.stringify(prodsFiltrados, null, '\t'))
-                console.log("Prods actualizados");
             }else{//se pasa el objeto entero
                 if(typeof valor === 'object' && valor !== null){
                     //saco el producto con el id pasado como parámetro del storage
@@ -46,11 +45,13 @@ class ProductManager{
                     prodsFiltrados2.push(newProd);
                     //guardo los productos
                     await fs.promises.writeFile(this.path, JSON.stringify(prodsFiltrados2, null, '\t'))
-                    console.log("Prods actualizados");
                 }
             }
+            console.log("Prods actualizados");
+            return true;
         }catch(error){
             console.log(error)
+            return false;
         }
     }
 
@@ -60,8 +61,10 @@ class ProductManager{
             const productos = JSON.parse(data)
             const prodsFiltrados = productos.filter((prod) => prod.id !== id)
             await fs.promises.writeFile(this.path, JSON.stringify(prodsFiltrados, null, '\t'))
+            return true
         }catch(error){
             console.log(error);
+            return false
         }
     }
 
@@ -103,9 +106,11 @@ class ProductManager{
                     }
                     productos.push(prod);
                     await fs.promises.writeFile(this.path, JSON.stringify(productos, null, '\t')); 
-                    return "Producto agregado☑️";
+                    console.log("Producto agregado☑️")
+                    return true
                 }else{
                     console.log('El código que ingresó pertenece a un producto existente');
+                    return false
                 }
             }
         }catch(error){

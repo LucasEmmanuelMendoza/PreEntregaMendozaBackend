@@ -26,14 +26,16 @@ routerProduct.post('/', async(req, res) => {
   //obtengo el producto de req.body
 })
 
-routerProduct.put('/pid', async(req, res) => {
+routerProduct.put('/:pid', async(req, res) => {
   const id = req.query.pid
-
+  
 
 })
 
 routerProduct.delete('/:pid', async(req, res) => {
   const id = req.params.pid
-  await productManager.deleteProduct(id)
+  const retorno = await productManager.deleteProduct(id)
+
+  retorno ? res.status(200).send("Producto borrado") : res.status(400).send('Error al eliminar el producto')
 })
 
