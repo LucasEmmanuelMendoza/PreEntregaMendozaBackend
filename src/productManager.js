@@ -3,7 +3,7 @@ const uuid = require('uuid')
 
 class ProductManager{
     constructor(path){//
-        this.path = './productos.json';
+        this.path = '../productos.json';
     }
 
     async updateProduct(id, campo, valor){
@@ -80,7 +80,6 @@ class ProductManager{
 
     async addProduct(title, description, price, thumbnail, code, stock, category){
         try{
-            //Leo el archivo para obtener el mayor id
             const data = await fs.promises.readFile(this.path, 'utf-8')
             const productos = JSON.parse(data);
             let mayorId = productos.reduce((id, prodId) => Number(id) > Number(prodId.id)? id : prodId.id, productos[0].id)
