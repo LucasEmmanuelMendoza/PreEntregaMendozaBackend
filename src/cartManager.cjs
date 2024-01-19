@@ -1,9 +1,11 @@
-const fs = require('fs'); 
-const uuid = require('uuid');
+const fs = require('fs');
+const { v4: uuid } = require('uuid');
+const path = require('path');
 
 class CartManager{
-    constructor(){
-        this.path = '../cart.json'
+    
+    constructor() {
+        this.path = path.join(__dirname,'../cart.json');
     }
 
     async createCart(){
@@ -22,8 +24,7 @@ class CartManager{
             carts.push(newCart)
 
             await fs.promises.writeFile(this.path, JSON.stringify(carts, null, '\t'))
-            console.log('Producto agregado al carro')
-
+            console.log('Carrito creado')
             return true
         }catch(error){
             console.log(error)
@@ -84,4 +85,4 @@ class CartManager{
     }   
 }
 
-module.exports = CartManager
+module.exports = CartManager 

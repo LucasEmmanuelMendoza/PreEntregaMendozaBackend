@@ -1,9 +1,11 @@
-const fs = require('fs'); 
-const uuid = require('uuid')
+const fs = require('fs');
+const { v4: uuid } = require('uuid');
+const path = require('path');
 
-class ProductManager{
-    constructor(path){//
-        this.path = '../productos.json';
+class ProductManager{ 
+
+    constructor() {
+        this.path = path.join(__dirname, '../productos.json');
     }
 
     async updateProduct(id, campo, valor){
@@ -49,20 +51,19 @@ class ProductManager{
             return true;
         }catch(error){
             console.log(error)
-            return false;
         }
     }
 
     async deleteProduct(id){
         try{
+            console.log("id:", id)
             const data = await fs.promises.readFile(this.path, 'utf-8')
             const productos = JSON.parse(data)
             const prodsFiltrados = productos.filter((prod) => prod.id !== id)
-            await fs.promises.writeFile(this.path, JSON.stringify(prodsFiltrados, null, '\t'))
+            await fs.promises.writeFile(this.path, JSON.stringify(prodsFiltrados, null, '\t')) 
             return true
         }catch(error){
             console.log(error);
-            return false
         }
     }
 
@@ -128,4 +129,6 @@ class ProductManager{
     }
 }
 
-module.exports = ProductManager
+module.exports = ProductManager 
+/* export default ProductManager
+export default ProductManager;*/

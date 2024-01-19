@@ -1,9 +1,9 @@
-import { Router } from "express";
-import ProductManager from "../src/productManager";
+const express = require("express");
+const routerProduct = express.Router();  
 
-const productManager = new ProductManager('./productos.json')
+const ProductManager = require("../src/productManager.cjs");
 
-const routerProduct = Router()
+const productManager = new ProductManager() 
 
 routerProduct.get('/', async(req, res) => {
     const products = await productManager.getProducts()
@@ -12,7 +12,6 @@ routerProduct.get('/', async(req, res) => {
     if(limit){
       products = products.slice(0, limit)
     }
-
     products ? res.status(200).send(products) : res.status(400).send('No se encontraron productos')
 })
 
@@ -47,6 +46,9 @@ routerProduct.delete('/:pid', async(req, res) => {
 
   const retorno = await productManager.deleteProduct(id)
 
+  console.log("Retorno:", retorno)
+
   retorno ? res.status(200).send("Producto borrado") : res.status(400).send('Error al eliminar el producto')
 })
 
+module.exports =  { routerProduct };
