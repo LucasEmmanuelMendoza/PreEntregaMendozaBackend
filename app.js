@@ -1,11 +1,10 @@
-import { routerProduct } from './routes/products.routes.js'
-import { routerCarts } from './routes/cart.routes.js'
-import { express } from 'express';
-import {__dirname} from './paths'
-import path from 'path'
+import carts from './routes/cart.routes.cjs';
+const {routerCarts} = carts;
 
-/* const express = require('express');
-const ProductManager = require('./index.js') */
+import prods from './routes/products.routes.cjs';
+const {routerProduct} = prods;
+
+import express from 'express';
 
 const app = express();
 app.use(express.urlencoded({extended:true}))

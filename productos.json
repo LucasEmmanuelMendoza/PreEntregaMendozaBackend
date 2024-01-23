@@ -1,14 +1,5 @@
 [
 	{
-		"id": 2,
-		"title": "Baby Groot",
-		"thumbnail": "https://cdn.thingiverse.com/assets/b7/d9/9d/98/c2/featured_preview_photo_2019-11-26_13-02-55.jpg",
-		"description": "Marvel",
-		"price": 2569.79,
-		"stock": 33,
-		"code": 1010
-	},
-	{
 		"id": 3,
 		"title": "Pulpo",
 		"thumbnail": "https://cdn.thingiverse.com/renders/fa/b4/ff/c7/da/b65d3ab42f4cefee601419962cfb4a50_preview_featured.JPG",
