@@ -51,11 +51,11 @@ class CartManager{
             const carts = JSON.parse(data)
 
             const foundCart = carts.find(cart => cart.id === cartId)
-
-            if(foundCart){//si existe el carrito
+            //defino a foundCart como const y desp le asigno cartMod, MAL
+            if(foundCart){
                 const existsProd = foundCart.some((prod) => prod.product === productId)
                 
-                if(existsProd){//si el producto está en el carrito
+                if(existsProd){
                     const cartMod = foundCart.map((prodCart) => {
                         if(prodCart.product === productId){
                             return{
@@ -67,7 +67,7 @@ class CartManager{
                         }
                     })
                     foundCart = cartMod;
-                }else{//si el producto no está en el carrito
+                }else{
                     const newProd={
                         product: productId,
                         quantity: quantity
