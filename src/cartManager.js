@@ -43,7 +43,7 @@ class CartManager{
         }
     }
 
-    async addProduct(cartId, productId, quantity){
+    async addProduct(cartId, productId){
         try{
             const data = await fs.promises.readFile(this.path, 'utf-8')
             let carts = JSON.parse(data)
@@ -55,7 +55,7 @@ class CartManager{
                 const indexProd = foundCart.products.findIndex(prod => prod.product === productId)
 
                 if (indexProd != -1){//existe el producto en el carro
-                    carts[indexCart][indexProd].quantity += quantity
+                    carts[indexCart][indexProd].quantity += 1
                 }else{//no existe
                     const newProd={
                         product: productId,

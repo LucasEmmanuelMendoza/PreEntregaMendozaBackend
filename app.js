@@ -1,16 +1,21 @@
-import carts from './routes/cart.routes.cjs';
-const {routerCarts} = carts;
-
-import prods from './routes/products.routes.cjs';
+/* import carts from './routes/cart.routes.js';
+const {routerCarts} = carts; */
+const carts = require('./routes/cart.routes.js');
+const routerCarts = carts.routerCarts;
+/* 
+import prods from './routes/products.routes.js';
 const {routerProduct} = prods;
+ */
+const prods = require('./routes/products.routes.js');
+const routerProduct = prods.routerProduct;
 
-import express from 'express';
+const express = require("express");
+
+const PORT = 8080
 
 const app = express();
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
-
-const PORT = 8080
 
 app.use('/api/products', routerProduct)
 app.use('/api/carts', routerCarts)

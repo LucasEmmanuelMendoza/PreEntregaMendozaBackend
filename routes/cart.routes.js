@@ -1,4 +1,4 @@
-const CartManager = require('../src/cartManager.cjs')
+const CartManager = require('../src/cartManager.js')
 
 const express = require("express");
 const routerCarts = express.Router();
