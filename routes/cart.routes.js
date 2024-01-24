@@ -12,7 +12,7 @@ routerCarts.post('/', async(req, res) => {
 })
 
 routerCarts.get('/:cid', async(req, res) => {
-    const cartId = parseInt(req.params.cid)
+    const cartId = req.params.cid
     const cart = await cartManager.getCartById(cartId)
     const prods = cart.products
 
@@ -25,7 +25,7 @@ routerCarts.post('/:cid/product/:pid', async(req, res) => {
 
     const returnAdd = await cartManager.addProduct(cartId, prodId)
 
-    returnAdd ? res.status(200).send('Producto agregado al carro') : res.status(400).send('Error al agregar producto')
+    returnAdd ? res.status(200).send('Producto agregado al carro') : res.status(400).send('Error al agregar producto - id del carro no encontrado')
 })
 
 module.exports = { routerCarts };

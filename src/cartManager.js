@@ -35,9 +35,16 @@ class CartManager{
         try{
             const data = await fs.promises.readFile(this.path, 'utf-8')
             const carts = JSON.parse(data)
-            const foundCart = carts.find(cart => cart.id === id)
 
-            return foundCart
+            const exitsCart = carts.some((cart) => cart.id === id)
+            
+            if (exitsCart){
+                const foundCart = carts.find((cart) => cart.id === id)
+                return foundCart
+            }else{
+                return false
+            }
+
         }catch(error){
             console.log(error)
         }
@@ -46,7 +53,7 @@ class CartManager{
     async addProduct(cartId, productId){
         try{
             const data = await fs.promises.readFile(this.path, 'utf-8')
-            let carts = JSON.parse(data)
+            const carts = JSON.parse(data)
 
             const indexCart = carts.findIndex(cart => cart.id === cartId)
 
@@ -55,11 +62,11 @@ class CartManager{
                 const indexProd = foundCart.products.findIndex(prod => prod.product === productId)
 
                 if (indexProd != -1){//existe el producto en el carro
-                    carts[indexCart][indexProd].quantity += 1
+                    carts[indexCart].products[indexProd].quantity ++
                 }else{//no existe
                     const newProd={
                         product: productId,
-                        quantity: quantity
+                        quantity: 1
                     }
                     carts[indexCart].products.push(newProd)
                 }
