@@ -11,17 +11,6 @@
 		"status": true
 	},
 	{
-		"id": "925aa64b-79ca-4652-8124-b4004c1b9d79",
-		"title": "Bart Simpson",
-		"description": "Figura Bart Simpson",
-		"price": 3100,
-		"thumbnail": "https://cdn.threeding.com/pi/QugC/4YbvVRDZUyLbMEyoItQugC-161LF.webp",
-		"code": 1018,
-		"category": "Los Simpson",
-		"stock": 15,
-		"status": true
-	},
-	{
 		"id": "274fc1b9-fa75-4b8d-b67b-0e6b13ea9ce5",
 		"title": "Pulpo",
 		"description": "-",
@@ -53,12 +42,23 @@
 		"category": "Muñecos"
 	},
 	{
+		"id": "925aa64b-79ca-4652-8124-b4004c1b9d79",
+		"title": "Bart Simpson",
+		"description": "Figura Bart Simpson",
+		"price": 3600,
+		"thumbnail": "https://cdn.threeding.com/pi/QugC/4YbvVRDZUyLbMEyoItQugC-161LF.webp",
+		"code": 1018,
+		"category": "Los Simpson",
+		"stock": 15,
+		"status": true
+	},
+	{
 		"id": "imghj5614",
 		"title": "Harry Potter",
 		"thumbnail": "https://cdn.myminifactory.com/assets/object-assets/5ed14acd5fcd1/images/resize-img-4852.JPG",
 		"description": "DC",
 		"price": 3500,
-		"stock": 13,
+		"stock": 17,
 		"code": 1020,
 		"category": "Muñecos"
 	}

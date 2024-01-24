@@ -8,7 +8,7 @@ class ProductManager{
         this.path = path.join(__dirname, '../productos.json');
     }
 
-    async updateProduct(id, campo, valor){
+    async updateProduct(id, valor){
         try{
             const data =  await fs.promises.readFile(this.path, 'utf-8')
 
@@ -17,22 +17,8 @@ class ProductManager{
             const existeId = productos.some(prod => prod.id === id)
 
             if(existeId){
-                if(campo!=="obj"){//si se pasa el campo, lo modifico
-                    const prodsFiltrados = productos.map((prod) => {
-                        if(prod.id === id){
-                            return{
-                                ...prod,
-                                [campo]: valor,
-                            }
-                        }else{
-                            return prod;
-                        }
-                    })
-                    await fs.promises.writeFile(this.path, JSON.stringify(prodsFiltrados, null, '\t'))
-                }else{//se pasa el objeto entero
                     if(typeof valor === 'object' && valor !== null){
                         const prodsFiltrados2 = productos.filter((prod) => prod.id !== id);
-                        console.log(prodsFiltrados2)
     
                         await fs.promises.writeFile(this.path, JSON.stringify(prodsFiltrados2, null, '\t'))
     
@@ -43,10 +29,12 @@ class ProductManager{
     
                         prodsFiltrados2.push(newProd);
                         await fs.promises.writeFile(this.path, JSON.stringify(prodsFiltrados2, null, '\t'))
+                    
+                        console.log("Prods actualizados");
+                        return 1;
+                    }else{
+                        return 2;
                     }
-                }
-                console.log("Prods actualizados");
-                return 1;
             }else{
                 return 0;
             }

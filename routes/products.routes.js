@@ -42,12 +42,12 @@ routerProduct.post('/', async(req, res) => {
   }
 })
 
-//async updateProduct(id, campo, valor){
+//async updateProduct(id, valor){
 routerProduct.put('/:pid', async(req, res) => {
   const id = req.params.pid
   const newProd = req.body;
 
-  const retorno = await productManager.updateProduct(id, "obj", newProd)
+  const retorno = await productManager.updateProduct(id, newProd)
   
   switch(retorno){
     case 1:
@@ -56,6 +56,10 @@ routerProduct.put('/:pid', async(req, res) => {
 
     case 0:
       res.status(400).send("Error. Id no encontrado")
+    break;
+    
+    case 2:
+      res.status(400).send("Error, debe pasarse el objeto del producto")
     break;
   }
 
