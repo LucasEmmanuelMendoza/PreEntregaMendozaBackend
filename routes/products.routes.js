@@ -49,7 +49,6 @@ routerProduct.put('/:pid', async(req, res) => {
 
   const retorno = await productManager.updateProduct(id, "obj", newProd)
   
-  //retorno ? res.status(200).send("Producto actualizado") : res.status(400).send('Error al actualizar el producto')
   switch(retorno){
     case 1:
       res.status(200).send("Producto actualizado")
