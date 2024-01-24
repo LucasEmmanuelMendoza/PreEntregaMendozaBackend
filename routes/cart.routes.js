@@ -22,9 +22,8 @@ routerCarts.get('/:cid', async(req, res) => {
 routerCarts.post('/:cid/product/:pid', async(req, res) => {
     const cartId = req.params.cid
     const prodId = req.params.pid
-    const quantity = 1
 
-    const returnAdd = await cartManager.addProduct(cartId, prodId, quantity)
+    const returnAdd = await cartManager.addProduct(cartId, prodId)
 
     returnAdd ? res.status(200).send('Producto agregado al carro') : res.status(400).send('Error al agregar producto')
 })

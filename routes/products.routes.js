@@ -19,7 +19,7 @@ routerProduct.get('/:pid', async(req, res) => {
   const id = req.params.pid
   const productFound = await productManager.getProductById(id)
 
-  productFound ? res.status(200).send(productFound) : res.status(400).send('No se encontró el producto')
+  productFound ? res.status(200).send(productFound) : res.status(400).send('No se encontró el producto - id incorrecto')
 })
 
 routerProduct.post('/', async(req, res) => {
@@ -27,7 +27,19 @@ routerProduct.post('/', async(req, res) => {
 
   const retorno = await productManager.addProduct(prod.title, prod.description, prod.price, prod.thumbnail, prod.code, prod.stock, prod.category)
 
-  retorno ? res.status(200).send("Producto agregado") : res.status(400).send("Error al agregar el producto")
+  switch (retorno){
+    case 1:
+      res.status(200).send("Producto agregado")
+      break;
+
+    case 2:
+      res.status(400).send("Error. El código pertenece a un producto existente")
+      break;
+
+    case 3:
+      res.status(400).send("Error. Todos los campos son obligatorios")
+      break;
+  }
 })
 
 //async updateProduct(id, campo, valor){
@@ -37,7 +49,16 @@ routerProduct.put('/:pid', async(req, res) => {
 
   const retorno = await productManager.updateProduct(id, "obj", newProd)
   
-  retorno ? res.status(200).send("Producto actualizado") : res.status(400).send('Error al actualizar el producto')
+  //retorno ? res.status(200).send("Producto actualizado") : res.status(400).send('Error al actualizar el producto')
+  switch(retorno){
+    case 1:
+      res.status(200).send("Producto actualizado")
+    break;
+
+    case 0:
+      res.status(400).send("Error. Id no encontrado")
+    break;
+  }
 
 })
 
@@ -48,7 +69,7 @@ routerProduct.delete('/:pid', async(req, res) => {
 
   console.log("Retorno:", retorno)
 
-  retorno ? res.status(200).send("Producto borrado") : res.status(400).send('Error al eliminar el producto')
+  retorno ? res.status(200).send("Producto borrado") : res.status(400).send('Error al eliminar el producto - ID incorrecto')
 })
 
 module.exports =  { routerProduct };

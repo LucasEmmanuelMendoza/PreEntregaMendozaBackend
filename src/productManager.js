@@ -14,35 +14,42 @@ class ProductManager{
 
             const productos = JSON.parse(data)
 
-            if(campo!=="obj"){//si se pasa el campo, lo modifico
-                const prodsFiltrados = productos.map((prod) => {
-                    if(prod.id === id){
-                        return{
-                            ...prod,
-                            [campo]: valor,
+            const existeId = productos.some(prod => prod.id === id)
+
+            if(existeId){
+                if(campo!=="obj"){//si se pasa el campo, lo modifico
+                    const prodsFiltrados = productos.map((prod) => {
+                        if(prod.id === id){
+                            return{
+                                ...prod,
+                                [campo]: valor,
+                            }
+                        }else{
+                            return prod;
                         }
-                    }else{
-                        return prod;
+                    })
+                    await fs.promises.writeFile(this.path, JSON.stringify(prodsFiltrados, null, '\t'))
+                }else{//se pasa el objeto entero
+                    if(typeof valor === 'object' && valor !== null){
+                        const prodsFiltrados2 = productos.filter((prod) => prod.id !== id);
+                        console.log(prodsFiltrados2)
+    
+                        await fs.promises.writeFile(this.path, JSON.stringify(prodsFiltrados2, null, '\t'))
+    
+                        const newProd = {
+                            ...valor,
+                            id: id,
+                        }
+    
+                        prodsFiltrados2.push(newProd);
+                        await fs.promises.writeFile(this.path, JSON.stringify(prodsFiltrados2, null, '\t'))
                     }
-                })
-                await fs.promises.writeFile(this.path, JSON.stringify(prodsFiltrados, null, '\t'))
-            }else{//se pasa el objeto entero
-                if(typeof valor === 'object' && valor !== null){
-                    const prodsFiltrados2 = productos.filter((prod) => prod.id !== id);
-
-                    await fs.promises.writeFile(this.path, JSON.stringify(prodsFiltrados2, null, '\t'))
-
-                    const newProd = {
-                        ...valor,
-                        id: id,
-                    }
-
-                    prodsFiltrados2.push(newProd);
-                    await fs.promises.writeFile(this.path, JSON.stringify(prodsFiltrados2, null, '\t'))
                 }
+                console.log("Prods actualizados");
+                return 1;
+            }else{
+                return 0;
             }
-            console.log("Prods actualizados");
-            return true;
         }catch(error){
             console.log(error)
         }
@@ -50,12 +57,14 @@ class ProductManager{
 
     async deleteProduct(id){
         try{
-            console.log("id:", id)
             const data = await fs.promises.readFile(this.path, 'utf-8')
             const productos = JSON.parse(data)
-            const prodsFiltrados = productos.filter((prod) => prod.id !== id)
-            await fs.promises.writeFile(this.path, JSON.stringify(prodsFiltrados, null, '\t')) 
-            return true
+            const existsId = productos.some(prod => prod.id === id)
+            if(existsId){
+                const prodsFiltrados = productos.filter((prod) => prod.id !== id)
+                await fs.promises.writeFile(this.path, JSON.stringify(prodsFiltrados, null, '\t')) 
+                return true
+            }
         }catch(error){
             console.log(error);
         }
@@ -65,8 +74,11 @@ class ProductManager{
         try{
             const data = await fs.promises.readFile(this.path, 'utf-8')
             const productos = JSON.parse(data);
-            const prodFiltrado = productos.find((prod) => prod.id === id)
-            return prodFiltrado;
+            const existsId = productos.some(prod => prod.id === id)
+            if(existsId){
+                const prodFiltrado = productos.find((prod) => prod.id === id)
+                return prodFiltrado;
+            }
         }
         catch(error){
             console.log(error);
@@ -81,6 +93,7 @@ class ProductManager{
 
             if(!title || !description || !price || !code || !stock ||!category){
                 console.log("Excepto 'thumbnail', todos los campos son obligatorios");
+                return 3
             }else{
                 const existsCode = productos.find((p) => p.code === code);
                 
@@ -99,10 +112,10 @@ class ProductManager{
                     productos.push(prod);
                     await fs.promises.writeFile(this.path, JSON.stringify(productos, null, '\t')); 
                     console.log("Producto agregado☑️")
-                    return true
+                    return 1
                 }else{
                     console.log('El código que ingresó pertenece a un producto existente');
-                    return false
+                    return 2
                 }
             }
         }catch(error){

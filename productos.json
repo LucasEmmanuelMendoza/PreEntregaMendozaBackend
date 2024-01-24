@@ -1,56 +1,65 @@
 [
 	{
-		"id": 3,
+		"id": "8d59847d-63bc-4728-b7ed-6d347015e23a",
+		"title": "Bart Simpson",
+		"description": "Figura Bart Simpson",
+		"price": 3333.52,
+		"thumbnail": "https://cdn.threeding.com/pi/QugC/4YbvVRDZUyLbMEyoItQugC-161LF.webp",
+		"code": 1017,
+		"category": "Simpson",
+		"stock": 13,
+		"status": true
+	},
+	{
+		"id": "925aa64b-79ca-4652-8124-b4004c1b9d79",
+		"title": "Bart Simpson",
+		"description": "Figura Bart Simpson",
+		"price": 3100,
+		"thumbnail": "https://cdn.threeding.com/pi/QugC/4YbvVRDZUyLbMEyoItQugC-161LF.webp",
+		"code": 1018,
+		"category": "Los Simpson",
+		"stock": 15,
+		"status": true
+	},
+	{
+		"id": "274fc1b9-fa75-4b8d-b67b-0e6b13ea9ce5",
+		"title": "Pulpo",
+		"description": "-",
+		"price": 5000,
+		"thumbnail": "https://cdn.thingiverse.com/renders/fa/b4/ff/c7/da/b65d3ab42f4cefee601419962cfb4a50_preview_featured.JPG",
+		"code": 1011,
+		"category": "deco",
+		"stock": 24,
+		"status": true
+	},
+	{
+		"id": "9447b3c5-2739-45d2-883e-735a90da5474",
 		"title": "Pulpo",
 		"thumbnail": "https://cdn.thingiverse.com/renders/fa/b4/ff/c7/da/b65d3ab42f4cefee601419962cfb4a50_preview_featured.JPG",
 		"description": "-",
-		"price": 3286.76,
+		"price": 7000,
 		"stock": 24,
-		"code": 1011
+		"code": 1019,
+		"category": "deco"
 	},
 	{
-		"id": 6,
-		"title": "Pulpo",
-		"thumbnail": "https://cdn.thingiverse.com/renders/5b/ec/f1/12/97/7e7fe39c69e6ab74ec0fe0387b2cc5ac_preview_featured.jpg",
-		"description": "-",
-		"price": 646.32,
-		"stock": 20,
-		"code": 1012
-	},
-	{
-		"id": 7,
-		"title": "Hulk",
-		"thumbnail": "https://cdn.wallapop.com/images/10420/dh/m2/__/c10420p815643074/i2815782179.jpg?pictureSize=W640",
-		"description": "Marvel",
-		"price": 1319.36,
-		"stock": 13,
-		"code": 1013
-	},
-	{
-		"id": 8,
-		"title": "Bart Simpson",
-		"thumbnail": "https://cdn.threeding.com/pi/QugC/4YbvVRDZUyLbMEyoItQugC-161LF.webp",
-		"description": "LosSimpson",
-		"price": 2089.52,
-		"stock": 15,
-		"code": 1014
-	},
-	{
-		"id": 9,
+		"id": "nssbf013",
 		"title": "Iron Man",
 		"thumbnail": "https://cdn.myminifactory.com/assets/object-assets/5ed14acd5fcd1/images/resize-img-4852.JPG",
 		"description": "Marvel",
-		"price": 421.35,
-		"stock": 6,
-		"code": 1015
+		"price": 2544,
+		"stock": 13,
+		"code": 1015,
+		"category": "Muñecos"
 	},
 	{
-		"id": 10,
-		"title": "Hola",
-		"thumbnail": "https://img1.cgtrader.com/items/3323407/83e613fb3a/harry-potter-print-ready-3d-model-3d-model-obj-stl-ztl.jpg",
-		"description": "HarryPotter",
-		"price": 2529.51,
-		"stock": 15,
-		"code": 1016
+		"id": "imghj5614",
+		"title": "Harry Potter",
+		"thumbnail": "https://cdn.myminifactory.com/assets/object-assets/5ed14acd5fcd1/images/resize-img-4852.JPG",
+		"description": "DC",
+		"price": 3000,
+		"stock": 13,
+		"code": 1020,
+		"category": "Muñecos"
 	}
 ]
