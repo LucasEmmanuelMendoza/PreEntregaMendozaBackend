@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { v4: uuid } = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 const path = require('path');
 
 class ProductManager{ 
@@ -25,25 +25,19 @@ class ProductManager{
                         return prod;
                     }
                 })
-                //guardo en fs los prodsFiltrados
                 await fs.promises.writeFile(this.path, JSON.stringify(prodsFiltrados, null, '\t'))
             }else{//se pasa el objeto entero
                 if(typeof valor === 'object' && valor !== null){
-                    //saco el producto con el id pasado como parámetro del storage
                     const prodsFiltrados2 = productos.filter((prod) => prod.id !== id);
 
-                    //actualizo el storage sin el producto
                     await fs.promises.writeFile(this.path, JSON.stringify(prodsFiltrados2, null, '\t'))
 
-                    //creo un nuevo producto, manteniendo el id
                     const newProd = {
                         ...valor,
                         id: id,
                     }
 
-                    //agrego el producto al array
                     prodsFiltrados2.push(newProd);
-                    //guardo los productos
                     await fs.promises.writeFile(this.path, JSON.stringify(prodsFiltrados2, null, '\t'))
                 }
             }
@@ -83,9 +77,7 @@ class ProductManager{
         try{
             const data = await fs.promises.readFile(this.path, 'utf-8')
             const productos = JSON.parse(data);
-            let mayorId = productos.reduce((id, prodId) => Number(id) > Number(prodId.id)? id : prodId.id, productos[0].id)
-            console.log("MaryorId:", mayorId);
-            const newId = uuid.v4();
+            const newId = uuidv4()
 
             if(!title || !description || !price || !code || !stock ||!category){
                 console.log("Excepto 'thumbnail', todos los campos son obligatorios");
@@ -129,6 +121,4 @@ class ProductManager{
     }
 }
 
-module.exports = ProductManager 
-/* export default ProductManager
-export default ProductManager;*/
+module.exports = ProductManager

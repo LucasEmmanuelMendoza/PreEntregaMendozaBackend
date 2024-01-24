@@ -6,7 +6,7 @@ const ProductManager = require("../src/productManager.cjs");
 const productManager = new ProductManager() 
 
 routerProduct.get('/', async(req, res) => {
-    const products = await productManager.getProducts()
+    let products = await productManager.getProducts()
     const limit = req.query.limit
 
     if(limit){
