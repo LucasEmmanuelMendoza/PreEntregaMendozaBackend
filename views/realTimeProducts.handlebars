@@ -1,0 +1,17 @@
+<div>
+    <form onsubmit="return addProduct()" class="d-flex flex-column gap-2 m-3 w-50">
+        <input type="text" name="title" id="title" placeholder="title">
+        <input type="text" name="description" id="description" placeholder="description">
+        <input type="text" name="category" id="category" placeholder="category">
+        <input type="text" name="price" id="price" placeholder="price">
+        <input type="text" name="code" id="code" placeholder="code">
+        <input type="text" name="stock" id="stock" placeholder="stock">
+        <input type="text" name="thumbnail" id="thumbnail" placeholder="thumbnail">
+        <input type="submit" value="Agregar producto">
+    </form>
+</div>
+
+<div class="Container m-3" id="cajaProds"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>

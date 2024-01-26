@@ -9,10 +9,17 @@ routerProduct.get('/', async(req, res) => {
     let products = await productManager.getProducts()
     const limit = req.query.limit
 
-    if(limit){
+    /*if(limit){
       products = products.slice(0, limit)
     }
-    products ? res.status(200).send(products) : res.status(400).send('No se encontraron productos')
+     products ? res.status(200).send(products) : res.status(400).send('No se encontraron productos')*/
+    if(products){
+        res.render('home', {
+            products:products,
+        }
+    )}
+
+    res.render('home', {})
 })
 
 routerProduct.get('/:pid', async(req, res) => {
