@@ -13,7 +13,14 @@ const app = express();
 const server = http.createServer(app)
 const handlebars = require('express-handlebars');
 
-const productos = []
+const ProductManager = require('./src/productManager.js')
+
+const product = new ProductManager()
+let productos = [];
+
+(async() => {
+  productos = await product.getProducts()
+})();
 
 //Public
 app.use(express.static(__dirname+'/public'))
@@ -37,8 +44,8 @@ const io = new Server(server)
 io.on('connection', (socket) => {
   console.log('User conectado')
 
-  //msjProd=socket.emit(msjProd) de addNewProd - public/js/index.js
-  socket.on('msjProd', (data) => {
+//msjProd=socket.emit(msjProd) de addNewProd - public/js/index.js
+socket.on('msjProd', (data) => {
     productos.push(data)
     socket.emit('productosServidor', productos)
   })

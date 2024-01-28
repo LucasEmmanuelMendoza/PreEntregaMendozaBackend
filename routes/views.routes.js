@@ -8,7 +8,6 @@ const productManager = new ProductManager()
 routerViews.get('/realtimeproducts', async(req, res) => {
     const products = await productManager.getProducts()
 
-    console.log(products)
     if(products){
         res.render('realTimeProducts', {
             products:products,

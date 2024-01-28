@@ -1,5 +1,5 @@
 <div>
-    <form onsubmit="return addProduct()" class="d-flex flex-column gap-2 m-3 w-50">
+    <form onsubmit="return addNewProd()" class="d-flex flex-column gap-2 m-3 w-50">
         <input type="text" name="title" id="title" placeholder="title">
         <input type="text" name="description" id="description" placeholder="description">
         <input type="text" name="category" id="category" placeholder="category">
@@ -11,7 +11,23 @@
     </form>
 </div>
 
-<div class="Container m-3" id="cajaProds"></div>
+<div class="Container m-3 d-flex flex-wrap gap-2" id="cajaProds">
+            {{#each products}}
+            <div class="card" style="width: 18rem;">
+            <img src={{this.thumbnail}} class="card-img-top" alt="...">
+            <div class="card-body">
+                <h1 class="card-title">{{this.title}}</h1>
+                <p class="card-text">{{this.description}}</p>
+                <h3 class="card-text">Categoria: {{this.category}}</h3>
+                <h4 class="card-text">${{this.price}}</h4>
+                <h5 class="card-text">Código: {{this.code}}</h5>
+                <p class="card-text">Cant: {{this.stock}}</p>
+                
+                <a href="#" class="btn btn-primary">Comprar</a>
+            </div>
+            </div>
+        {{/each}}
+</div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/index.js"></script>
