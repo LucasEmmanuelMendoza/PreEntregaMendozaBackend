@@ -11,20 +11,19 @@
     </form>
 </div>
 
-<div class="Container m-3 d-flex flex-wrap gap-2" id="cajaProds">
+<div class="Container m-2 d-flex flex-wrap gap-2" id="cajaProds">
             {{#each products}}
             <div class="card" style="width: 18rem;">
-            <img src={{this.thumbnail}} class="card-img-top" alt="...">
-            <div class="card-body">
-                <h1 class="card-title">{{this.title}}</h1>
-                <p class="card-text">{{this.description}}</p>
-                <h3 class="card-text">Categoria: {{this.category}}</h3>
-                <h4 class="card-text">${{this.price}}</h4>
-                <h5 class="card-text">Código: {{this.code}}</h5>
-                <p class="card-text">Cant: {{this.stock}}</p>
-                
-                <a href="#" class="btn btn-primary">Comprar</a>
-            </div>
+                <img src={{this.thumbnail}} class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h1 class="card-title">{{this.title}}</h1>
+                    <p class="card-text">{{this.description}}</p>
+                    <h3 class="card-text">Categoria: {{this.category}}</h3>
+                    <h4 class="card-text">${{this.price}}</h4>
+                    <h5 class="card-text">Código: {{this.code}}</h5>
+                    <p class="card-text">Cant: {{this.stock}}</p>
+                    <a href="#" class="btn btn-primary">Comprar</a>
+                </div>
             </div>
         {{/each}}
 </div>
