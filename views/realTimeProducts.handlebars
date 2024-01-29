@@ -1,4 +1,4 @@
-<div>
+<div class="d-flex gap-5">
     <form onsubmit="return addNewProd()" class="d-flex flex-column gap-2 m-3 w-50">
         <input type="text" name="title" id="title" placeholder="title">
         <input type="text" name="description" id="description" placeholder="description">
@@ -9,6 +9,12 @@
         <input type="text" name="thumbnail" id="thumbnail" placeholder="thumbnail">
         <input type="submit" value="Agregar producto">
     </form>
+
+    <form onsubmit="return deleteProd()">
+        <h1>Eliminar producto</h1>
+        <input type="text" placeholder="Ingrese el código del producto" id="inputDelete">
+        <input type="submit" value="Eliminar">
+    </form>
 </div>
 
 <div class="Container m-2 d-flex flex-wrap gap-2" id="cajaProds">
@@ -17,12 +23,14 @@
                 <img src={{this.thumbnail}} class="card-img-top" alt="...">
                 <div class="card-body">
                     <h1 class="card-title">{{this.title}}</h1>
+                    <small>Id: {{this.id}}</small>
                     <p class="card-text">{{this.description}}</p>
                     <h3 class="card-text">Categoria: {{this.category}}</h3>
                     <h4 class="card-text">${{this.price}}</h4>
                     <h5 class="card-text">Código: {{this.code}}</h5>
                     <p class="card-text">Cant: {{this.stock}}</p>
-                    <a href="#" class="btn btn-primary">Comprar</a>
+                    <input type="button" class="btn btn-success" value="Comprar">
+                    <input type="button" class="btn btn-danger" id={{this.code}} value="Eliminar" onclick="deleteProd()">
                 </div>
             </div>
         {{/each}}

@@ -1,7 +1,14 @@
 //cliente
 const socket = io()
 
-const addNewProd= () => {
+const deleteProd = () => {
+    const idProd = document.getElementById("inputDelete").value
+
+    socket.emit('deleteProd', idProd)
+    return false
+}
+
+const addNewProd = () => {
     const newProd = {
         title: document.getElementById("title").value,
         description: document.getElementById("description").value,
@@ -12,7 +19,7 @@ const addNewProd= () => {
         thumbnail: document.getElementById("thumbnail").value
     }
 
-    socket.emit('msjProd', newProd)
+    socket.emit('addProd', newProd)
     return false
 }
 
@@ -23,13 +30,16 @@ const render = (dataProds) => {
             <div class="card" style="width: 18rem;">
                 <img src=${prod.thumbnail} class="card-img-top" alt="...">
                 <div class="card-body">
+
                     <h1 class="card-title">${prod.title}</h1>
+                    <small>Id: ${prod.id}</small>
                     <p class="card-text">${prod.description}</p>
                     <h3 class="card-text">Categoria: ${prod.category}</h3>
                     <h4 class="card-text">$${prod.price}</h4>
                     <h5 class="card-text">Código: ${prod.code}</h5>
                     <p class="card-text">Cant: ${prod.stock}</p>
-                    <a href="#" class="btn btn-primary">Comprar</a>
+                    <input type="button" class="btn btn-success" value="Comprar">
+                    <input type="button" class="btn btn-danger" id=${prod.code} value="Eliminar">
                 </div>
             </div>
             `

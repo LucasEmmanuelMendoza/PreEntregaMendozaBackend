@@ -44,12 +44,22 @@ const io = new Server(server)
 io.on('connection', (socket) => {
   console.log('User conectado')
 
-//msjProd=socket.emit(msjProd) de addNewProd - public/js/index.js
-socket.on('msjProd', (data) => {
-    productos.push(data)
-    socket.emit('productosServidor', productos)
+  //msjProd=socket.emit(msjProd) de addNewProd - public/js/index.js
+  //Agregar Producto
+  socket.on('addProd', (data1) => {
+    productos.push(data1) 
+    socket.emit('productosServidor', productos) 
   })
+
+  socket.on('deleteProd', (data) => {
+    productos= productos.filter((prod) => prod.code != data)
+    socket.emit('productosServidor', productos) 
+  }) 
+
 })
+
+
+    
 
 server.listen(PORT, ()=> {
   console.log('Server run on port', PORT)
