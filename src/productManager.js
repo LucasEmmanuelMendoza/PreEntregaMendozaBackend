@@ -5,7 +5,7 @@ const path = require('path');
 class ProductManager{ 
 
     constructor() {
-        this.path = path.join(__dirname, '../productos.json');
+        this.path = path.join(__dirname, '../productos2.json');
     }
 
     async updateProduct(id, valor){

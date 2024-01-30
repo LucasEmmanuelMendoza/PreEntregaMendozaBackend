@@ -14,10 +14,9 @@ const server = http.createServer(app)
 const handlebars = require('express-handlebars');
 
 const ProductManager = require('./src/productManager.js')
-
 const product = new ProductManager()
-let productos = [];
 
+let productos = [];
 (async() => {
   productos = await product.getProducts()
 })();
@@ -44,22 +43,28 @@ const io = new Server(server)
 io.on('connection', (socket) => {
   console.log('User conectado')
 
-  //msjProd=socket.emit(msjProd) de addNewProd - public/js/index.js
-  //Agregar Producto
   socket.on('addProd', (data1) => {
-    productos.push(data1) 
+    //de data1 no viene id
+
+    (async() => {
+      await product.addProduct(data1.title, data1.description, data1.price, data1.thumbnail, data1.code, data1.stock, data1.category)
+    })();
+
+    (async() => {
+      productos = await product.getProducts()
+    })();
+    
     socket.emit('productosServidor', productos) 
   })
 
   socket.on('deleteProd', (data) => {
-    productos= productos.filter((prod) => prod.code != data)
+    productos = productos.filter((prod) => prod.id != data);
+    (async() => {
+      const retorno = await product.deleteProduct(data)
+    })();
     socket.emit('productosServidor', productos) 
   }) 
-
 })
-
-
-    
 
 server.listen(PORT, ()=> {
   console.log('Server run on port', PORT)
