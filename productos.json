@@ -61,5 +61,27 @@
 		"stock": 17,
 		"code": 1020,
 		"category": "Muñecos"
+	},
+	{
+		"id": "c469a894-04bc-4695-8149-30cbacda5fa1",
+		"title": "Batman",
+		"description": "Busto Batman",
+		"price": "1333",
+		"thumbnail": "https://files.cults3d.com/uploaders/25973187/illustration-file/2b7811f3-f2d2-4aa3-8203-8eb67b39c5a9/main.png",
+		"code": "asd123",
+		"category": "DC",
+		"stock": "15",
+		"status": true
+	},
+	{
+		"id": "83799418-2ff8-4420-820a-b66d969c5a09",
+		"title": "Hulk",
+		"description": "Figura Hulk",
+		"price": "2000",
+		"thumbnail": "https://files.cults3d.com/uploaders/14619068/illustration-file/7925d4c0-2c04-4fa6-8ee0-7c2158a834c3/002.jpg",
+		"code": "Hulk123",
+		"category": "Marvel",
+		"stock": "20",
+		"status": true
 	}
 ]

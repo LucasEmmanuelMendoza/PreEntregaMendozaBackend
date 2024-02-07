@@ -1,0 +1,46 @@
+[
+	{
+		"id": "f65fd0e0-9c24-4500-9129-2b74330755bd",
+		"title": "Hulk",
+		"description": "Muñeco Hulk",
+		"price": "123123",
+		"thumbnail": "https://files.cults3d.com/uploaders/14619068/illustration-file/7925d4c0-2c04-4fa6-8ee0-7c2158a834c3/002.jpg",
+		"code": "123adasds",
+		"category": "Marvel",
+		"stock": "20",
+		"status": true
+	},
+	{
+		"id": "8d59847d-63bc-4728-b7ed-6d347015e23a",
+		"title": "Bart Simpson",
+		"description": "Figura Bart Simpson",
+		"price": 3333.52,
+		"thumbnail": "https://cdn.threeding.com/pi/QugC/4YbvVRDZUyLbMEyoItQugC-161LF.webp",
+		"code": 1017,
+		"category": "Simpson",
+		"stock": 13,
+		"status": true
+	},
+	{
+		"id": "72f9b78b-0a09-4ba3-9d88-9be30a37071c",
+		"title": "Iron Man",
+		"description": "Muñeco",
+		"price": "12341",
+		"thumbnail": "https://files.cults3d.com/uploaders/14083807/illustration-file/6709ce12-529a-4744-91e9-2aaac063bc22/Iron_Man_Bust_3d1.jpg",
+		"code": "iron123",
+		"category": "Marvel",
+		"stock": "20",
+		"status": true
+	},
+	{
+		"id": "49002b9f-9266-4d26-bde1-af70b27736d0",
+		"title": "Batman",
+		"description": "busto",
+		"price": "1234",
+		"thumbnail": "https://files.cults3d.com/uploaders/25973187/illustration-file/2b7811f3-f2d2-4aa3-8203-8eb67b39c5a9/main.png",
+		"code": "bat143",
+		"category": "dc",
+		"stock": "41",
+		"status": true
+	}
+]
