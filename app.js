@@ -13,6 +13,8 @@ const app = express();
 const server = http.createServer(app)
 const handlebars = require('express-handlebars');
 
+const CONFIG = require('./config')
+
 const ProductManager = require('./src/productManager.js')
 const product = new ProductManager()
 
