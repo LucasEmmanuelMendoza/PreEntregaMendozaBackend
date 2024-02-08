@@ -24,13 +24,23 @@ class CartManager{
 
     async addProduct(cartId, productId){
         try{
-            const returnFind = await Carts.findOne({_id: cartId})
-            if (returnFind != null){
+            //busco el carrito
+            const foundCart = await Carts.findOne({_id: cartId})
+            if (foundCart != null){//existe el carrito
+                const indexProd = foundCart.products.findIndex(prod => prod.product == productId)
 
-            }else{
-                await Carts.updateOne({"_id": cartId},{$addToSet: {products: productId}})
+                if (indexProd != -1){//existe el producto en el carro
+                    foundCart.products[indexProd].quantity ++
+                }else{
+                    const newProd = {
+                        product: productId,
+                        quantity : 1
+                    }
+                    foundCart.products.push(newProd)
+                }
+                await Carts.updateOne({"_id": cartId}, foundCart)
+                return true
             }
-            return true
         }catch(error){
             console.log(error)
             return false
