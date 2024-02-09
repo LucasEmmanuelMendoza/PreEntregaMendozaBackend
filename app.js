@@ -1,8 +1,8 @@
-const carts = require('./routes/cart.routes.js');
+const carts = require('./dao/fileSystem/routes/cart.routes.js')
 const routerCarts = carts.routerCarts;
-const prods = require('./routes/products.routes.js');
+const prods = require('./dao/fileSystem/routes/products.routes.js');
 const routerProduct = prods.routerProduct;
-const views =  require('./routes/views.routes.js');
+const views =  require('./dao/fileSystem/routes/views.routes.js');
 const routerView = views.routerViews;
 
 const { Server } = require("socket.io");
@@ -12,8 +12,9 @@ const PORT = 8080
 const app = express();
 const server = http.createServer(app)
 const handlebars = require('express-handlebars');
-
-const ProductManager = require('./src/productManager.js')
+/* 
+const ProductManager = require('./src/productManager.js') */
+const ProductManager = require('./dao/fileSystem/productManager.js')
 const product = new ProductManager()
 
 let productos = [];

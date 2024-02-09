@@ -1,8 +1,8 @@
 const express = require("express");
 const routerViews = express.Router();  
-
-const ProductManager = require("../src/productManager.js");
-
+/* 
+const ProductManager = require("../src/productManager.js"); */
+const ProductManager = require("../productManager.js")
 const productManager = new ProductManager()
 
 routerViews.get('/realtimeproducts', async(req, res) => {
@@ -15,7 +15,6 @@ routerViews.get('/realtimeproducts', async(req, res) => {
     )}
 })
 
-//anda
 routerViews.get('/', async(req, res) => {
     const products = await productManager.getProducts()
 
