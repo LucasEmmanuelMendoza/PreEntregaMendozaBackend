@@ -32,7 +32,6 @@ app.use(express.json())
 //Motor de plantilla
 app.engine('handlebars', handlebars.engine())
 app.set('view engine', 'handlebars')
-/* app.set('views', '/views') */
 
 //Routes
 app.use('/api/products', routerProduct)
