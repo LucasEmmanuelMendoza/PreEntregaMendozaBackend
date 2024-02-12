@@ -1,9 +1,13 @@
-const carts = require('./dao/fileSystem/routes/cart.routes.js')
+const carts = require('./routesDb/cart.routes.js')
 const routerCarts = carts.routerCarts;
-const prods = require('./dao/fileSystem/routes/products.routes.js');
+
+const prods = require('./routesDb/product.routes.js')
 const routerProduct = prods.routerProduct;
+
 const views =  require('./dao/fileSystem/routes/views.routes.js');
 const routerView = views.routerViews;
+
+const Database = require('./dao/db/index.js')
 
 const { Server } = require("socket.io");
 const http = require('http')
@@ -12,8 +16,7 @@ const PORT = 8080
 const app = express();
 const server = http.createServer(app)
 const handlebars = require('express-handlebars');
-/* 
-const ProductManager = require('./src/productManager.js') */
+
 const ProductManager = require('./dao/fileSystem/productManager.js')
 const product = new ProductManager()
 
@@ -44,7 +47,6 @@ io.on('connection', (socket) => {
   console.log('User conectado')
 
   socket.on('addProd', (data1) => {
-    //de data1 no viene id
 
     (async() => {
       await product.addProduct(data1.title, data1.description, data1.price, data1.thumbnail, data1.code, data1.stock, data1.category)
@@ -68,4 +70,5 @@ io.on('connection', (socket) => {
 
 server.listen(PORT, ()=> {
   console.log('Server run on port', PORT)
+  Database.connect()  
 })

@@ -8,7 +8,7 @@ class ProductManagerMongo{
             return true;
         } catch(error) {
             console.log(error)
-            return false
+            return error
         }
     }
 
@@ -38,7 +38,7 @@ class ProductManagerMongo{
             return products
         }catch(error){
             console.log(error)
-            return false
+            return error
         }
     }
 
