@@ -1,6 +1,34 @@
 //cliente
 const socket = io()
 
+const addMsg = () => {
+    const newMsg = {
+        user: document.getElementById('user').value,
+        message: document.getElementById('message').value
+    }
+
+    socket.emit('newMsg', newMsg)
+}
+
+const renderMsg = (dataMessages) =>{
+    console.log(dataMessages)
+    const arrayMap = dataMessages.map( msg => {
+        return(
+            `<div>
+                ${msg.user}:${msg.message}
+            </div>`
+        )
+    }).join(' ')
+
+    document.getElementById("cajaMensajes").innerHTML = arrayMap
+}
+
+socket.on('messagesServidor', (data) => {
+    renderMsg(data)
+})
+
+//=============================================
+
 const deleteProd = () => {
     const idProd = document.getElementById("inputDelete").value
     socket.emit('deleteProd', idProd)
@@ -19,8 +47,6 @@ const addNewProd = () => {
     }
 
     socket.emit('addProd', newProd)
-
-    console.log("Add Product")
 }
 
 const render = (dataProds) => {

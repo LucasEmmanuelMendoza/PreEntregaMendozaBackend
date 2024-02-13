@@ -22,9 +22,17 @@ const handlebars = require('express-handlebars');
 const ProductManager = require('./dao/db/productManagerMongo/productManager.js')
 const product = new ProductManager()
 
+const MessageManager = require('./dao/db/productManagerMongo/messageManager.js')
+const message = new MessageManager()
+
 let productos = [];
 (async() => {
   productos = await product.getProducts()
+})();
+
+let messages = [];
+(async() => {
+  messages = await message.getMessages()
 })();
 
 //Public
@@ -65,6 +73,14 @@ io.on('connection', (socket) => {
     socket.emit('productosServidor', productos) 
   }) 
 
+  socket.on('newMsg', (data) => {
+    (async() => {
+      await message.addMessage(data)
+    })();
+
+    io.sockets.emit('messagesServidor', messages)
+
+  })
 })
 
 server.listen(PORT, ()=> {

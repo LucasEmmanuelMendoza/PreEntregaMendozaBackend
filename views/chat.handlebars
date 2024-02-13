@@ -1,11 +1,18 @@
-<div class="user">
-    <input type="text" name="user" placeholder="Ingrese su nombre">
-    <input type="text" name="msj" id="message">
+<form  onsubmit="addMsg()" class="m-3 d-flex gap-2">
+    <input type="text" name="user" placeholder="Ingrese su nombre" id="user">
+    <input type="text" name="msg"  placeholder="Ingrese el mensaje" id="message">
 
+    <input type="submit" value="Send">
+</form>
+
+<div class="container" id="cajaMensajes">
+    {{#each messages}}
+        <div class="container">
+            <h2>{{this.user}}:</h2>
+            <p>{{this.message}}</p>
+        </div>
+    {{/each}}
 </div>
-
-<div class="container cajaMensajes"></div>
-
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/index.js"></script>
