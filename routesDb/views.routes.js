@@ -37,4 +37,16 @@ routerViews.get('/chat', async(req, res) => {
     }
 })
 
+routerViews.get('/cart', async(req, res) => {
+    const messages = await messageManeger.getMessages()
+
+    if(messages){
+        res.render('cart', {
+            products : products
+        })
+    }
+})
+
+
+
 module.exports = { routerViews };
