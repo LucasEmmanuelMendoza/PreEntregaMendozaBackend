@@ -6,7 +6,7 @@ const cartManager = new CartManager()
 
 routerCarts.post('/', async(req, res) => {
     const returnCreate = await cartManager.createCart()
-
+    
     returnCreate ? res.status(200).send('Carrito creado') : res.status(400).send("Error al crear el carro");
 })
 
