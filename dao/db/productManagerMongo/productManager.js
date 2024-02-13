@@ -34,7 +34,7 @@ class ProductManagerMongo{
 
     async getProducts(){
         try{
-            const products = await Products.find()
+            const products = await Products.find().lean()
             return products
         }catch(error){
             console.log(error)

@@ -23,14 +23,13 @@
                 <img src={{this.thumbnail}} class="card-img-top" alt="...">
                 <div class="card-body">
                     <h1 class="card-title">{{this.title}}</h1>
-                    <small>Id: {{this.id}}</small>
+                    <small>Id: {{this._id}}</small>
                     <p class="card-text">{{this.description}}</p>
                     <h3 class="card-text">Categoria: {{this.category}}</h3>
                     <h4 class="card-text">${{this.price}}</h4>
                     <h5 class="card-text">Código: {{this.code}}</h5>
                     <p class="card-text">Cant: {{this.stock}}</p>
                     <input type="button" class="btn btn-success" value="Comprar">
-                    <input type="button" class="btn btn-danger" id={{this.code}} value="Eliminar" onclick="deleteProd()">
                 </div>
             </div>
         {{/each}}

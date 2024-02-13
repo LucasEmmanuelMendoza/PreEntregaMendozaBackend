@@ -3,8 +3,8 @@ const socket = io()
 
 const deleteProd = () => {
     const idProd = document.getElementById("inputDelete").value
-
     socket.emit('deleteProd', idProd)
+    
     return false
 }
 
@@ -13,10 +13,11 @@ const addNewProd = () => {
         title: document.getElementById("title").value,
         description: document.getElementById("description").value,
         category: document.getElementById("category").value,
-        price: document.getElementById("price").value,
-        code: document.getElementById("code").value,
-        stock: document.getElementById("stock").value,
-        thumbnail: document.getElementById("thumbnail").value
+        price: parseInt(document.getElementById("price").value),
+        code: parseInt(document.getElementById("code").value),
+        stock: parseInt(document.getElementById("stock").value),
+        thumbnail: document.getElementById("thumbnail").value,
+        status:true
     }
 
     socket.emit('addProd', newProd)

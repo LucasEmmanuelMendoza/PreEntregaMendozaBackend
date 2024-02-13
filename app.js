@@ -4,7 +4,9 @@ const routerCarts = carts.routerCarts;
 const prods = require('./routesDb/product.routes.js')
 const routerProduct = prods.routerProduct;
 
-const views =  require('./dao/fileSystem/routes/views.routes.js');
+//const views =  require('./dao/fileSystem/routes/views.routes.js');
+const views = require('./routesDb/views.routes.js')
+//const views = require('./dao/fileSystem/routes/views.routes.js')
 const routerView = views.routerViews;
 
 const Database = require('./dao/db/index.js')
@@ -17,7 +19,7 @@ const app = express();
 const server = http.createServer(app)
 const handlebars = require('express-handlebars');
 
-const ProductManager = require('./dao/fileSystem/productManager.js')
+const ProductManager = require('./dao/db/productManagerMongo/productManager.js')
 const product = new ProductManager()
 
 let productos = [];
@@ -47,25 +49,22 @@ io.on('connection', (socket) => {
   console.log('User conectado')
 
   socket.on('addProd', (data1) => {
-
     (async() => {
-      await product.addProduct(data1.title, data1.description, data1.price, data1.thumbnail, data1.code, data1.stock, data1.category)
-    })();
-
-    (async() => {
-      productos = await product.getProducts()
+      await product.addProduct(data1)
     })();
     
     socket.emit('productosServidor', productos) 
   })
 
   socket.on('deleteProd', (data) => {
-    productos = productos.filter((prod) => prod.id != data);
+    //data: id del producto a eliminar
+    productos = productos.filter((prod) => prod._id != data);
     (async() => {
-      const retorno = await product.deleteProduct(data)
+      await product.deleteProduct(data)
     })();
     socket.emit('productosServidor', productos) 
   }) 
+
 })
 
 server.listen(PORT, ()=> {
