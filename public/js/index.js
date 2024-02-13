@@ -4,8 +4,6 @@ const socket = io()
 const deleteProd = () => {
     const idProd = document.getElementById("inputDelete").value
     socket.emit('deleteProd', idProd)
-    
-    return false
 }
 
 const addNewProd = () => {
@@ -21,7 +19,8 @@ const addNewProd = () => {
     }
 
     socket.emit('addProd', newProd)
-    return false
+
+    console.log("Add Product")
 }
 
 const render = (dataProds) => {
