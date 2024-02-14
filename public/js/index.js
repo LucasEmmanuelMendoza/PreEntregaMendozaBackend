@@ -1,6 +1,34 @@
 //cliente
 const socket = io()
 
+//================== Cart =======================
+
+const addToCart = (event) => {
+
+    const cart={
+        cartId: document.getElementById('cartId').value,
+        prod: event.target.name
+    }
+
+    socket.emit('prodToCart', cart)
+}
+
+const renderCart = (dataCart) => {
+    const cart = `
+        <div>
+            ${dataCart._id}
+            ${dataCart.products}
+        </div>`
+
+    document.getElementById("cart").innerHTML = cart;
+}
+
+socket.on('cartServidor', (data) => {
+    renderCart(data)
+})
+
+
+//================== Messages =======================
 const addMsg = () => {
     const newMsg = {
         user: document.getElementById('user').value,
@@ -11,7 +39,6 @@ const addMsg = () => {
 }
 
 const renderMsg = (dataMessages) =>{
-    console.log(dataMessages)
     const arrayMap = dataMessages.map( msg => {
         return(
             `<div>
@@ -27,7 +54,7 @@ socket.on('messagesServidor', (data) => {
     renderMsg(data)
 })
 
-//=============================================
+//=================== Products ==========================
 
 const deleteProd = () => {
     const idProd = document.getElementById("inputDelete").value

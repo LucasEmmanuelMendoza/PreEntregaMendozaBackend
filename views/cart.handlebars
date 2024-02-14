@@ -1,4 +1,7 @@
 <div class="bg-success">
+
+    <input type="text" class="m-3" placeholder="Ingrese el id del carrito" id="cartId"> 
+
     <h1>PRODUCTOS</h1>
     <div class="container d-flex flex-wrap gap-3">
         {{#each products}}
@@ -12,11 +15,11 @@
                 <h5 class="card-text">Código: {{this.code}}</h5>
                 <p class="card-text">Cant: {{this.stock}}</p>
                 
-                <a href="#" class="btn btn-primary">Comprar</a>
+                <input class="btn btn-primary" value="Agregar al carro" type="submit" name={{this._id}} onsubmit="addToCart()">
             </div>
             </div>
         {{/each}}
-    </div>    
+    </div>
 </div>
 
 <div class="container" id="cart"></div>

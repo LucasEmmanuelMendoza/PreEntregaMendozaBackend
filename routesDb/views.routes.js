@@ -38,9 +38,9 @@ routerViews.get('/chat', async(req, res) => {
 })
 
 routerViews.get('/cart', async(req, res) => {
-    const messages = await messageManeger.getMessages()
+    const products = await productManager.getProducts()
 
-    if(messages){
+    if(products){
         res.render('cart', {
             products : products
         })
