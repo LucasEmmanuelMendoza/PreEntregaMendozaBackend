@@ -54,6 +54,7 @@ app.use('/views', routerView)
 
 //Socket
 const io = new Server(server)
+
 io.on('connection', (socket) => {
   console.log('User conectado')
 
@@ -103,3 +104,5 @@ server.listen(PORT, ()=> {
   console.log('Server run on port', PORT)
   Database.connect()  
 })
+
+module.exports = { app, server, io };

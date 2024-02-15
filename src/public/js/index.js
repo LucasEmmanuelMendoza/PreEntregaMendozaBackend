@@ -11,6 +11,7 @@ const addToCart = (event) => {
     }
 
     socket.emit('prodToCart', cart)
+    return false
 }
 
 const renderCart = (dataCart) => {
@@ -36,6 +37,7 @@ const addMsg = () => {
     }
 
     socket.emit('newMsg', newMsg)
+    return false
 }
 
 const renderMsg = (dataMessages) =>{
@@ -74,6 +76,7 @@ const addNewProd = () => {
     }
 
     socket.emit('addProd', newProd)
+    return false
 }
 
 const render = (dataProds) => {
