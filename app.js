@@ -92,14 +92,13 @@ io.on('connection', (socket) => {
       await cart.addProduct(data.cartId, data.prod)
     })();
 
-    let cartData;
     (async() => {
+      let cartData;
       cartData = await cart.getCartById(data.cartId)
     })();
     
     socket.emit('cartServidor', cartData)
   })
-
 })
 
 server.listen(PORT, ()=> {
