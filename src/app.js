@@ -1,12 +1,10 @@
-const cartsR = require('./routesDb/cart.routes.js')
+const cartsR = require('./dao/db/routesDb/cart.routes.js')
 const routerCarts = cartsR.routerCarts;
 
-const prods = require('./routesDb/product.routes.js')
+const prods = require('./dao/db/routesDb/product.routes.js')
 const routerProduct = prods.routerProduct;
 
-//const views =  require('./dao/fileSystem/routes/views.routes.js');
-const views = require('./routesDb/views.routes.js')
-//const views = require('./dao/fileSystem/routes/views.routes.js')
+const views = require('./dao/db/routesDb/views.routes.js')
 const routerView = views.routerViews;
 
 const Database = require('./dao/db/index.js')

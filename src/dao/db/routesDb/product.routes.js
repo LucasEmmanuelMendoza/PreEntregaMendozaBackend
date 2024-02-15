@@ -1,4 +1,4 @@
-const ProductManager = require('../dao/db/productManagerMongo/productManager.js')
+const ProductManager = require('../productManagerMongo/productManager.js')
 const express = require('express')
 const routerProduct = express.Router();
 

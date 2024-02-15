@@ -1,10 +1,10 @@
 const express = require('express')
 const routerViews = express.Router()
 
-const ProductManager = require('../dao/db/productManagerMongo/productManager.js')
+const ProductManager = require('../productManagerMongo/productManager.js')
 const productManager = new ProductManager()
 
-const MessageManager = require('../dao/db/productManagerMongo/messageManager.js')
+const MessageManager = require('../productManagerMongo/messageManager.js')
 const messageManeger = new MessageManager()
 
 routerViews.get('/realtimeproducts', async(req, res) => {
@@ -46,7 +46,5 @@ routerViews.get('/cart', async(req, res) => {
         })
     }
 })
-
-
 
 module.exports = { routerViews };
