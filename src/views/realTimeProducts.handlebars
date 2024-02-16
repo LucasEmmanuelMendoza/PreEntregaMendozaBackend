@@ -10,7 +10,7 @@
         <input type="submit" value="Agregar producto">
     </form>
 
-    <form id="deleteProductForm" onsubmit="deleteProd()" >
+    <form id="deleteProductForm" onsubmit="return deleteProd()" >
         <h1>Eliminar producto</h1>
         <input type="text" placeholder="Ingrese el id del producto" id="inputDelete">
         <input type="submit" value="Eliminar">
@@ -23,7 +23,7 @@
                 <img src={{this.thumbnail}} class="card-img-top" alt="...">
                 <div class="card-body">
                     <h1 class="card-title">{{this.title}}</h1>
-                    <small>Id: {{this._id}}</small>
+                    <small>id: {{this._id}}</small>
                     <p class="card-text">{{this.description}}</p>
                     <h3 class="card-text">Categoria: {{this.category}}</h3>
                     <h4 class="card-text">${{this.price}}</h4>

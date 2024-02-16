@@ -27,7 +27,6 @@ socket.on('cartServidor', (data) => {
     renderCart(data)
 })
 
-
 //================== Messages =======================
 const addMsg = () => {
     const newMsg = {
@@ -35,14 +34,17 @@ const addMsg = () => {
         message: document.getElementById('message').value
     }
 
+    document.getElementById('message').value = '';
+    
     socket.emit('newMsg', newMsg)
+    return false
 }
 
 const renderMsg = (dataMessages) =>{
     const arrayMap = dataMessages.map( msg => {
         return(
             `<div>
-                ${msg.user}:${msg.message}
+                <h2>${msg.user}:</h2><p>${msg.message}</p>
             </div>`
         )
     }).join(' ')
@@ -57,8 +59,12 @@ socket.on('messagesServidor', (data) => {
 //=================== Products ==========================
 
 const deleteProd = () => {
-    const idProd = document.getElementById("inputDelete").value
+    const idProd = document.getElementById("inputDelete").value;
+
+    document.getElementById('inputDelete').value = "";
+
     socket.emit('deleteProd', idProd)
+    return false
 }
 
 const addNewProd = () => {
@@ -85,14 +91,13 @@ const render = (dataProds) => {
                 <div class="card-body">
 
                     <h1 class="card-title">${prod.title}</h1>
-                    <small>Id: ${prod.id}</small>
+                    <small>id: ${prod._id}</small>
                     <p class="card-text">${prod.description}</p>
                     <h3 class="card-text">Categoria: ${prod.category}</h3>
                     <h4 class="card-text">$${prod.price}</h4>
                     <h5 class="card-text">Código: ${prod.code}</h5>
                     <p class="card-text">Cant: ${prod.stock}</p>
                     <input type="button" class="btn btn-success" value="Comprar">
-                    <input type="button" class="btn btn-danger" id=${prod.code} value="Eliminar">
                 </div>
             </div>
             `

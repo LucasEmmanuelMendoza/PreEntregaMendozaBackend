@@ -1,11 +1,10 @@
-const { io } = require('../../app.js')
 const ProductManager = require('./productManagerMongo/productManager.js')
 const MessageManager = require('./productManagerMongo/messageManager.js')
 
 const product = new ProductManager()
 const message = new MessageManager()
 
-let productos = []
+let productos = [];
 (async() => {
     productos = await product.getProducts()
 })();
@@ -13,34 +12,40 @@ let productos = []
 let messages = [];
 (async() => {
   messages = await message.getMessages()
-})(); 
+})();  
 
-io.on('Connection', (socket) => {
+const funcionSocket = (io) => {
+  io.on('connection', (socket) => {
+    console.log('User connected');
 
-    socket.on('addProd', (data) => {
-      productos.push(data)
-        (async() => {  
-            productos = await product.addProduct(data)
-        })();
-        socket.emit('productosServidor', productos)
-    })
+  socket.on('addProd', (data) => {
 
-    socket.on('deleteProd', (data) => {
-        //data: id del producto a eliminar
-        console.log(data)
-        productos = productos.filter((prod) => prod._id != data);
-        (async() => {
-          await product.deleteProduct(data)
-        })();
-        socket.emit('productosServidor', productos) 
-      }) 
-
-    socket.on('newMsg', (data) => {
-    messages.push(data)
-    (async() => {
-        await message.addMessage(data)
+    (async() => {  
+      await product.addProduct(data);
+      productos = await product.getProducts()
     })();
 
-    io.sockets.emit('messagesServidor', messages)
+    productos.push(data);
+    socket.emit('productosServidor', productos);
+  })
+
+  socket.on('deleteProd', (data) => {
+    productos = productos.filter((prod) => prod._id != data);
+    (async() => {
+      await product.deleteProduct(data);
+    })();
+    socket.emit('productosServidor', productos);
+  }) 
+
+  socket.on('newMsg', (data) => {
+    messages.push(data);
+    (async() => {
+        await message.addMessage(data);
+    })();
+
+      io.sockets.emit('messagesServidor', messages);
     })
-})
+  });
+};
+
+module.exports = funcionSocket;
