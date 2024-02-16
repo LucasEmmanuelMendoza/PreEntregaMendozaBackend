@@ -7,8 +7,6 @@ const productManager = new ProductManager()
 const MessageManager = require('../productManagerMongo/messageManager.js')
 const messageManeger = new MessageManager()
 
-//const { io } = require('../../../app.js')
-
 routerViews.get('/realtimeproducts', async(req, res) => {
     const products = await productManager.getProducts()
     

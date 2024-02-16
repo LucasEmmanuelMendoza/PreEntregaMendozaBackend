@@ -14,7 +14,7 @@ class ProductManagerMongo{
 
     async deleteProduct(id){
         try{
-            await Products.deleteOne({_id:id})
+            const retorno = await Products.deleteOne({_id:id})
             return true
         }catch(error){
             console.log(error)
@@ -24,8 +24,11 @@ class ProductManagerMongo{
 
     async getProductById(id){
         try{
-            const product = await Products.findOne({_id:id})
-            return product
+            const product = await Products.findOne({_id:id}).lean()
+            if(product != null){
+                return product
+            }
+            
         }catch(error){
             console.log(error)
             return false
@@ -35,7 +38,9 @@ class ProductManagerMongo{
     async getProducts(){
         try{
             const products = await Products.find().lean()
-            return products
+            if(products != null){
+                return products 
+            }
         }catch(error){
             console.log(error)
             return error

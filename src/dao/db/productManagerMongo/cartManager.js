@@ -15,7 +15,9 @@ class CartManager{
     async getCartById(id){
         try{
             const cart = await Carts.findOne({_id:id})
-            return cart
+            if(cart != null){
+                return cart
+            }
         }catch(error){
             console.log(error)
             return false

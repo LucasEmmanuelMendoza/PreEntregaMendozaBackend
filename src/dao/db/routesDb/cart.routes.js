@@ -15,7 +15,7 @@ routerCarts.get('/:cid', async(req, res) => {
     const cart = await cartManager.getCartById(cartId)
     const products = cart.products
 
-    cart ? res.status(200).send(products) : res.status(400).send("Carrito no encontrado")
+    cart ? res.status(200).json(products) : res.status(400).send("Carrito no encontrado")
 })
 
 routerCarts.post('/:cid/product/:pid', async(req, res) => {

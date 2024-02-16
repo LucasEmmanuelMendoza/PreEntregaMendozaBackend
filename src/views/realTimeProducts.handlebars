@@ -1,5 +1,5 @@
 <div class="d-flex gap-5">
-    <form id="addProductForm" onsubmit="return addNewProd()" class="d-flex flex-column gap-2 m-3 w-50">
+    <form id="addProductForm" onsubmit="addNewProd()" class="d-flex flex-column gap-2 m-3 w-50">
         <input type="text" name="title" id="title" placeholder="title">
         <input type="text" name="description" id="description" placeholder="description">
         <input type="text" name="category" id="category" placeholder="category">
@@ -10,7 +10,7 @@
         <input type="submit" value="Agregar producto">
     </form>
 
-    <form id="deleteProductForm" onsubmit="deleteProd()">
+    <form id="deleteProductForm" onsubmit="deleteProd()" >
         <h1>Eliminar producto</h1>
         <input type="text" placeholder="Ingrese el id del producto" id="inputDelete">
         <input type="submit" value="Eliminar">

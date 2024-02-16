@@ -15,7 +15,9 @@ class MessageManager{
     async getMessages(){
         try{
             const messages = await Messages.find().lean()
-            return messages
+            if(messages != null){
+                return messages
+            }
         }catch(error){
             console.log(error)
             return error

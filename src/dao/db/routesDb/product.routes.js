@@ -12,14 +12,14 @@ routerProduct.get('/', async(req, res) => {
         products = products.slice(0, limit)
     }
 
-    products ? res.status(200).send(products) : res.status(400).send(products)
+    products ? res.status(200).json(products) : res.status(400).send(products)
 })
 
 routerProduct.get('/:pid', async(req, res) => {
     const prodId = req.params.pid
     const product = await productManager.getProductById(prodId)
 
-    product ? res.status(200).send(product) : res.status(400).send("Producto no encontrado")
+    product ? res.status(200).json(product) : res.status(400).send("Producto no encontrado")
 })
 
 routerProduct.post('/', async(req, res) => {
