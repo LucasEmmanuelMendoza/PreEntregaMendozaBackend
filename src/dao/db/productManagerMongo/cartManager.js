@@ -54,7 +54,6 @@ class CartManager{
             const foundCart = await Carts.findOne({_id:cartId}).lean();
             if(foundCart != null){
                 const existeProd = foundCart.products.some(prod => prod.product == productId)
-
                 if(existeProd != -1){//exite el prod
                     foundCart.products = foundCart.products.filter(prod => prod.product != productId);
                     await Carts.updateOne({"_id": cartId}, foundCart);
@@ -67,13 +66,11 @@ class CartManager{
         }
     }
 
-    
     async deleteAllProducts(cartId){
         try{
             const foundCart = await Carts.findOne({_id: cartId}).lean();
             if(foundCart != null){
-                foundCart.products = [];
-                await Carts.updateOne({"_id": cartId}, foundCart);
+                await Carts.updateOne({"_id": cartId}, {$set: {"products": []}});
                 return true;
             }
         }catch(error){
@@ -82,7 +79,33 @@ class CartManager{
         }
     }
     
+    async updateCart(cartId, products){
+        try{
+            const foundCart = await Carts.findOne({_id: cartId}).lean();
+            if(foundCart != null){
+                await Carts.updateOne({"_id": cartId}, {$set: {"products": products}});
+                return true
+            }
+        }catch(error){
+            console.log(error)
+            return false
+        }
+    }
 
+    async updateQuantity(cartId, productId, quantity){
+        try{
+            const foundCart = await Carts.findOne({_id: cartId}).lean();
+            if(foundCart != null){
+                const indexProd = foundCart.products.findIndex(prod => prod.id == productId)
+                foundCart[indexProd].quantity = quantity;
+                await Carts.updateOne({"_id": cartId}, foundCart);
+                return true;
+            }
+        }catch(error){
+            console.log(error)
+            return false
+        }
+    }
 }
 
 module.exports = CartManager
