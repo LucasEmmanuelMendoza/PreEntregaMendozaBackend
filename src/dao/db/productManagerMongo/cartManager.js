@@ -1,10 +1,10 @@
 const Carts = require('../models/cart.model')
 
 class CartManager{
-    
+
     async createCart(){
         try{
-            const retorno = await Carts.create({ products: []})
+            await Carts.create({ products: []})
             return true
         }catch(error){
             console.log(error)
@@ -14,7 +14,7 @@ class CartManager{
 
     async getCartById(id){
         try{
-            const cart = await Carts.findOne({_id:id})
+            const cart = await Carts.findOne({_id:id}).lean()
             if(cart != null){
                 return cart
             }
@@ -27,7 +27,7 @@ class CartManager{
     async addProduct(cartId, productId){
         try{
             //busco el carrito
-            const foundCart = await Carts.findOne({_id: cartId})
+            const foundCart = await Carts.findOne({_id: cartId}).lean()
             if (foundCart != null){//existe el carrito
                 const indexProd = foundCart.products.findIndex(prod => prod.product == productId)
 
@@ -48,6 +48,41 @@ class CartManager{
             return false
         }
     }
+
+    async deleteProduct(cartId, productId){
+        try{
+            const foundCart = await Carts.findOne({_id:cartId}).lean();
+            if(foundCart != null){
+                const existeProd = foundCart.products.some(prod => prod.product == productId)
+
+                if(existeProd != -1){//exite el prod
+                    foundCart.products = foundCart.products.filter(prod => prod.product != productId);
+                    await Carts.updateOne({"_id": cartId}, foundCart);
+                    return true;
+                }
+            }
+        }catch(error){
+            console.log(error);
+            return error;
+        }
+    }
+
+    
+    async deleteAllProducts(cartId){
+        try{
+            const foundCart = await Carts.findOne({_id: cartId}).lean();
+            if(foundCart != null){
+                foundCart.products = [];
+                await Carts.updateOne({"_id": cartId}, foundCart);
+                return true;
+            }
+        }catch(error){
+            console.log(error);
+            return error;
+        }
+    }
+    
+
 }
 
 module.exports = CartManager
