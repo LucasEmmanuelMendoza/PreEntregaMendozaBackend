@@ -14,7 +14,7 @@ class CartManager{
 
     async getCartById(id){
         try{
-            const cart = await Carts.findOne({_id:id}).lean()
+            const cart = await Carts.findOne({_id:id}).populate('products.product')
             if(cart != null){
                 return cart
             }
@@ -27,7 +27,7 @@ class CartManager{
     async addProduct(cartId, productId){
         try{
             //busco el carrito
-            const foundCart = await Carts.findOne({_id: cartId}).lean()
+            const foundCart = await Carts.findOne({_id: cartId})
             if (foundCart != null){//existe el carrito
                 const indexProd = foundCart.products.findIndex(prod => prod.product == productId)
 
@@ -51,7 +51,7 @@ class CartManager{
 
     async deleteProduct(cartId, productId){
         try{
-            const foundCart = await Carts.findOne({_id:cartId}).lean();
+            const foundCart = await Carts.findOne({_id:cartId});
             if(foundCart != null){
                 const existeProd = foundCart.products.some(prod => prod.product == productId)
                 if(existeProd != -1){//exite el prod
@@ -68,7 +68,7 @@ class CartManager{
 
     async deleteAllProducts(cartId){
         try{
-            const foundCart = await Carts.findOne({_id: cartId}).lean();
+            const foundCart = await Carts.findOne({_id: cartId});
             if(foundCart != null){
                 await Carts.updateOne({"_id": cartId}, {$set: {"products": []}});
                 return true;
@@ -81,7 +81,7 @@ class CartManager{
     
     async updateCart(cartId, products){
         try{
-            const foundCart = await Carts.findOne({_id: cartId}).lean();
+            const foundCart = await Carts.findOne({_id: cartId});
             if(foundCart != null){
                 await Carts.updateOne({"_id": cartId}, {$set: {"products": products}});
                 return true
@@ -94,7 +94,7 @@ class CartManager{
 
     async updateQuantity(cartId, productId, quantity){
         try{
-            const foundCart = await Carts.findOne({_id: cartId}).lean();
+            const foundCart = await Carts.findOne({_id: cartId});
             if(foundCart != null){
                 const indexProd = foundCart.products.findIndex(prod => prod.id == productId)
                 foundCart[indexProd].quantity = quantity;
