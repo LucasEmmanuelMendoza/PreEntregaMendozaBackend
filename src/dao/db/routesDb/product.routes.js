@@ -7,6 +7,9 @@ const productManager = new ProductManager()
 routerProduct.get('/', async(req, res) => {
     let products = await productManager.getProducts()
     const limit = req.query.limit
+    const page = req.query.page
+    const sort = req.query.sort
+    const query = req.query.query
 
     if(limit){
         products = products.slice(0, limit)
