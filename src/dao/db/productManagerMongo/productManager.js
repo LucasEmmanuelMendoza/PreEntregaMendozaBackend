@@ -45,8 +45,8 @@ class ProductManagerMongo{
                 {
                     limit: limit ? limit : 10,
                     page: page ? page : 1,
-                    lean: true/* 
-                    sort: sort ? {price: priceSort} : null     */                                                                    
+                    /*sort: sort ? {price: priceSort} : null     */ 
+                    lean: true                                                                   
                 }
             )
     
@@ -67,7 +67,6 @@ class ProductManagerMongo{
             }
 
             return returnGetProducts;
-            
         }catch(error){
             console.log(error)
             return false

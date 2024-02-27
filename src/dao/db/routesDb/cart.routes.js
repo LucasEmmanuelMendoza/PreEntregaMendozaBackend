@@ -13,9 +13,13 @@ routerCarts.post('/', async(req, res) => {
 routerCarts.get('/:cid', async(req, res) => {
     const cartId = req.params.cid
     const cart = await cartManager.getCartById(cartId)
-    const products = cart.products
+    const cartProducts = cart.products
+    
+    console.log(cartProducts)
 
-    cart ? res.status(200).json(products) : res.status(400).send("Carrito no encontrado")
+    res.render('cart', {
+        products: cartProducts
+    })
 })
 
 routerCarts.post('/:cid/product/:pid', async(req, res) => {

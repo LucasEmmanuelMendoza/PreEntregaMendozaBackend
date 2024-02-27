@@ -23,10 +23,12 @@ const funcionSocket = (io) => {
     (async() => {  
       await product.addProduct(data);
       productos = await product.getProducts()
+      productos.payload.push(data);
     })();
 
-    productos.push(data);
-    socket.emit('productosServidor', productos);
+    console.log(productos.payload)
+
+    socket.emit('productosServidor', productos.payload);
   })
 
   socket.on('deleteProd', (data) => {
