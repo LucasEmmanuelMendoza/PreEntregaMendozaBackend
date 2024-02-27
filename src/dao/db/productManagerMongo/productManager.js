@@ -35,15 +35,42 @@ class ProductManagerMongo{
         }
     }
 
-    async getProducts(){
+    async getProducts(limit, page, category, priceSort){
         try{
-            const products = await Products.find().lean()
-            if(products != null){
-                return products 
+            let prevLink=null;
+            let nextLink=null;
+
+            const returnPaginate = await Products.paginate(
+                category ? {category: category} : {},
+                {
+                    limit: limit ? limit : 10,
+                    page: page ? page : 1,
+                    lean: true/* 
+                    sort: sort ? {price: priceSort} : null     */                                                                    
+                }
+            )
+    
+            returnPaginate.hasPrevPage ? prevLink = `http://localhost:8080/api/products?page=${returnPaginate.prevPage}&limit=${limit}&query=${category}&sort=sort` : null
+            returnPaginate.hasNextPage ? nextLink = `http://localhost:8080/api/products?page=${returnPaginate.nextPage}&limit=${limit}&query=${category}&sort=sort` : null
+
+            const returnGetProducts = {
+                success: true,
+                payload: returnPaginate.docs,
+                totalPages: returnPaginate.totalPages,
+                prevPage: returnPaginate.prevPage,
+                nextPage: returnPaginate.nextPage,
+                page: returnPaginate.page,
+                hasPrevPage: returnPaginate.hasPrevPage,
+                hasNextPage: returnPaginate.hasNextPage,
+                prevLink: prevLink,
+                nextLink: nextLink
             }
+
+            return returnGetProducts;
+            
         }catch(error){
             console.log(error)
-            return error
+            return false
         }
     }
 

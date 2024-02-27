@@ -5,17 +5,18 @@ const routerProduct = express.Router();
 const productManager = new ProductManager()
 
 routerProduct.get('/', async(req, res) => {
-    let products = await productManager.getProducts()
     const limit = req.query.limit
     const page = req.query.page
     const sort = req.query.sort
-    const query = req.query.query
+    const category = req.query.query
 
-    if(limit){
-        products = products.slice(0, limit)
+    let returnPaginate = await productManager.getProducts(limit, page, category, sort)
+
+    if(returnPaginate != false){
+        res.status(200).send(returnPaginate)
+    }else{
+        res.status(400).send("Error al obtener productos")
     }
-
-    products ? res.status(200).json(products) : res.status(400).send(products)
 })
 
 routerProduct.get('/:pid', async(req, res) => {

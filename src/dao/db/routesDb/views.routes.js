@@ -12,7 +12,7 @@ routerViews.get('/realtimeproducts', async(req, res) => {
     
     if (products) {
         res.render('realTimeProducts', {
-            products: products
+            products: products.payload
         })
     }
 })
@@ -22,7 +22,7 @@ routerViews.get('/', async(req, res) => {
 
     if(products) {
         res.render('home', {
-            products : products
+            products : products.payload
         })
     }
 })
