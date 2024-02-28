@@ -7,6 +7,9 @@ const productManager = new ProductManager()
 const MessageManager = require('../productManagerMongo/messageManager.js')
 const messageManeger = new MessageManager()
 
+const CartManager = require('../productManagerMongo/cartManager.js')
+const cartManager = new CartManager()
+
 routerViews.get('/products', async(req, res) => {
     const products = await productManager.getProducts()
 
@@ -15,7 +18,29 @@ routerViews.get('/products', async(req, res) => {
             products: products.payload
         })
     }
+})
 
+routerViews.get('/carts/:cid', async(req, res) => {
+    const cartId = req.params.cid;
+    
+    const cartProds = await cartManager.getCartById(cartId)
+
+    if(cartProds){
+        res.render('cart', {
+            products : cartProds.products
+        })
+    }
+})
+
+routerViews.get('/products/details/:pid', async(req, res) => {
+    const productId = req.params.pid 
+
+    const product = await productManager.getProductById(productId)
+    if(product){
+        res.render('productDetails', {
+            product: product
+        })
+    }
 })
 
 routerViews.get('/realtimeproducts', async(req, res) => {
@@ -44,16 +69,6 @@ routerViews.get('/chat', async(req, res) => {
     if(messages){
         res.render('chat', {
             messages: messages
-        })
-    }
-})
-
-routerViews.get('/cart', async(req, res) => {
-    const products = await productManager.getProducts()
-
-    if(products){
-        res.render('cart', {
-            products : products
         })
     }
 })

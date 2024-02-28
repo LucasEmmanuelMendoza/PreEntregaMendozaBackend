@@ -1,0 +1,25 @@
+<div class="bg-success">
+    <h1>DETALLES DEL PRODUCTO</h1>
+
+    <input type="text" placeholder="id carrito" class="m-2" id="cartId">
+     <div class="container d-flex flex-wrap gap-3">
+        <div class="card" style="width: 18rem;">
+        <img src={{product.thumbnail}} class="card-img-top" alt="...">
+        <div class="card-body">
+            <h1 class="card-title">{{product.title}}</h1>
+            <p class="card-text">{{product.description}}</p>
+            <h3 class="card-text">Categoria: {{product.category}}</h3>
+            <h4 class="card-text">${{product.price}}</h4>
+            <h5 class="card-text">Código: {{product.code}}</h5>
+            <p class="card-text">Cant: {{product.stock}}</p>
+            <p>id:{{product._id}}</p>
+            <div class="d-flex justify-content-center gap-3">
+                <button class="btn btn-primary btnAddToCart" data-id="{{product._id}}">Add to cart</button>
+            </div>
+        </div>
+        </div>
+        
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>

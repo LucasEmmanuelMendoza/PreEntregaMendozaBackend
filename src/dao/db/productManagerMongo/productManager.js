@@ -28,7 +28,6 @@ class ProductManagerMongo{
             if(product != null){
                 return product
             }
-            
         }catch(error){
             console.log(error)
             return false

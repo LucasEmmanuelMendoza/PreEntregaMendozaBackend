@@ -1,24 +1,19 @@
-MODIFICAR ESTO PARA QUE SEA EL CARRO DIRECTAMENTE, NO LOS PRODS CON UN BOTÓN DE 
-AGREGAR AL CARRO
-
 <div class="bg-success">
-
-    <input type="text" class="m-3" placeholder="Ingrese el id del carrito" id="cartId"> 
-
-    <h1>PRODUCTOS</h1>
+    <h1>Carrito</h1>
     <div class="container d-flex flex-wrap gap-3">
         {{#each products}}
             <div class="card" style="width: 18rem;">
-            <img src={{this.thumbnail}} class="card-img-top" alt="...">
+            <img src={{this.product.thumbnail}} class="card-img-top" alt="...">
             <div class="card-body">
-                <h1 class="card-title">{{this.title}}</h1>
-                <p class="card-text">{{this.description}}</p>
-                <h3 class="card-text">Categoria: {{this.category}}</h3>
-                <h4 class="card-text">${{this.price}}</h4>
-                <h5 class="card-text">Código: {{this.code}}</h5>
-                <p class="card-text">Cant: {{this.stock}}</p>
+                <h1 class="card-title">{{this.product.title}}</h1>
+                <p class="card-text">{{this.product.description}}</p>
+                <h3 class="card-text">Categoria: {{this.product.category}}</h3>
+                <h4 class="card-text">${{this.product.price}}</h4>
+                <h5 class="card-text">Código: {{this.product.code}}</h5>
+                <p class="card-text">Cant: {{this.quantity}}</p>
                 
-                <input class="btn btn-primary" value="Agregar al carro" type="submit" name={{this._id}} onsubmit="addToCart()">
+                <input class="btn btn-primary" value="Ver más" type="button" name={{this.product._id}} onsubmit="addToCart()">
+
             </div>
             </div>
         {{/each}}
