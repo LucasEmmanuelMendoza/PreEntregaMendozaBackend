@@ -1,3 +1,4 @@
+const { default: mongoose } = require('mongoose')
 const Carts = require('../models/cart.model')
 
 class CartManager{
@@ -24,15 +25,15 @@ class CartManager{
         }
     }
 
-    async addProduct(cartId, productId){
+     async addProduct(cartId, productId){
         try{
             //busco el carrito
             const foundCart = await Carts.findOne({_id: cartId})
             if (foundCart != null){//existe el carrito
-                const indexProd = foundCart.products.findIndex(prod => prod.product == productId)
+                const indexProd = foundCart.products.findIndex(prod => prod.product._id == productId);
 
                 if (indexProd != -1){//existe el producto en el carro
-                    foundCart.products[indexProd].quantity ++
+                    foundCart.products[indexProd].quantity ++;
                 }else{
                     const newProd = {
                         product: productId,
@@ -47,7 +48,7 @@ class CartManager{
             console.log(error)
             return false
         }
-    }
+    }  
 
     async deleteProduct(cartId, productId){
         try{

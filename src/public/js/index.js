@@ -2,16 +2,20 @@
 const socket = io()
 
 //================== Cart =======================
-
 const addToCart = (event) => {
-
     const cart={
         cartId: document.getElementById('cartId').value,
-        prod: event.target.name
+        prod: event.currentTarget.getAttribute('data-id')
     }
-
+    alert("Producto agregado al carro");
     socket.emit('prodToCart', cart)
 }
+
+const buttons = document.querySelectorAll('.btnAddToCart');
+
+buttons.forEach(button => {
+    button.addEventListener('click', addToCart);
+});
 
 const renderCart = (dataCart) => {
     const cart = `
@@ -19,7 +23,6 @@ const renderCart = (dataCart) => {
             ${dataCart._id}
             ${dataCart.products}
         </div>`
-
     document.getElementById("cart").innerHTML = cart;
 }
 

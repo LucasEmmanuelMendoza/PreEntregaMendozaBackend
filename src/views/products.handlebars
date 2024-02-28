@@ -1,11 +1,8 @@
-MODIFICAR ESTO PARA QUE SEA EL CARRO DIRECTAMENTE, NO LOS PRODS CON UN BOTÓN DE 
-AGREGAR AL CARRO
-
 <div class="bg-success">
-
-    <input type="text" class="m-3" placeholder="Ingrese el id del carrito" id="cartId"> 
-
     <h1>PRODUCTOS</h1>
+
+    <input type="text" placeholder="id carrito" class="m-2" id="cartId">
+
     <div class="container d-flex flex-wrap gap-3">
         {{#each products}}
             <div class="card" style="width: 18rem;">
@@ -17,15 +14,14 @@ AGREGAR AL CARRO
                 <h4 class="card-text">${{this.price}}</h4>
                 <h5 class="card-text">Código: {{this.code}}</h5>
                 <p class="card-text">Cant: {{this.stock}}</p>
+                <p>id:{{this._id}}</p>
                 
-                <input class="btn btn-primary" value="Agregar al carro" type="submit" name={{this._id}} onsubmit="addToCart()">
+                <button class="btn btn-primary btnAddToCart" data-id="{{this._id}}">Agregar al carro</button>
             </div>
             </div>
         {{/each}}
-    </div>
+    </div>    
 </div>
-
-<div class="container" id="cart"></div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/index.js"></script>

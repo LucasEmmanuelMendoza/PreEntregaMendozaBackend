@@ -65,7 +65,6 @@ class ProductManagerMongo{
                 prevLink: prevLink,
                 nextLink: nextLink
             }
-
             return returnGetProducts;
         }catch(error){
             console.log(error)

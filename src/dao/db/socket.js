@@ -1,8 +1,10 @@
 const ProductManager = require('./productManagerMongo/productManager.js')
 const MessageManager = require('./productManagerMongo/messageManager.js')
+const CartManager = require('./productManagerMongo/cartManager.js')
 
 const product = new ProductManager()
 const message = new MessageManager()
+const cart = new CartManager()
 
 let productos = [];
 (async() => {
@@ -46,6 +48,12 @@ const funcionSocket = (io) => {
     })();
 
       io.sockets.emit('messagesServidor', messages);
+    })
+
+  socket.on('prodToCart', (data) => {
+      (async() => {
+          await cart.addProduct(data.cartId, data.prod)
+      })();
     })
   });
 };

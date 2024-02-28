@@ -7,10 +7,21 @@ const productManager = new ProductManager()
 const MessageManager = require('../productManagerMongo/messageManager.js')
 const messageManeger = new MessageManager()
 
+routerViews.get('/products', async(req, res) => {
+    const products = await productManager.getProducts()
+
+    if(products != false){
+        res.render('products', {
+            products: products.payload
+        })
+    }
+
+})
+
 routerViews.get('/realtimeproducts', async(req, res) => {
     const products = await productManager.getProducts()
     
-    if (products) {
+    if(products){
         res.render('realTimeProducts', {
             products: products.payload
         })
@@ -20,7 +31,7 @@ routerViews.get('/realtimeproducts', async(req, res) => {
 routerViews.get('/', async(req, res) => {
     const products = await productManager.getProducts()
 
-    if(products) {
+    if(products){
         res.render('home', {
             products : products.payload
         })
