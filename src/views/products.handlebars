@@ -1,6 +1,10 @@
 <div class="bg-success">
-    <h1>PRODUCTOS</h1>
-
+    <div class="d-flex gap-2">
+        <h1>PRODUCTOS</h1>
+        <form action="/auth/logout" method="get">
+            <input class="btn btn-danger" type="submit" value="Cerrar sesión">
+        </form>
+    </div>
     <input type="text" placeholder="id carrito" class="m-2" id="cartId">
 
     <div class="container d-flex flex-wrap gap-3">

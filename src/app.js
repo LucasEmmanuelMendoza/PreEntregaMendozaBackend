@@ -17,8 +17,11 @@ const PORT = 8080
 const app = express();
 const server = http.createServer(app)
 const handlebars = require('express-handlebars');
+const MongoStore = require('connect-mongo')
+const session = require('express-session')
 
 const funcionSocket = require('./dao/db/socket.js');
+const { routerAuth } = require('./dao/db/routesDb/auth.routes.js');
 
 //Public
 app.use(express.static(__dirname+'/public'))
@@ -31,10 +34,20 @@ app.use(express.json())
 app.engine('handlebars', handlebars.engine())
 app.set('view engine', 'handlebars')
 
+app.use(session({
+  store: MongoStore.create({
+      mongoUrl: 'mongodb+srv://lucas:123@clustermendoza.0fsgvex.mongodb.net/sessions'
+  }),
+  secret:'secretCoder',
+  resave: true,
+  saveUninitialized: true
+}))
+
 //Routes
 app.use('/api/products', routerProduct)
 app.use('/api/carts', routerCarts)
 app.use('/views', routerView)
+app.use('/auth', routerAuth)
 
 const io = new Server(server); 
 

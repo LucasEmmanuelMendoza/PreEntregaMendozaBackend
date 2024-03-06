@@ -73,4 +73,17 @@ routerViews.get('/chat', async(req, res) => {
     }
 })
 
+routerViews.get('/login-view', async(req, res)=> {
+    res.render('login')
+})
+
+routerViews.get('/register-view', async(req, res)=> {
+    res.render('register')
+})
+
+routerViews.get('/profile-view', async(req, res)=> {
+    res.render('profile')
+})
+
+
 module.exports = { routerViews };

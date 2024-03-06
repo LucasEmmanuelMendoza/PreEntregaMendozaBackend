@@ -44,13 +44,13 @@ class ProductManagerMongo{
                 {
                     limit: limit ? limit : 10,
                     page: page ? page : 1,
-                    /*sort: sort ? {price: priceSort} : null     */ 
+                    sort: priceSort ? {price: priceSort} : null,
                     lean: true                                                                   
                 }
             )
     
-            returnPaginate.hasPrevPage ? prevLink = `http://localhost:8080/api/products?page=${returnPaginate.prevPage}&limit=${limit}&query=${category}&sort=sort` : null
-            returnPaginate.hasNextPage ? nextLink = `http://localhost:8080/api/products?page=${returnPaginate.nextPage}&limit=${limit}&query=${category}&sort=sort` : null
+            returnPaginate.hasPrevPage ? prevLink = `http://localhost:8080/api/products?page=${returnPaginate.prevPage}&limit=${limit}&query=${category}&sort=${sort}` : null
+            returnPaginate.hasNextPage ? nextLink = `http://localhost:8080/api/products?page=${returnPaginate.nextPage}&limit=${limit}&query=${category}&sort=${sort}` : null
 
             const returnGetProducts = {
                 success: true,
