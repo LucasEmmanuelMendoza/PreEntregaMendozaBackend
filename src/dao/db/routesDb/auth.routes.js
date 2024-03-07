@@ -19,7 +19,7 @@ routerAuth.post('/register', async(req, res) => {
 routerAuth.post('/login', async(req, res) => {
     const newUser = req.body
     const existeUser = await userManager.existsUser(newUser.username) 
-    console.log("existeUser:",existeUser)
+    
     if(existeUser.password === newUser.password && existeUser.username === newUser.username){
         req.session.user = newUser.username
         req.session.rol = "usuario" 

@@ -12,10 +12,11 @@ const cartManager = new CartManager()
 
 routerViews.get('/products', async(req, res) => {
     const products = await productManager.getProducts()
-
+    
     if(products != false){
         res.render('products', {
-            products: products.payload
+            products: products.payload,
+            user: req.session.user
         })
     }
 })
