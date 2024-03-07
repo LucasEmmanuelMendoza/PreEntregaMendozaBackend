@@ -19,14 +19,16 @@ routerAuth.post('/register', async(req, res) => {
 routerAuth.post('/login', async(req, res) => {
     const newUser = req.body
     const existeUser = await userManager.existsUser(newUser.username) 
- 
-    if(existeUser){
+    console.log("existeUser:",existeUser)
+    if(existeUser.password === newUser.password && existeUser.username === newUser.username){
         req.session.user = newUser.username
         req.session.rol = "usuario" 
         if(newUser.username === "adminCoder@coder.com"){
             req.session.rol = "admin"
         }
         res.redirect('/views/products')
+    }else{
+        res.send('Usuario o contraseña incorrectos')
     }
 })
 

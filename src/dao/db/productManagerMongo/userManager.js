@@ -14,7 +14,11 @@ class UserManager{
     async existsUser(username){
         try{
             const userFound = await Users.findOne({username: username})
-            return userFound !== null;
+            if(userFound != null){
+                return userFound
+            }else{
+                return false
+            }
         }catch(error){
             console.log(error)
             return error

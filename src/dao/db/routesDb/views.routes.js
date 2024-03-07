@@ -85,5 +85,4 @@ routerViews.get('/profile-view', async(req, res)=> {
     res.render('profile')
 })
 
-
 module.exports = { routerViews };
