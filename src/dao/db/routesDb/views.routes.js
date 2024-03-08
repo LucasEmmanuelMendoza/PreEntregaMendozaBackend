@@ -3,14 +3,14 @@ const routerViews = express.Router()
 
 const ProductManager = require('../productManagerMongo/productManager.js')
 const productManager = new ProductManager()
-
 const MessageManager = require('../productManagerMongo/messageManager.js')
 const messageManeger = new MessageManager()
-
 const CartManager = require('../productManagerMongo/cartManager.js')
 const cartManager = new CartManager()
+const UserManager = require('../productManagerMongo/userManager.js')
+const userManager = new UserManager()
 
-routerViews.get('/products', async(req, res) => {
+routerViews.get('/products', profileAuth, async(req, res) => {
     const products = await productManager.getProducts()
     
     if(products != false){
@@ -74,7 +74,26 @@ routerViews.get('/chat', async(req, res) => {
     }
 })
 
-routerViews.get('/login-view', async(req, res)=> {
+/////////////////////////////////////////////////////////////
+function profileAuth(req, res, next){
+    if(req.session.user != null){
+        next()
+    }
+    else{
+        res.redirect('/views/login-view')
+    }
+}
+
+function loginAuth(req, res, next){
+    if(req.session.user != null){
+        res.redirect('/views/profile-view')
+    }
+    else{
+        next()
+    }
+}
+
+routerViews.get('/login-view', loginAuth, async(req, res)=> {
     res.render('login')
 })
 
@@ -82,8 +101,12 @@ routerViews.get('/register-view', async(req, res)=> {
     res.render('register')
 })
 
-routerViews.get('/profile-view', async(req, res)=> {
-    res.render('profile')
+routerViews.get('/profile-view', profileAuth, async(req, res)=> {
+    res.render('profile',{
+            user: req.session.user,
+            rol: req.session.rol
+        }
+    )
 })
 
 module.exports = { routerViews };

@@ -6,24 +6,26 @@ const userManager = new UserManager()
 
 routerAuth.post('/register', async(req, res) => {
     const newUser = req.body
-    const existeUser = await userManager.existsUser(newUser.username) 
-
-    if(existeUser){
-        res.status(401).send("Usuario existente")
+    if(newUser.first_name != "" && newUser.last_name != "" && newUser.email != "" && newUser.age != "" && newUser.password != ""){
+        const existeUser = await userManager.existsUser(newUser.email)
+        if(existeUser){
+            res.redirect('/views/register-view')
+        }else{
+            await userManager.addUser(newUser)
+            res.redirect('/views/login-view')
+        }
     }else{
-        await userManager.addUser(newUser)
-        res.redirect('/views/login-view')
+        res.redirect('/views/register-view')
     }
 })
 
 routerAuth.post('/login', async(req, res) => {
     const newUser = req.body
-    const existeUser = await userManager.existsUser(newUser.username) 
-    
-    if(existeUser.password === newUser.password && existeUser.username === newUser.username){
-        req.session.user = newUser.username
+    const existeUser = await userManager.existsUser(newUser.email) 
+    if(existeUser.password === newUser.password && existeUser.email === newUser.email){
+        req.session.user = newUser.email
         req.session.rol = "usuario" 
-        if(newUser.username === "adminCoder@coder.com"){
+        if(newUser.email === "adminCoder@coder.com"){
             req.session.rol = "admin"
         }
         res.redirect('/views/products')

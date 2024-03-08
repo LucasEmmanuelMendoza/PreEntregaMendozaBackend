@@ -11,9 +11,9 @@ class UserManager{
         }
     }
 
-    async existsUser(username){
+    async existsUser(email){
         try{
-            const userFound = await Users.findOne({username: username})
+            const userFound = await Users.findOne({email})
             if(userFound != null){
                 return userFound
             }else{
