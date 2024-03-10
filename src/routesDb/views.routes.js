@@ -1,16 +1,16 @@
 const express = require('express')
 const routerViews = express.Router()
 
-const ProductManager = require('../productManagerMongo/productManager.js')
+const ProductManager = require('../dao/db/productManagerMongo/productManager.js')
 const productManager = new ProductManager()
-const MessageManager = require('../productManagerMongo/messageManager.js')
+const MessageManager = require('../dao/db/productManagerMongo/messageManager.js')
 const messageManeger = new MessageManager()
-const CartManager = require('../productManagerMongo/cartManager.js')
+const CartManager = require('../dao/db/productManagerMongo/cartManager.js')
 const cartManager = new CartManager()
-const UserManager = require('../productManagerMongo/userManager.js')
+const UserManager = require('../dao/db/productManagerMongo/userManager.js')
 const userManager = new UserManager()
 
-routerViews.get('/products', profileAuth, async(req, res) => {
+routerViews.get('/products', redirectToLogin, async(req, res) => {
     const products = await productManager.getProducts()
     
     if(products != false){
@@ -21,7 +21,7 @@ routerViews.get('/products', profileAuth, async(req, res) => {
     }
 })
 
-routerViews.get('/carts/:cid', async(req, res) => {
+routerViews.get('/carts/:cid', redirectToLogin, async(req, res) => {
     const cartId = req.params.cid;
     
     const cartProds = await cartManager.getCartById(cartId)
@@ -33,7 +33,7 @@ routerViews.get('/carts/:cid', async(req, res) => {
     }
 })
 
-routerViews.get('/products/details/:pid', async(req, res) => {
+routerViews.get('/products/details/:pid', redirectToLogin, async(req, res) => {
     const productId = req.params.pid 
 
     const product = await productManager.getProductById(productId)
@@ -44,7 +44,7 @@ routerViews.get('/products/details/:pid', async(req, res) => {
     }
 })
 
-routerViews.get('/realtimeproducts', async(req, res) => {
+routerViews.get('/realtimeproducts', redirectToLogin, async(req, res) => {
     const products = await productManager.getProducts()
     
     if(products){
@@ -54,7 +54,7 @@ routerViews.get('/realtimeproducts', async(req, res) => {
     }
 })
 
-routerViews.get('/', async(req, res) => {
+routerViews.get('/', redirectToLogin, async(req, res) => {
     const products = await productManager.getProducts()
 
     if(products){
@@ -64,7 +64,7 @@ routerViews.get('/', async(req, res) => {
     }
 })
 
-routerViews.get('/chat', async(req, res) => {
+routerViews.get('/chat', redirectToLogin, async(req, res) => {
     const messages = await messageManeger.getMessages()
 
     if(messages){
@@ -75,7 +75,7 @@ routerViews.get('/chat', async(req, res) => {
 })
 
 /////////////////////////////////////////////////////////////
-function profileAuth(req, res, next){
+function redirectToLogin(req, res, next){
     if(req.session.user != null){
         next()
     }
@@ -84,7 +84,7 @@ function profileAuth(req, res, next){
     }
 }
 
-function loginAuth(req, res, next){
+function redirectToProfile(req, res, next){
     if(req.session.user != null){
         res.redirect('/views/profile-view')
     }
@@ -93,15 +93,15 @@ function loginAuth(req, res, next){
     }
 }
 
-routerViews.get('/login-view', loginAuth, async(req, res)=> {
+routerViews.get('/login-view', redirectToProfile, async(req, res)=> {
     res.render('login')
 })
 
-routerViews.get('/register-view', async(req, res)=> {
+routerViews.get('/register-view', redirectToProfile, async(req, res)=> {
     res.render('register')
 })
 
-routerViews.get('/profile-view', profileAuth, async(req, res)=> {
+routerViews.get('/profile-view', redirectToLogin, async(req, res)=> {
     res.render('profile',{
             user: req.session.user,
             rol: req.session.rol

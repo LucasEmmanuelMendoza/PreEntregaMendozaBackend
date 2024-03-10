@@ -1,11 +1,10 @@
-/* const cartsR = require('./routesDb/cart.routes.js') */
-const cartsR = require('./dao/db/routesDb/cart.routes.js')
+const cartsR = require('../src/routesDb/cart.routes.js')
 const routerCarts = cartsR.routerCarts;
 
-const prods = require('./dao/db/routesDb/product.routes.js')
+const prods = require('../src/routesDb/product.routes.js')
 const routerProduct = prods.routerProduct;
 
-const views = require('./dao/db/routesDb/views.routes.js')
+const views = require('../src/routesDb/views.routes.js')
 const routerView = views.routerViews;
 
 const Database = require('./dao/db/index.js')
@@ -21,7 +20,7 @@ const MongoStore = require('connect-mongo')
 const session = require('express-session')
 
 const funcionSocket = require('./dao/db/socket.js');
-const { routerAuth } = require('./dao/db/routesDb/auth.routes.js');
+const { routerAuth } = require('../src/routesDb/auth.routes.js')
 
 //Public
 app.use(express.static(__dirname+'/public'))

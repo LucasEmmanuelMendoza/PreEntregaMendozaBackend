@@ -1,4 +1,4 @@
-const UserManager = require('../productManagerMongo/userManager.js')
+const UserManager = require('../dao/db/productManagerMongo/userManager.js')
 const express = require('express')
 const routerAuth = express.Router()
 
