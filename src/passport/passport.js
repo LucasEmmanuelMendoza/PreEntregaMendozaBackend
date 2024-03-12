@@ -17,12 +17,12 @@ const initializePassport = () => {
         },
         async(accessToken, refreshToken, profile, done) => {
             try{
-                console.log(profile)
+                console.log("profile:",profile)
                 let {name, email}= profile._json
                 let usuario = await userManager.existsUser(email)
                 if(!usuario){
                     usuario = await userManager.addUser(
-                        {nombre:name, email, github:profile}
+                        {first_name:name, email}
                     )}
                 return done(null, usuario)
             }catch(error){
@@ -56,15 +56,11 @@ const initializePassport = () => {
     ))
 
     passport.serializeUser((user, done) => {
-        done(null, user.id)
+        done(null, user._id)
     })
-    passport.deserializeUser(async(id, done) => {
-        try {
-            let user = await userModel.findById(id).exec();
-            done(null, user);
-        } catch (error) {
-            done(error, null);
-        }
+    passport.deserializeUser((id, done) => {
+        let user = userModel.findById(id)
+        done(null, user)
     })
 }
 

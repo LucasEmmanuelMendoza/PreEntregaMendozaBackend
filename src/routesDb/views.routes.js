@@ -102,11 +102,24 @@ routerViews.get('/register-view', redirectToProfile, async(req, res)=> {
     res.render('register')
 })
 
+/* routerViews.get('/register-view', redirectToProfile, passport.authenticate('register', {failureRedirect:'/views/failedRegister'}), async(req, res)=> {
+    res.render('register')
+}) */
+
+routerViews.get('/register', redirectToProfile, passport.authenticate('register', {failureRedirect:'/views/failedRegister'}), (req, res)=>{
+    res.send('user registered')
+})
+
+routerViews.get('/failedRegister', (req, res) => {
+    res.send('Failed user register')
+})
+
 routerViews.get('/github', passport.authenticate('github', {}), (req, res)=>{})
-routerViews.get('/callbackGithub', passport.authenticate('github', {}), (req, res) => {
+routerViews.get('/callbackGithub', redirectToProfile, passport.authenticate('github', {}), (req, res) => {
     req.session.user = req.user
-    console.log(req.user)
-    return res.status(200).json({payload:req.user})
+    res.redirect('/views/profile-view')
+    /*console.log(req.user)
+    return res.status(200).json({payload:req.user}) */
 })
 
 routerViews.get('/profile-view', redirectToLogin, async(req, res)=> {
