@@ -1,5 +1,6 @@
 const express = require('express')
 const routerViews = express.Router()
+const passport = require('passport')
 
 const ProductManager = require('../dao/db/productManagerMongo/productManager.js')
 const productManager = new ProductManager()
@@ -99,6 +100,13 @@ routerViews.get('/login-view', redirectToProfile, async(req, res)=> {
 
 routerViews.get('/register-view', redirectToProfile, async(req, res)=> {
     res.render('register')
+})
+
+routerViews.get('/github', passport.authenticate('github', {}), (req, res)=>{})
+routerViews.get('/callbackGithub', passport.authenticate('github', {}), (req, res) => {
+    req.session.user = req.user
+    console.log(req.user)
+    return res.status(200).json({payload:req.user})
 })
 
 routerViews.get('/profile-view', redirectToLogin, async(req, res)=> {

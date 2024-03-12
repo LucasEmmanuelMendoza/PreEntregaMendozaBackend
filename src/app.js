@@ -1,9 +1,7 @@
 const cartsR = require('../src/routesDb/cart.routes.js')
 const routerCarts = cartsR.routerCarts;
-
 const prods = require('../src/routesDb/product.routes.js')
 const routerProduct = prods.routerProduct;
-
 const views = require('../src/routesDb/views.routes.js')
 const routerView = views.routerViews;
 
@@ -20,7 +18,9 @@ const MongoStore = require('connect-mongo')
 const session = require('express-session')
 
 const funcionSocket = require('./dao/db/socket.js');
-const { routerAuth } = require('../src/routesDb/auth.routes.js')
+const { routerAuth } = require('../src/routesDb/auth.routes.js');
+const initializePassport = require('./passport/passport.js');
+const passport = require('passport');
 
 //Public
 app.use(express.static(__dirname+'/public'))
@@ -41,6 +41,10 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }))
+
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
 
 //Routes
 app.use('/api/products', routerProduct)

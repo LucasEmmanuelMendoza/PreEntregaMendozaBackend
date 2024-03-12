@@ -1,4 +1,5 @@
 <div class="m-2">
+    <h1>Registro</h1>
     <form action="/auth/register" method="post" >
     <div class="d-flex flex-column gap-2">
         <div>        
@@ -16,7 +17,12 @@
         <div>
         <label for="password">Password</label>
         <input type="text" name="password"></div>
+
+        <div><input type="submit" value="Register" class="btn btn-success">
+        <br>
+        Ya tengo una cuenta      
+        <a href="http://localhost:8080/views/login-view" class="btn btn-primary">Login</a>
+        </div>
     </div>
-        <input type="submit" value="Register" class="btn btn-success">
     </form>    
 </div>

@@ -1,3 +1,4 @@
+const passport = require('passport')
 const UserManager = require('../dao/db/productManagerMongo/userManager.js')
 const express = require('express')
 const routerAuth = express.Router()
@@ -40,5 +41,6 @@ routerAuth.get('/logout', async(req, res) => {
     })
     res.redirect('/views/login-view')
 })
+
 
 module.exports = { routerAuth }

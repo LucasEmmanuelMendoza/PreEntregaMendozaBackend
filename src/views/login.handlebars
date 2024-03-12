@@ -1,11 +1,15 @@
 <div class="m-3">
-    <form action="/auth/login" method="post" class="d-flex gap-2">
+    <form action="/auth/login" method="post" class="d-flex flex-column gap-2">
     <div>        <label for="email">email</label>
         <input type="text" name="email">
         <label for="password">password</label>
-        <input type="text" name="password"></div>
-
+        <input type="text" name="password"></div> 
+        <div>
         <input type="submit" value="Login" class="btn btn-primary">
-        <a href="/views/register-view" class="btn btn-success">Register</a> 
+        <a href="http://localhost:8080/views/register-view" class="btn btn-success">Register</a>
+    <br>
+        <a href="http://localhost:8080/views/github" class="btn btn-warning m-2">Acceder con github</a>
+        </div>
+
     </form>    
 </div>
