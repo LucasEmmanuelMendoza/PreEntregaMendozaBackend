@@ -97,21 +97,8 @@ function redirectToProfile(req, res, next){
 routerViews.get('/login-view', redirectToProfile, async(req, res)=> {
     res.render('login')
 })
-
 routerViews.get('/register-view', redirectToProfile, async(req, res)=> {
     res.render('register')
-})
-
-/* routerViews.get('/register-view', redirectToProfile, passport.authenticate('register', {failureRedirect:'/views/failedRegister'}), async(req, res)=> {
-    res.render('register')
-}) */
-
-routerViews.get('/register', redirectToProfile, passport.authenticate('register', {failureRedirect:'/views/failedRegister'}), (req, res)=>{
-    res.send('user registered')
-})
-
-routerViews.get('/failedRegister', (req, res) => {
-    res.send('Failed user register')
 })
 
 routerViews.get('/github', passport.authenticate('github', {}), (req, res)=>{})

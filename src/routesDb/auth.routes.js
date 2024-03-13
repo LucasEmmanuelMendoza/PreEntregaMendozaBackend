@@ -5,7 +5,7 @@ const routerAuth = express.Router()
 
 const userManager = new UserManager()
 
-routerAuth.post('/register', async(req, res) => {
+/* routerAuth.post('/register', async(req, res) => {
     const newUser = req.body
     if(newUser.first_name != "" && newUser.last_name != "" && newUser.email != "" && newUser.age != "" && newUser.password != ""){
         const existeUser = await userManager.existsUser(newUser.email)
@@ -16,8 +16,16 @@ routerAuth.post('/register', async(req, res) => {
             res.redirect('/views/login-view')
         }
     }else{
-        res.redirect('/views/register-view')
+        
     }
+}) */
+
+routerAuth.post('/register', passport.authenticate('register', {failureRedirect:'/auth/failRegister'}), async(req, res) => {
+    res.redirect('/views/login-view')
+})
+
+routerAuth.get('failRegister', (req, res) => {
+    res.send('Failed register')
 })
 
 routerAuth.post('/login', async(req, res) => {

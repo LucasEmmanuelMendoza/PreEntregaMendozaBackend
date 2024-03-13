@@ -31,37 +31,54 @@ const initializePassport = () => {
         }
     ))
 
+    passport.use('login', new LocalStrategy(
+        {},
+        async()=>{
+
+        }
+    ))
+
     passport.use('register', new LocalStrategy(
         {usernameField: 'email', passReqToCallback: true},
         async(req, username, password, done)=>{
             try{
                 let userData = req.body
-                let user = await userManager.existsUser({email: username})
+                let user = await userManager.existsUser(username)
                 if(user){
                     done('Error, usuario existente')
-                }
-                let newUser = {
+                }else{
+                    let newUser = {
                     first_name: userData.first_name,
                     last_name: userData.last_name,
                     email: username, 
                     age: userData.age,
-                    password: createHash(userData.password)                 
+                    password: createHash(password)                 
                 }
-                let result = await userManager.addUser(newUser)
-                done(null, result)
+                    let result = await userManager.addUser(newUser)
+                    done(null, result)
+                }
             }catch(error){
                 done('Register error: ', error)
             }
         }
     ))
 
-    passport.serializeUser((user, done) => {
+/*     passport.serializeUser((user, done) => {
         done(null, user._id)
     })
     passport.deserializeUser((id, done) => {
         let user = userModel.findById(id)
         done(null, user)
-    })
+    }) */
+
+    passport.serializeUser(function(user, done) {
+        done(null, user);
+      });
+      
+      passport.deserializeUser(function(user, done) {
+        done(null, user);
+      });
+
 }
 
 module.exports = initializePassport 
