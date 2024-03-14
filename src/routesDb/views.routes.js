@@ -11,9 +11,9 @@ const cartManager = new CartManager()
 const UserManager = require('../dao/db/productManagerMongo/userManager.js')
 const userManager = new UserManager()
 
-routerViews.get('/products', redirectToLogin, async(req, res) => {
+routerViews.get('/products', redirectToLogin,  async(req, res) => {
     const products = await productManager.getProducts()
-    
+    //console.log('req.session.passport.user.firs_name:', req.session.passport.user.first_name)
     if(products != false){
         res.render('products', {
             products: products.payload,

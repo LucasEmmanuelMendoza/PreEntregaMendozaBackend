@@ -21,19 +21,39 @@ const initializePassport = () => {
                 let usuario = await userManager.existsUser(email);
                 if(!usuario){
                     usuario = await userManager.addUser({first_name:name, email, github: profile});
-                    return done(null, usuario);
                 }
                 return done(null, usuario)
             }catch(error){
-                done('Register error: ', error)
+                return done('Register error: ', error)
             }
         }
     ))
 
     passport.use('login', new LocalStrategy(
-        {},
-        async()=>{
-
+        {usernameField: 'email', passReqToCallback: true},
+        async(req, username, password, done)=>{
+            try{
+                const userData = req.body
+                let user = await userManager.existsUser(username)
+                if(user !== null){
+                    if(isValidPassword(user, userData.password)){
+                        req.session.user = userData.email  
+                        req.session.rol = 'user'
+                        if(userData.email === "adminCoder@coder.com"){
+                            req.session.rol = 'mod'
+                        }                          
+                        //console.log('req.session.user: ', req.session.user)
+                        //console.log('user:',user)
+                        return done(null, user)
+                    }else{
+                        return done(null, 'Usuario o contraseña incorrectos')
+                    }
+                }else{
+                    return done(null, 'Usuario o contraseña incorrectos')
+                }
+            }catch(error){
+                return done(error)
+            }
         }
     ))
 
@@ -44,7 +64,7 @@ const initializePassport = () => {
                 let userData = req.body
                 let user = await userManager.existsUser(username)
                 if(user){
-                    done('Error, usuario existente')
+                    return done('Error, usuario existente')
                 }else{
                     let newUser = {
                     first_name: userData.first_name,
@@ -54,21 +74,13 @@ const initializePassport = () => {
                     password: createHash(password)                 
                 }
                     let result = await userManager.addUser(newUser)
-                    done(null, result)
+                    return done(null, result)
                 }
             }catch(error){
                 done('Register error: ', error)
             }
         }
     ))
-
-/*     passport.serializeUser((user, done) => {
-        done(null, user._id)
-    })
-    passport.deserializeUser((id, done) => {
-        let user = userModel.findById(id)
-        done(null, user)
-    }) */
 
     passport.serializeUser(function(user, done) {
         done(null, user);
