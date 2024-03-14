@@ -12,6 +12,7 @@ routerAuth.get('/failRegister', (req, res) => {
 
 routerAuth.post('/login', passport.authenticate('login', {failureRedirect:'/auth/failLogin'}), async(req, res)=>{
     console.log(req.session.user)
+    const datos = req.body
     res.redirect('/views/products')
 })
 routerAuth.get('/failLogin', (req, res) => {

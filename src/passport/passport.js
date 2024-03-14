@@ -15,15 +15,18 @@ const initializePassport = () => {
             clientSecret:"5403391c3c7749b03b1f2e14aab59f925130adcf",
             callbackURL:"http://localhost:8080/views/callbackGithub"
         },
-        async(req, accessToken, refreshToken, profile, done) => {
+        async(accessToken, refreshToken, profile, done) => {
             try{
-                let {name, email}= profile._json;
-                //req.session.user = name;
+                let {name, email}= profile._json;//esto viene de github, o sea que existe
                 let usuario = await userManager.existsUser(email);
-                if(!usuario){
-                    usuario = await userManager.addUser({first_name:name, email, github: profile});
+                let retorno = ''
+                if(usuario == null){
+                    await userManager.addUser({first_name:name, email, github: profile});
+                    retorno = {usuario:name, email: email}
+                }else{
+                    retorno={usuario:usuario.first_name, email:usuario.email}
                 }
-                return done(null, usuario)
+                return done(null, retorno)
             }catch(error){
                 return done('Register error: ', error)
             }
@@ -38,14 +41,6 @@ const initializePassport = () => {
                 let user = await userManager.existsUser(username)
                 if(user !== null){
                     if(isValidPassword(user, userData.password)){
-                        req.session.user = user.first_name  
-                        req.session.rol = 'user'
-                        console.log('a:',req.session.user)
-                        if(userData.email === "adminCoder@coder.com"){
-                            req.session.rol = 'mod'
-                        }                          
-                        //console.log('req.session.user: ', req.session.user)
-                        //console.log('user:',user)
                         return done(null, user)
                     }else{
                         return done(null, 'Usuario o contraseña incorrectos')

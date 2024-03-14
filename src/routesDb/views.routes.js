@@ -102,15 +102,20 @@ routerViews.get('/register-view', redirectToProfile, async(req, res)=> {
 })
 
 routerViews.get('/github', passport.authenticate('github', {}), (req, res)=>{})
-routerViews.get('/callbackGithub', redirectToProfile, passport.authenticate('github', {}), (req, res) => {
-   req.session.user = "User"
-   //req.user devuelve true y req en passport.js en estrategia 'github' no anda
-   //console.log(req.user)
-   //return res.status(200).json({payload:req.user}) 
+routerViews.get('/callbackGithub', redirectToProfile, passport.authenticate('github', {successRedirect: '/views/successGithub'}), (req, res) => {
+})
+
+routerViews.get('/successGithub', (req, res)=>{
+    req.session.user = req.user.usuario
+    req.session.rol = 'usuario'
+    if(req.user.usuario === 'adminCoder@coder.com'){
+        req.session.rol = 'admin'
+    }
     res.redirect('/views/profile-view')
 })
 
 routerViews.get('/profile-view', redirectToLogin, async(req, res)=> {
+    //console.log('profile:', req.session.user)
     res.render('profile',{
             user: req.session.user,
             rol: req.session.rol
