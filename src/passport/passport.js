@@ -38,8 +38,9 @@ const initializePassport = () => {
                 let user = await userManager.existsUser(username)
                 if(user !== null){
                     if(isValidPassword(user, userData.password)){
-                        req.session.user = userData.email  
+                        req.session.user = user.first_name  
                         req.session.rol = 'user'
+                        console.log('a:',req.session.user)
                         if(userData.email === "adminCoder@coder.com"){
                             req.session.rol = 'mod'
                         }                          

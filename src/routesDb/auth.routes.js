@@ -3,8 +3,6 @@ const UserManager = require('../dao/db/productManagerMongo/userManager.js')
 const express = require('express')
 const routerAuth = express.Router()
 
-const userManager = new UserManager()
-
 routerAuth.post('/register', passport.authenticate('register', {failureRedirect:'/auth/failRegister'}), async(req, res) => {
     res.redirect('/views/login-view')
 })
