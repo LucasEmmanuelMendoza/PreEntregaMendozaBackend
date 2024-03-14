@@ -10,10 +10,18 @@ routerAuth.get('/failRegister', (req, res) => {
     res.send('Failed register')
 })
 
-routerAuth.post('/login', passport.authenticate('login', {failureRedirect:'/auth/failLogin'}), async(req, res)=>{
-    console.log(req.session.user)
+routerAuth.post('/login', passport.authenticate('login', {failureRedirect:'/auth/failLogin', successRedirect:'/auth/successLogin'}), async(req, res)=>{
     const datos = req.body
     res.redirect('/views/products')
+})
+
+routerAuth.get('/successLogin', (req, res) => {
+    req.session.user = req.user.first_name
+    req.session.rol = 'usuario'
+    if(req.user.email === 'adminCoder@coder.com'){
+        req.session.rol = 'admin'
+    }
+    res.redirect('/views/profile-view')
 })
 routerAuth.get('/failLogin', (req, res) => {
     res.send('Failed login')

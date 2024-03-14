@@ -14,7 +14,6 @@ class UserManager{
     async existsUser(email){
         try{
             const userFound = await Users.findOne({email})
-            console.log('userFound Manager: ', userFound)
             return userFound
         }catch(error){
             console.log(error)
