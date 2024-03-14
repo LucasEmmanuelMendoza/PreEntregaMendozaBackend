@@ -103,10 +103,11 @@ routerViews.get('/register-view', redirectToProfile, async(req, res)=> {
 
 routerViews.get('/github', passport.authenticate('github', {}), (req, res)=>{})
 routerViews.get('/callbackGithub', redirectToProfile, passport.authenticate('github', {}), (req, res) => {
-    req.session.user = req.user
+   req.session.user = "User"
+   //req.user devuelve true y req en passport - github no anda
+   //console.log(req.user)
+   //return res.status(200).json({payload:req.user}) 
     res.redirect('/views/profile-view')
-    /*console.log(req.user)
-    return res.status(200).json({payload:req.user}) */
 })
 
 routerViews.get('/profile-view', redirectToLogin, async(req, res)=> {

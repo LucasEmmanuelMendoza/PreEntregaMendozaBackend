@@ -17,13 +17,12 @@ const initializePassport = () => {
         },
         async(accessToken, refreshToken, profile, done) => {
             try{
-                console.log("profile:",profile)
-                let {name, email}= profile._json
-                let usuario = await userManager.existsUser(email)
+                let {name, email}= profile._json;
+                let usuario = await userManager.existsUser(email);
                 if(!usuario){
-                    usuario = await userManager.addUser(
-                        {first_name:name, email}
-                    )}
+                    usuario = await userManager.addUser({first_name:name, email, github: profile});
+                    return done(null, usuario);
+                }
                 return done(null, usuario)
             }catch(error){
                 done('Register error: ', error)

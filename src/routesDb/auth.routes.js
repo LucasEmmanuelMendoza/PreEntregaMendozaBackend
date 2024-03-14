@@ -50,5 +50,4 @@ routerAuth.get('/logout', async(req, res) => {
     res.redirect('/views/login-view')
 })
 
-
 module.exports = { routerAuth }
