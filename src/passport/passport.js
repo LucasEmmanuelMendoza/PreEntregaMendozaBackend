@@ -15,9 +15,10 @@ const initializePassport = () => {
             clientSecret:"5403391c3c7749b03b1f2e14aab59f925130adcf",
             callbackURL:"http://localhost:8080/views/callbackGithub"
         },
-        async(accessToken, refreshToken, profile, done) => {
+        async(req, accessToken, refreshToken, profile, done) => {
             try{
                 let {name, email}= profile._json;
+                //req.session.user = name;
                 let usuario = await userManager.existsUser(email);
                 if(!usuario){
                     usuario = await userManager.addUser({first_name:name, email, github: profile});
