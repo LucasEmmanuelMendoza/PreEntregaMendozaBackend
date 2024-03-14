@@ -1,0 +1,32 @@
+Rutas que deberíamos tener principales:
+- "api/products"  => productos
+     - get => "/"
+     - get ID => "/:id"
+     - post => "/"
+     - put => "/:id"
+     - delete => "/:id"
+- "api/carts"     => carritos
+     - get => "/"                       opcional porque no lo pide todavía
+     - get ID => "/:cid"
+     - post => "/:cid/products/:pid"
+     - put => "/:cid/products/:pid"
+     - put => "/:cid/products/:pid"
+     - delete => "/:cid/products/:pid" 
+     - delete => "/:cid"
+- "api/sessions"  => session
+     - "current" 
+- "api/auth" // "api/user" => cualquier nombre
+     - "login"
+     - "register"
+     - "github"
+     - "githubCallback"
+     - "logout"
+- "api/chats" => chats
+     - get => "/"
+     - post => "/"
+- "/"  => vistas
+     - "/products"  => todos los productos
+     - "cart/:id" => carrito
+     - "/login"
+     - "/register"
+     - "/profile"

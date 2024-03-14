@@ -4,6 +4,8 @@ const prods = require('../src/routesDb/product.routes.js')
 const routerProduct = prods.routerProduct;
 const views = require('../src/routesDb/views.routes.js')
 const routerView = views.routerViews;
+const sessions = require('../src/routesDb/session.routes.js')
+const routerSession = sessions.routerSession;
 
 const Database = require('./dao/db/index.js')
 
@@ -49,6 +51,7 @@ app.use(passport.session())
 //Routes
 app.use('/api/products', routerProduct)
 app.use('/api/carts', routerCarts)
+app.use('/api/sessions', routerSession)
 app.use('/views', routerView)
 app.use('/auth', routerAuth)
 

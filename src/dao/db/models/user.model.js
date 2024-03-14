@@ -8,14 +8,23 @@ const UserSchema = new mongoose.Schema(
         type:String
     },
     email:{
-        type:String
+        type:String,
+        unique: true
     },
     age:{
         type:Number
     },
     password:{
         type:String
-    }},
+    },
+    cartId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'cart'
+    },
+    role:{
+        type:String,
+        default:'user'
+    }},    
     {
         timestamps:true,
         strict:false//agregar datos adicionales al create
