@@ -3,9 +3,11 @@ const LocalStrategy = require('passport-local').Strategy
 const userModel = require('../dao/db/models/user.model.js')
 const { createHash, isValidPassword } = require('../utils/bcrypt.js')
 const UserManager = require('../dao/db/productManagerMongo/userManager.js')
+const CartManager = require('../dao/db/productManagerMongo/cartManager.js')
 const github = require('passport-github2')
 
 const userManager = new UserManager()
+const cartManager = new CartManager()
 
 const initializePassport = () => {
 
@@ -21,10 +23,11 @@ const initializePassport = () => {
                 let usuario = await userManager.existsUser(email);
                 let retorno = ''
                 if(usuario == null){
-                    await userManager.addUser({first_name:name, email, github: profile});
-                    retorno = {usuario:name, email: email}
+                    const cart = await cartManager.createCart()
+                    await userManager.addUser({first_name:name, email, cartId: cart._id, github: profile});
+                    retorno = {usuario:name, email: email, cartId: cart._id}
                 }else{
-                    retorno={usuario:usuario.first_name, email:usuario.email}
+                    retorno={usuario:usuario.first_name, email:usuario.email, cartId:usuario.cartId} 
                 }
                 return done(null, retorno)
             }catch(error){
@@ -63,12 +66,14 @@ const initializePassport = () => {
                 if(user){
                     return done('Error, usuario existente')
                 }else{
+                    const cart = await cartManager.createCart()
                     let newUser = {
                     first_name: userData.first_name,
                     last_name: userData.last_name,
                     email: username, 
                     age: userData.age,
-                    password: createHash(password)                 
+                    password: createHash(password),
+                    cartId: cart._id            
                 }
                     let result = await userManager.addUser(newUser)
                     return done(null, result)

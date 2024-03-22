@@ -5,8 +5,8 @@ class CartManager{
 
     async createCart(){
         try{
-            await Carts.create({ products: []})
-            return true
+            const retorno = await Carts.create({ products: []})
+            return retorno
         }catch(error){
             console.log(error)
             return error
