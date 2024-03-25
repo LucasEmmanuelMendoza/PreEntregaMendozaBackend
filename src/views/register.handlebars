@@ -1,28 +1,34 @@
 <div class="m-2">
-    <h1>Registro</h1>
-    <form action="/auth/register" method="post" >
-    <div class="d-flex flex-column gap-2">
-        <div>        
-        <label >first_name</label>
-        <input type="text" name="first_name"></div>
-        <div>
-        <label f>last_name</label>
-        <input type="text" name="last_name"></div>
-        <div>
-        <label >email</label>
-        <input type="text" name="email"></div>
-        <div>
-        <label >age</label>
-        <input type="number" name="age"></div>
-        <div>
-        <label>Password</label>
-        <input type="text" name="password"></div>
-
-        <div><input type="submit" value="Register" class="btn btn-success">
-        <br>
-        Ya tengo una cuenta      
-        <a href="http://localhost:8080/views/login-view" class="btn btn-primary">Login</a>
+    <form action="/auth/register" method="post" class="container register_form">
+        <h1 class="text-center" >Registro</h1>
+        <div class="data">
+            <div>        
+                <label>First name</label><br>
+                <input type="text" name="first_name">
+            </div>
+            <div>
+                <label>Last name</label><br>
+                <input type="text" name="last_name">
+            </div>
+            <div>
+                <label>Email</label><br>
+                <input type="text" name="email">
+            </div>
+            <div>
+                <label>Age</label><br>
+                <input type="number" name="age">
+            </div>
+            <div>
+                <label>Password</label><br>
+                <input type="text" name="password">
+            </div>
+            <input type="submit" value="Register" class="btn btn-success btn_register">
         </div>
+    </form>  
+
+    <div class="container login_div">
+        Already have an account      
+        <a href="http://localhost:8080/views/login-view" class="">Login</a>
     </div>
-    </form>    
+ 
 </div>

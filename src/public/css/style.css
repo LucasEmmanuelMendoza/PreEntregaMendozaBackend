@@ -4,11 +4,15 @@
     box-sizing: border-box;
 }
 
+body{
+    background-color: rgb(241, 241, 241);
+}
+
 a{
     text-decoration: none;
 }
 
-.register_div{
+.register_div, .login_div{
     height: 100%;
     margin-top: 1rem;
     align-items: center;
@@ -16,7 +20,7 @@ a{
     gap:.25rem
 }
 
-.login_form, .register_div{
+.login_form, .register_div, .register_form, .login_div{
     width: 25rem;
     background-color: rgb(242, 242, 242);
     border-radius: .4rem;
@@ -27,23 +31,24 @@ a{
     justify-content: center;
 }
 
-.login_form label{
+
+.login_form label, .register_form label{
     margin-bottom: .3rem;
 }
 
-.login_form .data{
+.login_form .data, .register_form .data{
     display: flex;
     flex-flow: wrap;
     gap: 1rem;
     padding: 1rem;
 }
 
-.login_form input{
+.login_form input, .register_form input{
     width: 155%;
     border-radius: .3rem;
 }
 
-.login_form .btn_sign{
+.login_form .btn_sign, .register_form .btn_register{
     font-weight: 600;
     font-size: large;
 }
