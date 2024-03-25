@@ -4,6 +4,46 @@
     box-sizing: border-box;
 }
 
-body{
-    background-color: rgb(26, 15, 189);
+a{
+    text-decoration: none;
+}
+
+.register_div{
+    height: 100%;
+    margin-top: 1rem;
+    align-items: center;
+    padding-top: .5rem;
+    gap:.25rem
+}
+
+.login_form, .register_div{
+    width: 25rem;
+    background-color: rgb(242, 242, 242);
+    border-radius: .4rem;
+    border: .1rem solid rgb(225, 222, 222);
+    font-size: larger;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login_form label{
+    margin-bottom: .3rem;
+}
+
+.login_form .data{
+    display: flex;
+    flex-flow: wrap;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.login_form input{
+    width: 155%;
+    border-radius: .3rem;
+}
+
+.login_form .btn_sign{
+    font-weight: 600;
+    font-size: large;
 }

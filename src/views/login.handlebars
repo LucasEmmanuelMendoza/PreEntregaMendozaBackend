@@ -1,16 +1,23 @@
 <div class="m-3">
-    <form action="/auth/login" method="post" class="d-flex flex-column gap-2">
-    <div>        
-        <label for="email">email</label>
-        <input type="text" name="email">
-        <label for="password">password</label>
-        <input type="text" name="password">
-    </div> 
-    <div>
-        <input type="submit" value="Login" class="btn btn-primary">
-        <a href="http://localhost:8080/views/register-view" class="btn btn-success">Register</a>
-        <br>
-        <a href="http://localhost:8080/views/github" class="btn btn-warning m-2">Acceder con github</a>
+    <form action="/auth/login" method="post" class="container login_form">
+        <div class="data">
+            <div>
+                <label for="email">Email</label><br>
+                <input type="text" name="email">
+            </div>
+            <div>
+                <label for="password">password</label><br>
+                <input type="text" name="Password">  
+            </div>
+            <input type="submit" value="Sign in" class="btn btn-success btn_sign">
+        </div>
+    </form>
+       
+    <div class="container register_div">
+        <a href="http://localhost:8080/views/github" class="login_github">Sign in with Github</a>
+        <p>Don't have an account yet?<a href="http://localhost:8080/views/register-view" class="ms-2">Register</a></p>
     </div>
-    </form>    
 </div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>
