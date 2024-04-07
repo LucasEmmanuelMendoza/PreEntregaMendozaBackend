@@ -1,14 +1,14 @@
-const ProductManager = require('./productManagerMongo/productManager.js')
-const MessageManager = require('./productManagerMongo/messageManager.js')
-const CartManager = require('./productManagerMongo/cartManager.js')
+const ProductService = require('../../services/productService.js')
+const MessageManager = require('../../controller/messageManager.js')
+const CartManager = require('../../services/cartService.js')
 
-const product = new ProductManager()
+const product = new ProductService()
 const message = new MessageManager()
 const cart = new CartManager()
 
 let productos = [];
 (async() => {
-    productos = await product.getProducts()
+    productos = await product.findProducts()
 })();
 
 let messages = [];
@@ -23,8 +23,8 @@ const funcionSocket = (io) => {
   socket.on('addProd', (data) => {
 
     (async() => {  
-      await product.addProduct(data);
-      productos = await product.getProducts()
+      await product.addProd(data);
+      productos = await product.findProducts()
       productos.payload.push(data);
     })();
 
@@ -36,7 +36,7 @@ const funcionSocket = (io) => {
   socket.on('deleteProd', (data) => {
     productos = productos.filter((prod) => prod._id != data);
     (async() => {
-      await product.deleteProduct(data);
+      await product.deleteProd(data);
     })();
     socket.emit('productosServidor', productos);
   }) 
@@ -52,7 +52,7 @@ const funcionSocket = (io) => {
 
   socket.on('prodToCart', (data) => {
       (async() => {
-          await cart.addProduct(data.cartId, data.prod)
+          await cart.addProd(data.cartId, data.prod)
       })();
     })
   });

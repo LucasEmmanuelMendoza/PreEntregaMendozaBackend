@@ -1,10 +1,10 @@
-const cartsR = require('../src/routesDb/cart.routes.js')
+const cartsR = require('../src/routes/cart.routes.js')
 const routerCarts = cartsR.routerCarts;
-const prods = require('../src/routesDb/product.routes.js')
+const prods = require('../src/routes/product.routes.js')
 const routerProduct = prods.routerProduct;
-const views = require('../src/routesDb/views.routes.js')
+const views = require('../src/routes/views.routes.js')
 const routerView = views.routerViews;
-const sessions = require('../src/routesDb/session.routes.js')
+const sessions = require('../src/routes/session.routes.js')
 const routerSession = sessions.routerSession;
 
 const Database = require('./dao/db/index.js')
@@ -20,8 +20,8 @@ const MongoStore = require('connect-mongo')
 const session = require('express-session')
 
 const funcionSocket = require('./dao/db/socket.js');
-const { routerAuth } = require('../src/routesDb/auth.routes.js');
-const initializePassport = require('./passport/passport.js');
+const { routerAuth } = require('./routes/auth.routes.js');
+const initializePassport = require('./config/passport.js');
 const passport = require('passport');
 
 //Public
