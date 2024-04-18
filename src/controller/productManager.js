@@ -1,7 +1,6 @@
 const ProductModel = require('../models/product.model.js')
 
 class ProductManagerMongo{
-    
     async addProduct(product) {
         try {
             await ProductModel.create(product)
@@ -34,7 +33,16 @@ class ProductManagerMongo{
         }
     }
 
-    async getProducts(limit, page, category, priceSort){
+    async getProducts(){
+        try{
+            return await ProductModel.find().lean()
+        }catch(error){
+            console.log(error)
+            return error
+        }
+    }
+
+    async getProductsPaginate(limit, page, category, priceSort){
         try{
             let prevLink=null;
             let nextLink=null;

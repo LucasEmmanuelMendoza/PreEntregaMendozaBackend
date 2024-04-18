@@ -2,6 +2,15 @@ const Carts = require('../models/cart.model')
 
 class CartManager{
 
+    async deleteCart(cid){
+        try{
+            return await Carts.findByIdAndDelete(cid)
+        }catch(error){
+            console.log(error)
+            return error
+        }
+    }
+
     async createCart(){
         try{
             const retorno = await Carts.create({ products: []})
