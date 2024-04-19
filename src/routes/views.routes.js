@@ -121,4 +121,5 @@ routerViews.get('/profile-view', redirectToLogin, async(req, res)=> {
     )
 })
 
+
 module.exports = { routerViews };

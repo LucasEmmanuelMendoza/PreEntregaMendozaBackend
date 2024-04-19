@@ -18,6 +18,7 @@ const server = http.createServer(app)
 const handlebars = require('express-handlebars');
 const MongoStore = require('connect-mongo')
 const session = require('express-session')
+const cookieParser = require('cookie-parser')
 
 const funcionSocket = require('./dao/db/socket.js');
 const { routerAuth } = require('./routes/auth.routes.js');
@@ -30,6 +31,7 @@ app.set('views', __dirname+'/views')
 
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
+app.use(cookieParser())
 
 //Motor de plantilla
 app.engine('handlebars', handlebars.engine())

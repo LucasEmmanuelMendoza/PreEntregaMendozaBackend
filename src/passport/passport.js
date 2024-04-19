@@ -5,11 +5,32 @@ const { createHash, isValidPassword } = require('../utils/bcrypt.js')
 const UserManager = require('../dao/db/productManagerMongo/userManager.js')
 const CartManager = require('../dao/db/productManagerMongo/cartManager.js')
 const github = require('passport-github2')
+//const { jwt } = require('jsonwebtoken')
+const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt')
 
 const userManager = new UserManager()
 const cartManager = new CartManager()
 
 const initializePassport = () => {
+
+    const cookieExtractor = function(req){
+        let token = null;
+        if(req && req.cookies){
+            token = req.cookies['cookieToken'];
+        }
+        return token
+    }
+
+    passport.use('jwt', new JwtStrategy({
+        jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
+        secretOrKey: 'coderSecret2'
+    }, async (jwt_payload, done) => {
+        try{
+            return done(null, jwt_payload);
+        }catch (error){
+            return done('Error en jwt passport', error);
+        }
+    }));
 
     passport.use('github', new github.Strategy(
         {
@@ -91,7 +112,6 @@ const initializePassport = () => {
       passport.deserializeUser(function(user, done) {
         done(null, user);
       });
-
 }
 
 module.exports = initializePassport 
