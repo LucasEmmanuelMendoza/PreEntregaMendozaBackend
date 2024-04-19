@@ -29,7 +29,7 @@ const initializePassport = () => {
                     await userManager.addUser({first_name:name, email, cartId: cart._id, github: profile});
                     retorno = {usuario:name, email: email, cartId: cart._id}
                 }else{
-                    retorno={usuario:usuario.first_name, email:usuario.email, cartId:usuario.cartId} 
+                    retorno = {usuario:usuario.first_name, email:usuario.email, cartId:usuario.cartId} 
                 }
                 return done(null, retorno)
             }catch(error){

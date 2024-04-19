@@ -114,7 +114,6 @@ routerViews.get('/successGithub', (req, res)=>{
 })
 
 routerViews.get('/profile-view', redirectToLogin, async(req, res)=> {
-    //console.log('profile:', req.session.user)
     res.render('profile',{
             user: req.session.user,
             rol: req.session.rol

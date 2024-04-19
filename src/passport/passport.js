@@ -19,7 +19,7 @@ const initializePassport = () => {
         },
         async(accessToken, refreshToken, profile, done) => {
             try{
-                let {name, email}= profile._json;//esto viene de github, o sea que existe
+                let {name, email} = profile._json;
                 let usuario = await userManager.existsUser(email);
                 let retorno = ''
                 if(usuario == null){

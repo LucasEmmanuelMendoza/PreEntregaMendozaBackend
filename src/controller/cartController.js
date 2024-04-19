@@ -1,6 +1,5 @@
 const CartService = require('../services/cartService.js');
 
-
 const deleteCart = async(req, res) => {
     const cartId = req.params.cid;
     try{
