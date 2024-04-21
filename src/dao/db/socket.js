@@ -47,8 +47,8 @@ const funcionSocket = (io) => {
 
   socket.on('prodToCart', (cart) => {
       (async()=> {
-        console.log("cart: ",cart)
         await cartManager.addProductToCart(cart.cartId, cart.prod)
+        console.log(`Producto ${cart.prod} agregado al carro`)
       })();
     })
   });

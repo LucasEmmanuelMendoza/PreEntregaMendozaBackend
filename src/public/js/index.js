@@ -3,11 +3,6 @@ const socket = io()
 
 //================== Cart =======================
 const addToCart = (event) => {
-/*     const cart={
-        cartId: document.getElementById('cartId').value, 
-        cartId: req.user.cart,
-        prod: event.currentTarget.getAttribute('data-id')
-    } */
     const prod = event.currentTarget.getAttribute('data-id')
     const cartId = event.currentTarget.getAttribute('cart-id');
 
@@ -15,7 +10,7 @@ const addToCart = (event) => {
         cartId,
         prod
     }    
-    alert('PRODUCTO AGREGADO AL CARRO')
+    alert(`Producto ${cart.prod} agregado al carro`)
     socket.emit('prodToCart', cart)
 }
 
