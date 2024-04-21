@@ -48,7 +48,7 @@ class ProductService{
 
     async findProducts(){
         try{
-            return await ProductModel.find()
+            return await ProductModel.find().lean()
         }catch(error){
             throw error
         }

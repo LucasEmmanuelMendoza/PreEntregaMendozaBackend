@@ -24,6 +24,7 @@ const funcionSocket = require('./dao/db/socket.js');
 const { routerAuth } = require('./routes/auth.routes.js');
 const initializePassport = require('./config/passport.js');
 const passport = require('passport');
+const cors = require('cors')
 
 //Public
 app.use(express.static(__dirname+'/public'))
@@ -36,6 +37,14 @@ app.use(cookieParser())
 //Motor de plantilla
 app.engine('handlebars', handlebars.engine())
 app.set('view engine', 'handlebars')
+
+const corsOptions = {
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}
+
+app.use(cors(corsOptions))
 
 app.use(session({
   store: MongoStore.create({

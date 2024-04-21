@@ -3,6 +3,15 @@ const CartManager = require('./cartManager.js');
 
 const cartManager = new CartManager()
 
+const purchaseCart = async(req, res) => {
+    const cartId = req.params.cid;
+    try{
+        
+    }catch(error){
+        res.status(500).send(error)
+    }
+}
+
 const deleteCart = async(req, res) => {
     const cartId = req.params.cid;
     try{
@@ -77,4 +86,4 @@ const getCartById = async (req, res) => {
     }
 }
 
-module.exports = { createCart, getCartById, addToCart, deleteFromCart, updateCart, updateProductFromCart, deleteCart }
+module.exports = { purchaseCart, createCart, getCartById, addToCart, deleteFromCart, updateCart, updateProductFromCart, deleteCart }

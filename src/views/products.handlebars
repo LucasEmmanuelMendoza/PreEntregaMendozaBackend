@@ -8,26 +8,25 @@
             <input class="btn btn-danger" type="submit" value="Cerrar sesión">
         </form>
     </div>
-    <input type="text" placeholder="id carrito" class="m-2" id="cartId">
 
     <div class="container d-flex flex-wrap gap-3">
         {{#each products}}
             <div class="card" style="width: 18rem;">
-            <img src={{this.thumbnail}} class="card-img-top" alt="...">
-            <div class="card-body">
-                <h1 class="card-title">{{this.title}}</h1>
-                <p class="card-text">{{this.description}}</p>
-                <h3 class="card-text">Categoria: {{this.category}}</h3>
-                <h4 class="card-text">${{this.price}}</h4>
-                <h5 class="card-text">Código: {{this.code}}</h5>
-                <p class="card-text">Cant: {{this.stock}}</p>
-                <p>id:{{this._id}}</p>
-                <div class="d-flex justify-content-center gap-3">
-                    <button class="btn btn-primary btnAddToCart" data-id="{{this._id}}">Add to cart</button>
-                    <a class="btn btn-primary" target="_blank" href="http://localhost:8080/views/products/details/{{this._id}}">Detalles</a>
+                <img src={{this.thumbnail}} class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h1 class="card-title">{{this.title}}</h1>
+                    <p class="card-text">{{this.description}}</p>
+                    <h3 class="card-text">Categoria: {{this.category}}</h3>
+                    <h4 class="card-text">${{this.price}}</h4>
+                    <h5 class="card-text">Código: {{this.code}}</h5>
+                    <p class="card-text">Cant: {{this.stock}}</p>
+                    <p>id:{{this._id}}</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <button class="btn btn-primary btnAddToCart" cart-id="{{this.cartId}}" data-id="{{this._id}}">Add to cart</button>
+                        <a class="btn btn-primary" target="_blank" href="http://localhost:8080/views/products/details/{{this._id}}">Detalles</a>
+                    </div>
+                    {{!-- http://localhost:8080/views/products/details/{{_id}} --}}
                 </div>
-                {{!-- http://localhost:8080/views/products/details/{{_id}} --}}
-            </div>
             </div>
         {{/each}}
     </div>    

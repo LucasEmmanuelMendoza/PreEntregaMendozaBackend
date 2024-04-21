@@ -4,7 +4,7 @@ const CartManager = require('../../services/cartService.js')
 
 const product = new ProductService()
 const message = new MessageManager()
-const cart = new CartManager()
+const cartManager = new CartManager()
 
 let productos = [];
 (async() => {
@@ -21,15 +21,11 @@ const funcionSocket = (io) => {
     console.log('User connected');
 
   socket.on('addProd', (data) => {
-
     (async() => {  
       await product.addProd(data);
       productos = await product.findProducts()
       productos.payload.push(data);
     })();
-
-    console.log(productos.payload)
-
     socket.emit('productosServidor', productos.payload);
   })
 
@@ -44,15 +40,16 @@ const funcionSocket = (io) => {
   socket.on('newMsg', (data) => {
     messages.push(data);
     (async() => {
-        await message.addMessage(data);
+      await message.addMessage(data);
     })();
-
       io.sockets.emit('messagesServidor', messages);
     })
 
-  socket.on('prodToCart', (data) => {
-      (async() => {
-          await cart.addProd(data.cartId, data.prod)
+  socket.on('prodToCart', (cart) => {
+      (async()=> {
+        console.log("cart: ",cart)
+         // await cartManager.addProductToCart(cart.cartId, cart.prod)
+        
       })();
     })
   });

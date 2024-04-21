@@ -12,11 +12,22 @@ const CartService = require('../services/cartService.js')
 const cartManager = new CartService()
 
 routerViews.get('/products', redirectToLogin,  async(req, res) => {
-    const products = await productManager.findProductsPaginate()
+    const products = await productManager.findProducts()
+    const userCartId = req.session.passport.user.cartId;
+    if(products){
+        res.render('products', { 
+            cartId: userCartId,
+            products: products.map(product => ({ ...product, cartId: userCartId }))
+        })
+    } 
+})
+
+routerViews.get('/home', async(req, res) => {
+    const products = await productManager.findProducts()
+    //console.log(products)
     if(products != false){
-        res.render('products', {
-            products: products.payload,
-            user: req.session.user
+        res.send({
+            data: products
         })
     }
 })
@@ -56,9 +67,10 @@ routerViews.get('/realtimeproducts', redirectToLogin, async(req, res) => {
 
 routerViews.get('/', redirectToLogin, async(req, res) => {
     const products = await productManager.findProductsPaginate()
-
+    const userCartId = req.session.passport.user.cartId;
     if(products){
         res.render('home', {
+            cartId: userCartId,
             products : products.payload
         })
     }
