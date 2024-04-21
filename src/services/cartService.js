@@ -1,4 +1,5 @@
 const CartModel = require('../models/cart.model.js')
+const { ObjectId } = require('mongodb');
 
 class CartService{
     async deleteOneCart(id){
@@ -28,13 +29,19 @@ class CartService{
     async addProductToCart(cartId, prodId){
         try{
             const foundCart = await CartModel.findOne({_id: cartId})
-            if (foundCart != null){
-                const indexProd = foundCart.products.findIndex(prod => prod.product == prodId);
-                if (indexProd != -1){
+            if (foundCart != null){ 
+                const indexProd = foundCart.products.findIndex(prod => prod.product._id.toString() === prodId.toString());
+                /* console.log("prodId:", prodId)
+                console.log("foundCart.products[0]._id:",foundCart.products[0]._id)
+                console.log("foundCart.products[0].product:",foundCart.products[0].product)
+                console.log("foundCart.products[0].product._id:",foundCart.products[0].product._id)
+                 */
+                console.log("indexProd", indexProd);
+                if (indexProd != -1){//existe el producto, actualiza la cantidad
                     foundCart.products[indexProd].quantity ++;
-                }else{
+                }else{//no existe el producto, lo agrega y setea la cantidad en 1
                     const newProd = {
-                        product: prodId,
+                        product: new ObjectId(prodId),
                         quantity : 1
                     }
                     foundCart.products.push(newProd)

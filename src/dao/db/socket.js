@@ -48,8 +48,7 @@ const funcionSocket = (io) => {
   socket.on('prodToCart', (cart) => {
       (async()=> {
         console.log("cart: ",cart)
-         // await cartManager.addProductToCart(cart.cartId, cart.prod)
-        
+        await cartManager.addProductToCart(cart.cartId, cart.prod)
       })();
     })
   });

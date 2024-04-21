@@ -16,6 +16,7 @@ routerViews.get('/products', redirectToLogin,  async(req, res) => {
     const userCartId = req.session.passport.user.cartId;
     if(products){
         res.render('products', { 
+            user:req.session.user,
             cartId: userCartId,
             products: products.map(product => ({ ...product, cartId: userCartId }))
         })
