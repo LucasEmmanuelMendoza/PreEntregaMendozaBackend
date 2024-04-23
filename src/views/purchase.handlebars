@@ -1,21 +1,27 @@
-<div class="container">
-    <h1>CART</h1>
+<div class="container mt-4">
     <div class=" d-flex flex-wrap gap-2">
-        {{#each cartProducts}}
-        <div class="card" style="width: 18rem;">
-            <img src={{this.product.thumbnail}} class="card-img-top" alt="...">
-            <div class="card-body">
-                <h1 class="card-title">{{this.product.title}}</h1>
-                <p class="card-text">{{this.product.description}}</p>
-                <h3 class="card-text">Categoria: {{this.product.category}}</h3>
-                <h4 class="card-text">${{this.product.price}}</h4>
-                <h5 class="card-text">Código: {{this.product.code}}</h5>
-                <p class="card-text">Cant: {{this.product.stock}}</p>
-                <p>id:{{this.product._id}}</p>
-                {{!-- http://localhost:8080/views/products/details/{{_id}} --}}
-            </div>
-        </div>
-        {{/each}}
+        <table class="table tabla">
+            <thead>
+                <tr>
+                <th scope="col"></th>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+                </tr>
+            </thead>
+            {{#each cartProducts}}
+            <tbody>
+                <tr>
+                    <th><img src="{{this.product.thumbnail}}" alt="{{this.product.thumbnail}}" style="width:4rem; height:4rem"></th>
+                    <td>{{this.product.title}}</td>
+                    <td>{{this.product.price}}</td>
+                    <td>{{this.quantity}}</td>
+                    <td>10000</td>
+                </tr>
+            </tbody>
+            {{/each}}
+        </table>
     </div>
 </div>
 
