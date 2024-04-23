@@ -5,6 +5,40 @@ const express = require('express')
 const { generaToken } = require('../utils/token.js')
 const routerAuth = express.Router()
 
+function onlyAdmin(req, res, next){
+    if(req.session.rol === 'admin'){
+        next()
+    }else{
+        res.redirect('/views/error')
+    }
+}
+
+function onlyUser(req, res, next){
+    if(req.session.rol === "user"){
+        next()
+    }else{
+        res.redirect('/views/error')
+    }
+}
+
+function redirectToLogin(req, res, next){
+    if(req.session.user != null){
+        next()
+    }
+    else{
+        res.redirect('/views/login-view')
+    }
+}
+
+function redirectToProfile(req, res, next){
+    if(req.session.user != null){
+        res.redirect('/views/profile-view')
+    }
+    else{
+        next()
+    }
+}
+
 routerAuth.post('/register', passport.authenticate('register', {failureRedirect:'/auth/failRegister'}), async(req, res) => {
     res.redirect('/views/login-view')
 })
@@ -50,4 +84,4 @@ routerAuth.get('/logout', async(req, res) => {
     res.redirect('/views/login-view')
 })*/
 
-module.exports = { routerAuth }
+module.exports = { routerAuth, onlyAdmin, onlyUser, redirectToLogin, redirectToProfile }

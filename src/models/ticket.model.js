@@ -14,7 +14,7 @@ const TicketSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    purchaser:{
+    purchaser:{//correo del usuario asociado al carrito
         type: String,
         required: true
     }

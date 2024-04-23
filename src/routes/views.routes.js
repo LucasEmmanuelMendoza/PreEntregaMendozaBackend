@@ -1,6 +1,7 @@
 const express = require('express')
 const routerViews = express.Router()
 const passport = require('passport')
+const {onlyAdmin, onlyUser, redirectToLogin, redirectToProfile } = require('./auth.routes.js')
 
 const ProductService = require('../services/productService.js')
 const productManager = new ProductService()
@@ -10,6 +11,7 @@ const messageManeger = new MessageManager()
 
 const CartService = require('../services/cartService.js')
 const cartManager = new CartService()
+
 
 routerViews.get('/products', redirectToLogin,  async(req, res) => {
     const products = await productManager.findProducts()
@@ -56,7 +58,7 @@ routerViews.get('/products/details/:pid', redirectToLogin, async(req, res) => {
     }
 })
 
-routerViews.get('/realtimeproducts', redirectToLogin, async(req, res) => {
+routerViews.get('/realtimeproducts', onlyAdmin, redirectToLogin, async(req, res) => {
     const products = await productManager.findProductsPaginate()
     
     if(products){
@@ -77,9 +79,8 @@ routerViews.get('/', redirectToLogin, async(req, res) => {
     }
 })
 
-routerViews.get('/chat', redirectToLogin, async(req, res) => {
+routerViews.get('/chat', onlyUser, redirectToLogin, async(req, res) => {
     const messages = await messageManeger.getMessages()
-
     if(messages){
         res.render('chat', {
             messages: messages
@@ -87,30 +88,24 @@ routerViews.get('/chat', redirectToLogin, async(req, res) => {
     }
 })
 
-/////////////////////////////////////////////////////////////
-function redirectToLogin(req, res, next){
-    if(req.session.user != null){
-        next()
-    }
-    else{
-        res.redirect('/views/login-view')
-    }
-}
-
-function redirectToProfile(req, res, next){
-    if(req.session.user != null){
-        res.redirect('/views/profile-view')
-    }
-    else{
-        next()
-    }
-}
+routerViews.get('/error', async(req, res) => {
+    res.render('error')
+})
 
 routerViews.get('/login-view', redirectToProfile, async(req, res)=> {
     res.render('login')
 })
+
 routerViews.get('/register-view', redirectToProfile, async(req, res)=> {
     res.render('register')
+})
+
+routerViews.get('/profile-view', redirectToLogin, async(req, res)=> {
+    res.render('profile',{
+            user: req.session.user,
+            rol: req.session.rol
+        }
+    )
 })
 
 routerViews.get('/github', passport.authenticate('github', {}), (req, res)=>{})
@@ -125,14 +120,5 @@ routerViews.get('/successGithub', (req, res)=>{
     }
     res.redirect('/views/profile-view')
 })
-
-routerViews.get('/profile-view', redirectToLogin, async(req, res)=> {
-    res.render('profile',{
-            user: req.session.user,
-            rol: req.session.rol
-        }
-    )
-})
-
 
 module.exports = { routerViews };

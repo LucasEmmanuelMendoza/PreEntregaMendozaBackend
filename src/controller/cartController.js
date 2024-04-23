@@ -5,8 +5,12 @@ const cartManager = new CartManager()
 
 const purchaseCart = async(req, res) => {
     const cartId = req.params.cid;
+    //const user = req.session.passport.user;
+    const cart = await cartManager.getCartByIdPopulate(cartId)
     try{
-        
+        res.render('purchase', {
+            cartProducts: cart.products
+        })
     }catch(error){
         res.status(500).send(error)
     }

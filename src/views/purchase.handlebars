@@ -1,0 +1,21 @@
+<div class="container">
+    <h1>CART</h1>
+    <div class=" d-flex flex-wrap gap-2">
+        {{#each cartProducts}}
+        <div class="card" style="width: 18rem;">
+            <img src={{this.product.thumbnail}} class="card-img-top" alt="...">
+            <div class="card-body">
+                <h1 class="card-title">{{this.product.title}}</h1>
+                <p class="card-text">{{this.product.description}}</p>
+                <h3 class="card-text">Categoria: {{this.product.category}}</h3>
+                <h4 class="card-text">${{this.product.price}}</h4>
+                <h5 class="card-text">Código: {{this.product.code}}</h5>
+                <p class="card-text">Cant: {{this.product.stock}}</p>
+                <p>id:{{this.product._id}}</p>
+                {{!-- http://localhost:8080/views/products/details/{{_id}} --}}
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+
