@@ -1,26 +1,41 @@
-<div class="bg-success">
-    <h1>Carrito</h1>
-    <div class="container d-flex flex-wrap gap-3">
-        {{#each products}}
-            <div class="card" style="width: 18rem;">
-            <img src={{this.product.thumbnail}} class="card-img-top" alt="...">
-            <div class="card-body">
-                <h1 class="card-title">{{this.product.title}}</h1>
-                <p class="card-text">{{this.product.description}}</p>
-                <h3 class="card-text">Categoria: {{this.product.category}}</h3>
-                <h4 class="card-text">${{this.product.price}}</h4>
-                <h5 class="card-text">Código: {{this.product.code}}</h5>
-                <p class="card-text">Cant: {{this.quantity}}</p>
-                
-                <input class="btn btn-primary" value="Ver más" type="button" name={{this.product._id}} onsubmit="addToCart()">
+<div class="container mt-4">
+    <div class="row d-flex flex-wrap">
+        <div class="col-10 gap-2">
+            <table class="table ">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                </thead>
+                {{#each cartProducts}}
+                <tbody class="m-2">
+                    <tr >
+                        <th><img src="{{this.product.thumbnail}}" alt="{{this.product.thumbnail}}" style="width:4rem; height:4rem"></th>
+                        <td>{{this.product.title}}</td>
+                        <td>{{this.product.price}}</td>
+                        <td>{{this.quantity}}</td>
+                        <td>10000</td>
+                    </tr>
+                </tbody>
+                {{/each}}
+            </table>
+        </div>
 
+        <div class="col-2">
+            <h3>Resumen del pedido</h3>
+            <div class="row">
+                <div class="col-9">
+                    <h5>X productos</h5>
+                </div>
+                <div class="col-3">
+                    <h4>$Precio Total</h3>
+                    <a href='/api/carts/{{cartId}}/purchase' class="btn btn-success">Finalizar Compra</a>
+                </div>
             </div>
-            </div>
-        {{/each}}
+        </div>
     </div>
 </div>
-
-<div class="container" id="cart"></div>
-
-<script src="/socket.io/socket.io.js"></script>
-<script src="/js/index.js"></script>

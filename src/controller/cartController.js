@@ -9,7 +9,8 @@ const purchaseCart = async(req, res) => {
     const cart = await cartManager.getCartByIdPopulate(cartId)
     try{
         res.render('purchase', {
-            cartProducts: cart.products
+            cartProducts: cart.products,
+            cartId:cartId
         })
     }catch(error){
         res.status(500).send(error)
@@ -80,11 +81,14 @@ const createCart = async (req, res) => {
 }
 
 const getCartById = async (req, res) => {
-    const cartId = req.params.cid
+    const cartId = req.params.cid;
+    //const user = req.session.passport.user;
+    const cart = await cartManager.getCartByIdPopulate(cartId)
     try{
-        //const cart = await CartService.findCartById(cartId)
-        const cart = await cartManager.getCartById(cartId)
-        return res.status(200).json(cart)
+        res.render('cart', {
+            cartProducts: cart.products,
+            cartId 
+        })
     }catch(error){
         res.status(500).send(error)
     }

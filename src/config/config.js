@@ -7,8 +7,9 @@ program
 program.parse()
 
 dotenv.config({
-    path: program.opts().mode == 'dev' ? './environment/.env.dev': './environment/.env.prod'
+    path: program.opts().mode == 'dev' ? '.env.dev': '.env.prod'
 })
 
-
-
+module.exports = {
+    persistence: process.env.PERSISTENCE
+}

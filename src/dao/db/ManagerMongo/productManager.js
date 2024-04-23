@@ -34,7 +34,16 @@ class ProductManagerMongo{
         }
     }
 
-    async getProducts(limit, page, category, priceSort){
+    async getProducts(){
+        try{
+            return await Products.find()
+        }catch(error){
+            console.log(error)
+            return false
+        }
+    }
+
+    async getProductsPaginate(limit, page, category, priceSort){
         try{
             let prevLink=null;
             let nextLink=null;
