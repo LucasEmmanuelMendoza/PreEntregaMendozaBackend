@@ -19,7 +19,6 @@ routerViews.get('/products', redirectToLogin,  async(req, res) => {
     if(products){
         res.render('products', { 
             user: req.session.user,
-            cartId: userCartId,
             products: products.map(product => ({ ...product, cartId: userCartId }))
         })
     } 
