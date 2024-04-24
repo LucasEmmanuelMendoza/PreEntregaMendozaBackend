@@ -7,16 +7,16 @@
         <div class="col-8 gap-2">
             <form>
                 <div class="mb-3">
-                    <label for="contact" class="form-label">Email</label>
-                    <input placeholder="Correo electrónico *" type="email" class="form-control w-50" id="emailPurchase" aria-describedby="emailHelp">
+                    <label for="emailPurchaser" class="form-label">Email</label>
+                    <input placeholder="Correo electrónico *" type="email" class="form-control w-50" id="emailPurchaser" aria-describedby="emailHelp">
                 </div>
                 <div class="mb-3 d-flex flex-row row">
                     <div class="col-6">
-                        <label for="adress" class="form-label">Dirección</label>
+                        <label for="adressPurchaser" class="form-label">Dirección</label>
                         <input type="text" class="form-control w-75" placeholder="Calle *" id="adressPurchaser">
                     </div>
                     <div class="col-6">
-                        <label for="adress-number" class="form-label">Número</label>
+                        <label for="adressNumberPurchaser" class="form-label">Número</label>
                         <input type="number" class="form-control" placeholder="Altura *" id="adressNumberPurchaser">
                     </div>
                 </div>
@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="col-6">
-                        <label for="credit-card-number" class="form-label">Código de seguridad</label>
+                        <label for="credit-card-cvv" class="form-label">Código de seguridad</label>
                         <input type="number" class="form-control" placeholder="CVV *" id="credit-card-cvv">
                     </div>
                 </div>
@@ -44,10 +44,10 @@
                     <h5>{{prodsQuantity}} productos</h5>
                 </div>
                 <div class="col-3">
-                    <h4>${{totalPrice}}</h3>
+                    <h4>${{totalPrice}}</h4>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</div>  
 

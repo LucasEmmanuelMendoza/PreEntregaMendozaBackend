@@ -1,10 +1,10 @@
 //cliente
 const socket = io(); 
 
-//================== Ticket ==================
+//================== Ticket ==================((
 const addTicket = (event) => {
-    const email = document.getElementById('emailPurchase')
-    const totalPrice = event.currentTarget.getAttribute('totalPrice-id')
+    const email = document.getElementById('emailPurchase').value
+    const totalPrice = parseFloat(event.currentTarget.getAttribute('totalPrice-id'));
 
     const date = new Date()
     const purchase_dateTime = date.getDate()
@@ -12,17 +12,15 @@ const addTicket = (event) => {
         purchase_dateTime,
         amount: totalPrice,
         purchaser: email
-    }
-    console.log('Ticket de compra generado con éxito')
+    } 
     socket.emit('addTicket', ticket ) 
-    alert('hola')
+    alert('Ticket de compra generado con éxito')
 }
 
-const btnPurchase = document.getElementById('btnPurchase')
+const btnPurchase = document.getElementsById('btnPurchase')
 
-if(btnPurchase != null){
-    btnPurchase.addEventListener('click', addTicket)
-}
+btnPurchase.addEventListener('click', addTicket)
+
 
 //================== Cart =======================
 const addToCart = (event) => {
@@ -33,8 +31,8 @@ const addToCart = (event) => {
         cartId,
         prod
     }    
-    alert(`Producto ${cart.prod} agregado al carro`)
     socket.emit('prodToCart', cart)
+    alert(`Producto ${cart.prod} agregado al carro`)
 }
 
 const buttons = document.querySelectorAll('.btnAddToCart');

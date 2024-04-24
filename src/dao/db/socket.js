@@ -57,7 +57,8 @@ const funcionSocket = (io) => {
 
     socket.on('addTicket', (ticket) => {
       (async () => {
-        const code = uuidv4()
+        //const code = uuidv4()
+        const code = 10
         const newTicket = {
           ...ticket,
           code

@@ -4,7 +4,7 @@ class TicketManager{
     async addTicket(ticket){
         await TicketModel.create(ticket) 
     }catch(error){
-        console.log(error) 
+        console.log('Error') 
         return error
     }
 }
