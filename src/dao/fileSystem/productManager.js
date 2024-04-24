@@ -73,28 +73,29 @@ class ProductManager{
         }
     }
 
-    async addProduct(title, description, price, thumbnail, code, stock, category){
+    /*async addProduct(title, description, price, thumbnail, code, stock, category){ */
+    async addProduct(product){
         try{
             const data = await fs.promises.readFile(this.path, 'utf-8')
             const productos = JSON.parse(data);
             const newId = uuidv4()
 
-            if(!title || !description || !price || !code || !stock ||!category){
+            if(!product.title || !product.description || !product.price || !product.code || !product.stock ||!product.category){
                 console.log("Excepto 'thumbnail', todos los campos son obligatorios");
                 return 3
             }else{
-                const existsCode = productos.find((p) => p.code === code);
+                const existsCode = productos.find((p) => p.code === product.code);
                 
                 if(!existsCode){
                     const prod = {
                         id: newId,
-                        title: title,
-                        description: description,
-                        price: price,
-                        thumbnail: thumbnail,
-                        code: code,
-                        category: category,
-                        stock: stock,
+                        title: product.title,
+                        description: product.description,
+                        price: product.price,
+                        thumbnail: product.thumbnail,
+                        code: product.code,
+                        category: product.category,
+                        stock: product.stock,
                         status: true
                     }
                     productos.push(prod);

@@ -1,4 +1,4 @@
-const Users = require('../models/user.model')
+const Users = require('../dao/db/models/user.model')
 
 class UserManager{
     async addUser(user){

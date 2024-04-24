@@ -1,39 +1,39 @@
 <div class="container mt-3">
     <div class="text-center mb-5">
         <h1>PAGAR</h1>
-        <h4>(n productos) $Pecio Total</h4>
+        <h4>({{prodsQuantity}} productos) ${{totalPrice}}</h4>
     </div>
     <div class="row d-flex flex-wrap">
         <div class="col-8 gap-2">
             <form>
                 <div class="mb-3">
                     <label for="contact" class="form-label">Email</label>
-                    <input placeholder="Correo electrónico *" type="email" class="form-control w-50" id="contact" aria-describedby="emailHelp">
+                    <input placeholder="Correo electrónico *" type="email" class="form-control w-50" id="emailPurchase" aria-describedby="emailHelp">
                 </div>
                 <div class="mb-3 d-flex flex-row row">
                     <div class="col-6">
-                        <label for="adress" class="form-label" placeholder="Calle">Dirección</label>
-                        <input type="text" class="form-control w-75" placeholder="Calle *" id="adress">
+                        <label for="adress" class="form-label">Dirección</label>
+                        <input type="text" class="form-control w-75" placeholder="Calle *" id="adressPurchaser">
                     </div>
                     <div class="col-6">
                         <label for="adress-number" class="form-label">Número</label>
-                        <input type="number" class="form-control" placeholder="Altura *" id="adress-number">
+                        <input type="number" class="form-control" placeholder="Altura *" id="adressNumberPurchaser">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-6">
-                        <label for="credit-card-number" class="form-label" placeholder="Calle">Tarjeta de Crédito / Débito</label>
-                        <input type="number" class="form-control" placeholder=" *" id="credit-card-number">
+                        <label for="credit-card-number" class="form-label">Tarjeta de Crédito / Débito</label>
+                        <input type="password" class="form-control" placeholder=" *" id="credit-card-number">
                     </div>
 
                     <div class="col-6">
-                        <label for="credit-card-number" class="form-label" placeholder="Calle">Código de seguridad</label>
-                        <input type="number" class="form-control" placeholder="CVV *" id="credit-card-number">
+                        <label for="credit-card-number" class="form-label">Código de seguridad</label>
+                        <input type="number" class="form-control" placeholder="CVV *" id="credit-card-cvv">
                     </div>
                 </div>
  
-                <input type="button" value="Pagar" class="mt-3 btn btn-success">
+                <input type="button" value="Generar ticket" totalPrice-id="{{totalPrice}}" class="mt-3 btn btn-success" id="btnPurchase">
             </form>
         </div>
 
@@ -41,10 +41,10 @@
             <h3>TU PEDIDO</h3>
             <div class="row">
                 <div class="col-9">
-                    <h5>X productos</h5>
+                    <h5>{{prodsQuantity}} productos</h5>
                 </div>
                 <div class="col-3">
-                    <h4>$Precio Total</h3>
+                    <h4>${{totalPrice}}</h3>
                 </div>
             </div>
         </div>

@@ -3,8 +3,9 @@ const routerViews = express.Router()
 const passport = require('passport')
 const {onlyAdmin, onlyUser, redirectToLogin, redirectToProfile } = require('./auth.routes.js')
 
-const ProductService = require('../services/productService.js')
-const productManager = new ProductService()
+const ProductManager = require('../dao/db/ManagerMongo/productManager.js')
+//const ProductManager = require('../dao/fileSystem/productManager.js')
+const productManager = new ProductManager()
 
 const MessageManager = require('../controller/messageManager.js')
 const messageManeger = new MessageManager()
@@ -12,9 +13,8 @@ const messageManeger = new MessageManager()
 const CartService = require('../services/cartService.js')
 const cartManager = new CartService()
 
-
 routerViews.get('/products', redirectToLogin,  async(req, res) => {
-    const products = await productManager.findProducts()
+    const products = await productManager.getProducts()
     const userCartId = req.session.passport.user.cartId;
     if(products){
         res.render('products', { 
@@ -26,7 +26,7 @@ routerViews.get('/products', redirectToLogin,  async(req, res) => {
 })
 
 routerViews.get('/home', async(req, res) => {
-    const products = await productManager.findProducts()
+    const products = await productManager.getProducts()
     //console.log(products)
     if(products != false){
         res.send({
@@ -37,12 +37,17 @@ routerViews.get('/home', async(req, res) => {
 
 routerViews.get('/carts/:cid', redirectToLogin, async(req, res) => {
     const cartId = req.params.cid;
-    
-    const cartProds = await cartManager.getCartById(cartId)
+    const cartProds = await cartManager.findCartById(cartId)
+
+    const totalPrice = cartProds.products.reduce((acumulador, prod) => acumulador += prod.product.price * prod.quantity, 0);
+    const prodsQuantity = cartProds.products.reduce((acumulador, prod) => acumulador += prod.quantity,0)
 
     if(cartProds){
         res.render('cart', {
-            products : cartProds.products
+            products : cartProds.products,
+            cartId,
+            totalPrice,
+            prodsQuantity
         })
     }
 })
@@ -59,7 +64,11 @@ routerViews.get('/products/details/:pid', redirectToLogin, async(req, res) => {
 })
 
 routerViews.get('/realtimeproducts', onlyAdmin, redirectToLogin, async(req, res) => {
-    const products = await productManager.findProductsPaginate()
+    const limit = req.params.limit;
+    const page = req.params.page;
+    const category = req.params.category;
+    const priceSort = req.params.priceSort;
+    const products = await productManager.getProductsPaginate(limit, page, category, priceSort)
     
     if(products){
         res.render('realTimeProducts', {
@@ -69,7 +78,7 @@ routerViews.get('/realtimeproducts', onlyAdmin, redirectToLogin, async(req, res)
 })
 
 routerViews.get('/', redirectToLogin, async(req, res) => {
-    const products = await productManager.findProductsPaginate()
+    const products = await productManager.getProductsPaginate()
     const userCartId = req.session.passport.user.cartId;
     if(products){
         res.render('home', {

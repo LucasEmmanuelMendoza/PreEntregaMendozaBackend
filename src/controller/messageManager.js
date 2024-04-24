@@ -1,4 +1,4 @@
-const Messages = require('../models/message.model')
+const Messages = require('../dao/db/models/message.model')
 
 class MessageManager{
     

@@ -7,7 +7,7 @@ program
 program.parse()
 
 dotenv.config({
-    path: program.opts().mode == 'dev' ? '.env.dev': '.env.prod'
+    path: program.opts().mode == 'dev' ? '.env.dev.MONGO': '.env.prod.FS'
 })
 
 module.exports = {

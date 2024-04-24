@@ -21,6 +21,6 @@ CartSchema.pre('findOne', function(){
     this.populate('products.product')
 })
 
-const Carts = mongoose.model('Cart', CartSchema)
+const CartModel = mongoose.model('Cart', CartSchema)
 
-module.exports = Carts
+module.exports = CartModel

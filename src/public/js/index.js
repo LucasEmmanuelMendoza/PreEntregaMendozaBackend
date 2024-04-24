@@ -1,5 +1,30 @@
 //cliente
 const socket = io()
+const { v4: uuidv4 } = require('uuid');
+
+//================== Ticket ==================
+const addTicket = (event) => {
+    const email = document.getElementById('emailPurchase')
+    const totalPrice = event.currentTarget.getAttribute('totalPrice-id')
+   /*const adress = document.getElementById('adressPurchaser')
+    const adressNumber = document.getElementById('adressNumberPurchaser')*/
+   
+    const date = new Date()
+    const purchase_dateTime = date.getDate()
+    const code = uuidv4()
+    const ticket = {
+        code,
+        purchase_dateTime,
+        amount: totalPrice,
+        purchaser: email
+    }
+    console.log('Ticket de compra generado con éxito')
+    socket.emit('addTicket', ticket )
+}
+
+const btnPurchase = document.getElementById('btnPurchase')
+
+btnPurchase.addEventListener('click', addTicket)
 
 //================== Cart =======================
 const addToCart = (event) => {

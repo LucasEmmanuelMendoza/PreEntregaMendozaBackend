@@ -1,4 +1,4 @@
-const Carts = require('../models/cart.model')
+const Carts = require('../dao/db/models/cart.model')
 
 class CartManager{
 

@@ -1,10 +1,10 @@
-const Products = require('../models/product.model.js')
+const ProductsModel = require('../models/product.model.js')
 
-class ProductManagerMongo{
+class ProductManager{
     
     async addProduct(product) {
         try {
-            await Products.create(product)
+            await ProductsModel.create(product)
             return true;
         } catch(error) {
             console.log(error)
@@ -14,7 +14,7 @@ class ProductManagerMongo{
 
     async deleteProduct(id){
         try{
-            const retorno = await Products.deleteOne({_id:id})
+            const retorno = await ProductsModel.deleteOne({_id:id})
             return true
         }catch(error){
             console.log(error)
@@ -24,7 +24,7 @@ class ProductManagerMongo{
 
     async getProductById(id){
         try{
-            const product = await Products.findOne({_id:id}).lean()
+            const product = await ProductsModel.findOne({_id:id}).lean()
             if(product != null){
                 return product
             }
@@ -36,7 +36,7 @@ class ProductManagerMongo{
 
     async getProducts(){
         try{
-            return await Products.find()
+            return await ProductsModel.find().lean()
         }catch(error){
             console.log(error)
             return false
@@ -48,7 +48,7 @@ class ProductManagerMongo{
             let prevLink=null;
             let nextLink=null;
 
-            const returnPaginate = await Products.paginate(
+            const returnPaginate = await ProductsModel.paginate(
                 category ? {category: category} : {},
                 {
                     limit: limit ? limit : 10,
@@ -82,7 +82,7 @@ class ProductManagerMongo{
 
     async updateProduct(id, value){
         try{
-            await Products.updateOne({"_id": id}, {$set: value})
+            await ProductsModel.updateOne({"_id": id}, {$set: value})
             return true
         }catch(error){
             console.log(error)
@@ -91,4 +91,4 @@ class ProductManagerMongo{
     }
 }
 
-module.exports = ProductManagerMongo
+module.exports = ProductManager

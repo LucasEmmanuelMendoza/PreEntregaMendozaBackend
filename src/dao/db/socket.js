@@ -1,10 +1,12 @@
 const ProductService = require('../../services/productService.js')
 const MessageManager = require('../../controller/messageManager.js')
 const CartManager = require('../../services/cartService.js')
+const TicketManager = require('../../dao/db/ManagerMongo/ticketManager.js')
 
 const product = new ProductService()
 const message = new MessageManager()
 const cartManager = new CartManager()
+const ticketManager = new TicketManager()
 
 let productos = [];
 (async() => {
@@ -51,7 +53,18 @@ const funcionSocket = (io) => {
         console.log(`Producto ${cart.prod} agregado al carro`)
       })();
     })
+
+    socket.on('addTicket', (ticket) => {
+      console.log(ticket)
+      (async () => {
+        await ticketManager.addTicket(ticket)
+        console.log('Ticket generado')
+      }) 
+    })
+
   });
+
+
 };
 
 module.exports = funcionSocket;

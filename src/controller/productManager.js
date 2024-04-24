@@ -1,4 +1,4 @@
-const ProductModel = require('../models/product.model.js')
+const ProductModel = require('../dao/db/models/product.model.js')
 
 class ProductManagerMongo{
     async addProduct(product) {

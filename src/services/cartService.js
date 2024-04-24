@@ -1,4 +1,4 @@
-const CartModel = require('../models/cart.model.js')
+const CartModel = require('../dao/db/models/cart.model.js')
 const { ObjectId } = require('mongodb');
 
 class CartService{
@@ -12,7 +12,8 @@ class CartService{
 
     async findCartById(id){
         try{
-            return await CartModel.findOne({_id:id}).populate('products.product').lean()
+            const cart = await CartModel.findOne({_id:id}).populate('products.product').lean()
+            return cart
         }catch(error){
             throw error
         }
