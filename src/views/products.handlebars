@@ -2,7 +2,7 @@
     <div class="d-flex gap-2">
         <div>
             <h1>PRODUCTOS</h1>
-            <h2>Bienvenido {{user}}</h2>
+            <h2>Bienvenido {{user}}</h2> 
         </div>  
         <form action="/auth/logout" method="get">
             <input class="btn btn-danger" type="submit" value="Cerrar sesión">
@@ -22,7 +22,7 @@
                     <p class="card-text">Cant: {{this.stock}}</p>
                     <p>id:{{this._id}}</p>
                     <div class="d-flex justify-content-center gap-3">
-                        <button class="btn btn-primary btnAddToCart" cart-id="{{this.cartId}}" data-id="{{this._id}}">Add to cart</button>
+                        <input type="button" value="Add to cart" class="btn btn-primary btnAddToCart" cart-id="{{this.cartId}}" data-id="{{this._id}}">
                         <a class="btn btn-primary" target="_blank" href="http://localhost:8080/views/products/details/{{this._id}}">Detalles</a>
                     </div>
                     {{!-- http://localhost:8080/views/products/details/{{_id}} --}}

@@ -15,10 +15,10 @@ const cartManager = new CartService()
 
 routerViews.get('/products', redirectToLogin,  async(req, res) => {
     const products = await productManager.getProducts()
-    const userCartId = req.session.passport.user.cartId;
+    const userCartId = req.session.passport.user.cartId; 
     if(products){
         res.render('products', { 
-            user:req.session.user,
+            user: req.session.user,
             cartId: userCartId,
             products: products.map(product => ({ ...product, cartId: userCartId }))
         })
@@ -41,7 +41,7 @@ routerViews.get('/carts/:cid', redirectToLogin, async(req, res) => {
 
     const totalPrice = cartProds.products.reduce((acumulador, prod) => acumulador += prod.product.price * prod.quantity, 0);
     const prodsQuantity = cartProds.products.reduce((acumulador, prod) => acumulador += prod.quantity,0)
-
+ 
     if(cartProds){
         res.render('cart', {
             products : cartProds.products,

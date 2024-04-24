@@ -32,12 +32,7 @@ class CartService{
             const foundCart = await CartModel.findOne({_id: cartId})
             if (foundCart != null){ 
                 const indexProd = foundCart.products.findIndex(prod => prod.product._id.toString() === prodId.toString());
-                /* console.log("prodId:", prodId)
-                console.log("foundCart.products[0]._id:",foundCart.products[0]._id)
-                console.log("foundCart.products[0].product:",foundCart.products[0].product)
-                console.log("foundCart.products[0].product._id:",foundCart.products[0].product._id)
-                 */
-                console.log("indexProd", indexProd);
+
                 if (indexProd != -1){//existe el producto, actualiza la cantidad
                     foundCart.products[indexProd].quantity ++;
                 }else{//no existe el producto, lo agrega y setea la cantidad en 1
