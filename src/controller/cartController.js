@@ -13,9 +13,8 @@ const purchaseCart = async(req, res) => {
         const cart = await cartManager.getCartById(cartId)
         const totalPrice = cart.products.reduce((acumulador, prod) => acumulador += prod.product.price * prod.quantity, 0);
         const prodsQuantity = cart.products.reduce((acumulador, prod) => acumulador += prod.quantity,0)
-    
+        console.log(cartId)
         res.render('purchase', {
-            cartProducts: cart.products,
             cartId,
             prodsQuantity,
             totalPrice
