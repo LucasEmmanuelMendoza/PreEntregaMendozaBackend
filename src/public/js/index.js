@@ -2,8 +2,8 @@
 const socket = io(); 
 
 //================== Ticket ==================(
-const addTicket = (event) => {
-/*         const email = document.getElementById('emailPurchaser').value
+/*const addTicket = (event) => {
+         const email = document.getElementById('emailPurchaser').value
         const totalPrice = parseFloat(event.currentTarget.getAttribute('totalPrice-id'));
     
         const date = new Date()
@@ -16,14 +16,22 @@ const addTicket = (event) => {
             purchaser: email
         } 
         alert('Ticket de compra generado con éxito')
-        socket.emit('addTicket', ticket )  */
+        socket.emit('addTicket', ticket )  
         console.log('Hola')
-    }
+    }*/
    
-    document.addEventListener('DOMContentLoaded', function() {
+    /* document.addEventListener('DOMContentLoaded', function() {
         const btnPurchase = document.getElementById('btnPurchase');
     
         btnPurchase.addEventListener('click', addTicket);
+    }); */
+
+    const saludo = () => {
+        alert('Hola')
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        const btnPurchase = document.getElementById('btnPurchase');
+        btnPurchase.addEventListener('click', saludo);
     });
 
 //================== Cart ======================
