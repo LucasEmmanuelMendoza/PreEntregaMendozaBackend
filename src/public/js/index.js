@@ -1,5 +1,5 @@
 //cliente
-const socket = io(); 
+const socket = io();
 
 //================== Cart ======================
 const addToCart = (event) => {
@@ -120,13 +120,16 @@ socket.on('productosServidor', (data) => {
 
 //================================= Ticket ===================================
 
-const addTicket = (event) => {
+const addTicket = async(event) => {
     const email = document.getElementById('emailPurchaser').value
     const totalPrice = parseFloat(event.currentTarget.getAttribute('totalPrice-id'));
-   
+    const cartId = event.currentTarget.getAttribute('cartId-id')
+
     const date = new Date()
     const purchase_dateTime = date.toISOString() 
+
     const ticket = {
+        cartId,
         purchase_dateTime,
         amount: totalPrice,
         purchaser: email

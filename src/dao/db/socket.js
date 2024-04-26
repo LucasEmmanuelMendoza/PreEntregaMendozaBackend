@@ -3,6 +3,7 @@ const MessageManager = require('../../controller/messageManager.js')
 const CartManager = require('../../services/cartService.js')
 const TicketManager = require('../../dao/db/ManagerMongo/ticketManager.js')
 const { v4: uuidv4  } = require('uuid');
+const ProductManager = require('./ManagerMongo/productManager.js');
 
 const product = new ProductService()
 const message = new MessageManager()
@@ -57,11 +58,19 @@ const funcionSocket = (io) => {
 
     socket.on('addTicket', (ticket) => {
       (async () => {
-        const code = uuidv4();
+        const code = uuidv4(); 
+        const cart = await cartManager.findCartById(ticket.cartId);
+        const products = await product.findProducts();
+
+        //check stock:
+
+        
         const newTicket = {
-          ...ticket,
-          code
-        }
+          code,
+          purchase_dateTime: ticket.purchase_dateTime,
+          amount: ticket.amount,
+          purchaser: ticket.purchaser,
+        } 
         await ticketManager.addTicket(newTicket)
       })(); 
     })
