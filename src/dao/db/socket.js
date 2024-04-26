@@ -57,14 +57,12 @@ const funcionSocket = (io) => {
 
     socket.on('addTicket', (ticket) => {
       (async () => {
-        //const code = uuidv4()
-       const code = '10';
+        const code = uuidv4();
         const newTicket = {
           ...ticket,
           code
         }
-        await ticketManager.addTicket(newTicket)  
-        console.log('Ticket generado')
+        await ticketManager.addTicket(newTicket)
       })(); 
     })
 

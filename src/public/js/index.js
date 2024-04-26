@@ -123,12 +123,10 @@ socket.on('productosServidor', (data) => {
 const addTicket = (event) => {
     const email = document.getElementById('emailPurchaser').value
     const totalPrice = parseFloat(event.currentTarget.getAttribute('totalPrice-id'));
-    console.log(totalPrice)
+   
     const date = new Date()
     const purchase_dateTime = date.toISOString() 
-    const code = '1344FAs313fr'
     const ticket = {
-        code,
         purchase_dateTime,
         amount: totalPrice,
         purchaser: email
