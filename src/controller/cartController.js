@@ -90,6 +90,7 @@ const getCartById = async (req, res) => {
     const cartId = req.params.cid;
     //const user = req.session.passport.user;
     const cart = await cartManager.getCartByIdPopulate(cartId)
+    console.log(cart.products)
     try{
         res.render('cart', {
             cartProducts: cart.products,
