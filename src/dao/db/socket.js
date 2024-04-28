@@ -1,6 +1,6 @@
 const ProductService = require('../../services/productService.js')
 const MessageManager = require('../../controller/messageManager.js')
-const CartManager = require('../../services/cartService.js')
+const CartManager = require('../db/ManagerMongo/cartManager.js')
 const TicketManager = require('../../dao/db/ManagerMongo/ticketManager.js')
 const { v4: uuidv4  } = require('uuid');
 const ProductManager = require('./ManagerMongo/productManager.js');
@@ -51,7 +51,7 @@ const funcionSocket = (io) => {
 
   socket.on('prodToCart', (cart) => { 
       (async () => {
-        await cartManager.addProductToCart(cart.cartId, cart.prod)
+        await cartManager.addProduct(cart.cartId, cart.prod)
         console.log(`Producto ${cart.prod} agregado al carro`)
       })();
     })
@@ -59,7 +59,7 @@ const funcionSocket = (io) => {
     socket.on('addTicket', (ticket) => {
       (async () => {
         const code = uuidv4(); 
-        const cart = await cartManager.findCartById(ticket.cartId);
+        const cart = await cartManager.getCartById(ticket.cartId);
         const products = await productManager.getProducts();
 
         let newAmount = 0
@@ -72,7 +72,7 @@ const funcionSocket = (io) => {
               await productManager.updateProduct(prod._id, prod)
               cartPurchase.push(prodCart);
               newAmount += prodCart.quantity * prodCart.product.price
-              await cartManager.deleteProductFromCart(cart._id, prodCart.product._id)
+              await cartManager.deleteProduct(cart._id, prodCart.product._id)
             }
           }
         };
