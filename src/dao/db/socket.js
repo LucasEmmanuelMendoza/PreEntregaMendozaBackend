@@ -5,14 +5,14 @@ const TicketManager = require('../../dao/db/ManagerMongo/ticketManager.js')
 const { v4: uuidv4  } = require('uuid');
 const ProductManager = require('./ManagerMongo/productManager.js');
 
-const product = new ProductService()
+const productManager = new ProductManager()
 const message = new MessageManager()
 const cartManager = new CartManager()
 const ticketManager = new TicketManager()
 
 let productos = [];
 (async() => {
-    productos = await product.findProducts()
+    productos = await productManager.getProducts()
 })();
 
 let messages = [];
@@ -26,8 +26,8 @@ const funcionSocket = (io) => {
 
   socket.on('addProd', (data) => {
     (async() => {  
-      await product.addProd(data);
-      productos = await product.findProducts()
+      await productManager.addProduct(data);
+      productos = await productManager.getProducts()
       productos.payload.push(data);
     })();
     socket.emit('productosServidor', productos.payload);
@@ -36,7 +36,7 @@ const funcionSocket = (io) => {
   socket.on('deleteProd', (data) => {
     productos = productos.filter((prod) => prod._id != data);
     (async() => {
-      await product.deleteProd(data);
+      await productManager.deleteProduct(data);
     })();
     socket.emit('productosServidor', productos);
   }) 
@@ -60,21 +60,32 @@ const funcionSocket = (io) => {
       (async () => {
         const code = uuidv4(); 
         const cart = await cartManager.findCartById(ticket.cartId);
-        const products = await product.findProducts();
+        const products = await productManager.getProducts();
 
-        //check stock:
+        let newAmount = 0
+        const cartPurchase = []
 
-        
-        const newTicket = {
+        for(prodCart of cart.products){
+          for(prod of products){
+             if((prodCart.product._id.toString() === prod._id.toString()) && (prodCart.quantity <= prod.stock)){
+              prod.stock -= prodCart.quantity;
+              await productManager.updateProduct(prod._id, prod)
+              cartPurchase.push(prodCart);
+              newAmount += prodCart.quantity * prodCart.product.price
+              await cartManager.deleteProductFromCart(cart._id, prodCart.product._id)
+            }
+          }
+        };
+
+         const newTicket = {
           code,
           purchase_dateTime: ticket.purchase_dateTime,
-          amount: ticket.amount,
+          amount: newAmount,
           purchaser: ticket.purchaser,
         } 
         await ticketManager.addTicket(newTicket)
       })(); 
     })
-
   });
 };
 
