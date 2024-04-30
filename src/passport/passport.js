@@ -11,6 +11,11 @@ const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt')
 const userManager = new UserManager()
 const cartManager = new CartManager()
 
+    
+function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+}
+
 const initializePassport = () => {
 
     const cookieExtractor = function(req){
@@ -89,13 +94,25 @@ const initializePassport = () => {
                 }else{
                     const cart = await cartManager.createCart()
                     let newUser = {
-                    first_name: userData.first_name,
-                    last_name: userData.last_name,
-                    email: username, 
-                    age: userData.age,
-                    password: createHash(password),
-                    cartId: cart._id            
-                }
+                        first_name: userData.first_name,
+                        last_name: userData.last_name,
+                        email: username, 
+                        age: userData.age,
+                        password: createHash(password),
+                        cartId: cart._id            
+                    }
+
+                    for (let key of Object.keys(newUser)) {
+                        let field = newUser[key];
+                        if (typeof field === 'string' && field.trim() === '' || field === null) {
+                            return done('Error, todos los campos son obligatorios.');
+                        }
+                    }
+
+                    if (!isValidEmail(newUser.email)) {
+                        return done('Error, el campo "Email" no es válido.');
+                    }
+
                     let result = await userManager.addUser(newUser)
                     return done(null, result)
                 }

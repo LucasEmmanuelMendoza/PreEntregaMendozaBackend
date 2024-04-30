@@ -14,12 +14,13 @@ body{
     flex-direction: column;
     min-height: 100vh;
 
-<<<<<<< HEAD
+}
+/*<<<<<<< HEAD
     color: rgb(89, 12, 141);
 =======
     color: rgb(255, 0, 0);
 >>>>>>> 367df746af458daf7b8332dfe8a9aaa57bb06ea0
-}
+}*/
 
 main{
     flex-grow: 1;
