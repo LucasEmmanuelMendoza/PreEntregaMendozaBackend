@@ -1,9 +1,11 @@
 const ProductService = require('../../services/productService.js')
 const MessageManager = require('../../controller/messageManager.js')
 const CartManager = require('../db/ManagerMongo/cartManager.js')
+//const CartManager = require('../fileSystem/cartManager.js')
 const TicketManager = require('../../dao/db/ManagerMongo/ticketManager.js')
 const { v4: uuidv4  } = require('uuid');
 const ProductManager = require('./ManagerMongo/productManager.js');
+//const ProductManger = require('../fileSystem/productManager.js')
 
 const productManager = new ProductManager()
 const message = new MessageManager()
@@ -77,15 +79,25 @@ const funcionSocket = (io) => {
           }
         };
 
-         const newTicket = {
+        const newTicket = {
           code,
           purchase_dateTime: ticket.purchase_dateTime,
           amount: newAmount,
           purchaser: ticket.purchaser,
-        } 
-        await ticketManager.addTicket(newTicket)
+        }
+                    
+        if(newTicket.amount > 0){
+          const addTicket = await ticketManager.addTicket(newTicket)
+  
+          if(addTicket){
+            console.log('Ticket de compra generado con éxito')
+          }
+        }else{
+          console.log('No hay productos en stock para el carrito seleccionado')
+        }
       })(); 
     })
+
   });
 };
 

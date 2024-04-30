@@ -11,6 +11,10 @@ const github = require('passport-github2')
 const userManager = new UserManager()
 const cartManager = new CartManager()
 
+function validateEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+}
+
 const initializePassport = () => {
 
     passport.use('github', new github.Strategy(
@@ -59,7 +63,7 @@ const initializePassport = () => {
         }
     ))
 
-    passport.use('register', new LocalStrategy(
+/*     passport.use('register', new LocalStrategy(
         {usernameField: 'email', passReqToCallback: true},
         async(req, username, password, done)=>{
             try{
@@ -77,6 +81,47 @@ const initializePassport = () => {
                     password: createHash(password),
                     cartId: cart._id            
                 }
+                    let result = await userManager.addUser(newUser)
+                    return done(null, result)
+                }
+            }catch(error){
+                done('Register error: ', error)
+            }
+        }
+    )) */
+
+    passport.use('register', new LocalStrategy(
+        {usernameField: 'email', passReqToCallback: true},
+        async(req, username, password, done)=>{
+            try{
+                let userData = req.body
+                let user = await userManager.existsUser(username)
+                if(user){
+                    return done('Error, usuario existente')
+                }else{
+                    const cart = await cartManager.createCart()
+                    let newUser = {
+                        first_name: userData.first_name,
+                        last_name: userData.last_name,
+                        email: username, 
+                        age: userData.age,
+                        password: createHash(password),
+                        cartId: cart._id            
+                    }
+
+                    console.log()
+
+                    for(const key of Object.keys(newUser)){
+                        const field = newUser[key];
+                        if (typeof field === 'string' && field.trim() === '' || field === null) {
+                            return done('Error, odos los campos son obligatorios');
+                        }
+                    }
+
+                    if(!validateEmail(newUser.email)){
+                        return done('Error, el campo "Email" no es válido');
+                    } 
+
                     let result = await userManager.addUser(newUser)
                     return done(null, result)
                 }

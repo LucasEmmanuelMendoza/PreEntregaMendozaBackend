@@ -134,7 +134,6 @@ const addTicket = async(event) => {
         amount: totalPrice,
         purchaser: email
     } 
-    alert('Ticket de compra generado con éxito')
     socket.emit('addTicket', ticket)  
 }
 const btnPurchase = document.getElementById('btnPurchase');
