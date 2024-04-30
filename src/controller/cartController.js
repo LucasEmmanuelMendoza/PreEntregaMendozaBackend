@@ -88,13 +88,17 @@ const createCart = async (req, res) => {
 
 const getCartById = async (req, res) => {
     const cartId = req.params.cid;
-    //const user = req.session.passport.user;
     const cart = await cartManager.getCartByIdPopulate(cartId)
-    console.log(cart.products)
+
+    const totalPrice = cart.products.reduce((acumulador, prod) => acumulador += prod.product.price * prod.quantity, 0);
+    const prodsQuantity = cart.products.reduce((acumulador, prod) => acumulador += prod.quantity,0)
+    
     try{
         res.render('cart', {
             cartProducts: cart.products,
-            cartId 
+            cartId,
+            totalPrice,
+            prodsQuantity
         })
     }catch(error){
         res.status(500).send(error)

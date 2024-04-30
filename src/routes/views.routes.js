@@ -40,10 +40,11 @@ routerViews.get('/carts/:cid', redirectToLogin, async(req, res) => {
 
     const totalPrice = cartProds.products.reduce((acumulador, prod) => acumulador += prod.product.price * prod.quantity, 0);
     const prodsQuantity = cartProds.products.reduce((acumulador, prod) => acumulador += prod.quantity,0)
- 
+    
+    console.log(cartProds.products)
     if(cartProds){
         res.render('cart', {
-            products : cartProds.products,
+            cartProducts : cartProds.products,
             cartId,
             totalPrice,
             prodsQuantity

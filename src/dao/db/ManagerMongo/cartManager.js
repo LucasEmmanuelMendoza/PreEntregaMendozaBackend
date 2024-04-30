@@ -54,9 +54,9 @@ class CartManager{
         try{
             const foundCart = await Carts.findOne({_id:cartId});
             if(foundCart != null){
-                const existeProd = foundCart.products.some(prod => prod.product == productId)
-                if(existeProd != -1){//exite el prod
-                    foundCart.products = foundCart.products.filter(prod => prod.product != productId);
+                const existeProd = foundCart.products.some(prod => prod.product.toString() === productId.toString())
+                if(existeProd != -1){//exite el prod 
+                    foundCart.products = foundCart.products.filter(prod => prod.product._id.toString() !== productId.toString());
                     await Carts.updateOne({"_id": cartId}, foundCart);
                     return true;
                 }
