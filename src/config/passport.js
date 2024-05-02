@@ -1,17 +1,41 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
-//const userModel = require('../dao/db/models/user.model.js')
 const userModel = require('../dao/db/models/user.model.js')
 const { createHash, isValidPassword } = require('../utils/bcrypt.js')
-//const UserManager = require('../dao/db/productManagerMongo/userManager.js')
-const UserManager = require('../controller/userManager.js')
-const CartManager = require('../controller/cartManager.js')
+const UserManager = require('../dao/db/productManagerMongo/userManager.js')
+const CartManager = require('../dao/db/productManagerMongo/cartManager.js')
 const github = require('passport-github2')
+//const { jwt } = require('jsonwebtoken')
+const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt')
 
 const userManager = new UserManager()
 const cartManager = new CartManager()
 
+    
+function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+}
+
 const initializePassport = () => {
+
+    const cookieExtractor = function(req){
+        let token = null;
+        if(req && req.cookies){
+            token = req.cookies['cookieToken'];
+        }
+        return token
+    }
+
+    passport.use('jwt', new JwtStrategy({
+        jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
+        secretOrKey: 'coderSecret2'
+    }, async (jwt_payload, done) => {
+        try{
+            return done(null, jwt_payload);
+        }catch (error){
+            return done('Error en jwt passport', error);
+        }
+    }));
 
     passport.use('github', new github.Strategy(
         {
@@ -21,7 +45,7 @@ const initializePassport = () => {
         },
         async(accessToken, refreshToken, profile, done) => {
             try{
-                let {name, email}= profile._json;//esto viene de github, o sea que existe
+                let {name, email} = profile._json;
                 let usuario = await userManager.existsUser(email);
                 let retorno = ''
                 if(usuario == null){
@@ -29,7 +53,7 @@ const initializePassport = () => {
                     await userManager.addUser({first_name:name, email, cartId: cart._id, github: profile});
                     retorno = {usuario:name, email: email, cartId: cart._id}
                 }else{
-                    retorno = {usuario:usuario.first_name, email:usuario.email, cartId:usuario.cartId} 
+                    retorno={usuario:usuario.first_name, email:usuario.email, cartId:usuario.cartId} 
                 }
                 return done(null, retorno)
             }catch(error){
@@ -70,13 +94,30 @@ const initializePassport = () => {
                 }else{
                     const cart = await cartManager.createCart()
                     let newUser = {
-                    first_name: userData.first_name,
-                    last_name: userData.last_name,
-                    email: username, 
-                    age: userData.age,
-                    password: createHash(password),
-                    cartId: cart._id            
-                }
+                        first_name: userData.first_name,
+                        last_name: userData.last_name,
+                        email: username, 
+                        age: userData.age,
+                        password: createHash(password),
+                        cartId: cart._id            
+                    }
+                    for (let key of Object.keys(newUser)) {
+                        let field = newUser[key];
+                        console.log('field: ', field)
+                    }
+                    
+                    for (let key of Object.keys(newUser)) {
+                        let field = newUser[key];
+                        console.log('field: ', field)
+                        if(field.trim() === '' || field === null){
+                            return done('Error, todos los campos son obligatorios.');
+                        }
+                    }
+
+                    if (!isValidEmail(newUser.email)) {
+                        return done('Error, el campo "Email" no es válido.');
+                    }
+
                     let result = await userManager.addUser(newUser)
                     return done(null, result)
                 }
@@ -93,7 +134,6 @@ const initializePassport = () => {
       passport.deserializeUser(function(user, done) {
         done(null, user);
       });
-
 }
 
 module.exports = initializePassport 

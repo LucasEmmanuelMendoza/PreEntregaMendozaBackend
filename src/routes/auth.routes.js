@@ -40,6 +40,7 @@ function redirectToProfile(req, res, next){
 }
 
 routerAuth.post('/register', passport.authenticate('register', {failureRedirect:'/auth/failRegister'}), async(req, res) => {
+    console.log(req.session.user)
     res.redirect('/views/login-view')
 })
 routerAuth.get('/failRegister', (req, res) => {
