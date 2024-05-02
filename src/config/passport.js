@@ -2,8 +2,8 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const userModel = require('../dao/db/models/user.model.js')
 const { createHash, isValidPassword } = require('../utils/bcrypt.js')
-const UserManager = require('../dao/db/productManagerMongo/userManager.js')
-const CartManager = require('../dao/db/productManagerMongo/cartManager.js')
+const UserManager = require('../dao/db/ManagerMongo/userManager.js')
+const CartManager = require('../dao/db/ManagerMongo/cartManager.js')
 const github = require('passport-github2')
 //const { jwt } = require('jsonwebtoken')
 const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt')
@@ -11,12 +11,7 @@ const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt')
 const userManager = new UserManager()
 const cartManager = new CartManager()
 
-<<<<<<< HEAD
-    
-function isValidEmail(email) {
-=======
 function validateEmail(email) {
->>>>>>> b7d8e5d210f6f04220819c7c011c3d7322ed4a57
     return /\S+@\S+\.\S+/.test(email);
 }
 
@@ -86,51 +81,7 @@ const initializePassport = () => {
             }
         }
     ))
-
-/*     passport.use('register', new LocalStrategy(
-        {usernameField: 'email', passReqToCallback: true},
-        async(req, username, password, done)=>{
-            try{
-                let userData = req.body
-                let user = await userManager.existsUser(username)
-                if(user){
-                    return done('Error, usuario existente')
-                }else{
-                    const cart = await cartManager.createCart()
-                    let newUser = {
-                        first_name: userData.first_name,
-                        last_name: userData.last_name,
-                        email: username, 
-                        age: userData.age,
-                        password: createHash(password),
-                        cartId: cart._id            
-                    }
-                    for (let key of Object.keys(newUser)) {
-                        let field = newUser[key];
-                        console.log('field: ', field)
-                    }
-                    
-                    for (let key of Object.keys(newUser)) {
-                        let field = newUser[key];
-                        console.log('field: ', field)
-                        if(field.trim() === '' || field === null){
-                            return done('Error, todos los campos son obligatorios.');
-                        }
-                    }
-
-                    if (!isValidEmail(newUser.email)) {
-                        return done('Error, el campo "Email" no es válido.');
-                    }
-
-                    let result = await userManager.addUser(newUser)
-                    return done(null, result)
-                }
-            }catch(error){
-                done('Register error: ', error)
-            }
-        }
-    )) */
-
+    
     passport.use('register', new LocalStrategy(
         {usernameField: 'email', passReqToCallback: true},
         async(req, username, password, done)=>{
