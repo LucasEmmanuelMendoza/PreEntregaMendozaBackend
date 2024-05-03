@@ -11,7 +11,18 @@ const MessageManager = require('../controller/messageManager.js')
 const messageManeger = new MessageManager()
 
 const CartService = require('../services/cartService.js')
+const generateProduct = require('../config/mocks/products.mocks.js')
 const cartManager = new CartService()
+
+routerViews.get('/mockingproducts', (req, res) => {
+    const products = [];
+    for(let i=0; i<100; i++){
+        products.push(generateProduct())
+    }
+    res.render('mockproducts',{
+        products: products
+    })
+})
 
 routerViews.get('/products', redirectToLogin,  async(req, res) => {
     const products = await productManager.getProducts()

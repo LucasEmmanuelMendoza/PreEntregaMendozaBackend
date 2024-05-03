@@ -101,8 +101,6 @@ const initializePassport = () => {
                         cartId: cart._id            
                     }
 
-                    console.log()
-
                     for(const key of Object.keys(newUser)){
                         const field = newUser[key];
                         if (typeof field === 'string' && field.trim() === '' || field === null) {

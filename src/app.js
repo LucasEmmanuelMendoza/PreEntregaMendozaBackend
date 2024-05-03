@@ -24,7 +24,8 @@ const funcionSocket = require('./dao/db/socket.js');
 const { routerAuth } = require('./routes/auth.routes.js');
 const initializePassport = require('./config/passport.js');
 const passport = require('passport');
-const cors = require('cors')
+const cors = require('cors');
+const routerMocking = require('./routes/mocking.routes.js');
 
 //Public
 app.use(express.static(__dirname+'/public'))
@@ -65,6 +66,7 @@ app.use('/api/carts', routerCarts)
 app.use('/api/sessions', routerSession)
 app.use('/views', routerView)
 app.use('/auth', routerAuth)
+app.use('/routerMocking', routerMocking)
 
 const io = new Server(server); 
 
