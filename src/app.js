@@ -20,6 +20,8 @@ const MongoStore = require('connect-mongo')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
 
+const dotenv = require('dotenv').config();
+
 const funcionSocket = require('./dao/db/socket.js');
 const { routerAuth } = require('./routes/auth.routes.js');
 const initializePassport = require('./config/passport.js');
@@ -71,6 +73,8 @@ app.use('/routerMocking', routerMocking)
 const io = new Server(server); 
 
 funcionSocket(io);
+
+console.log(process.env.PERSISTENCE)
 
 server.listen(PORT, ()=> {
   console.log('Server run on port', PORT)

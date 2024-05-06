@@ -1,14 +1,16 @@
 const config = require('../config/config.js')
 let pathProductManager;
 
+console.log('c.persistence: ',config.persistence)
+
 switch(config.persistence){
     case "MONGO":
-        pathProductManager = require(__dirname + '/../dao/db/ManagerMongo/productManager.js');
+        pathProductManager = __dirname + '../dao/db/ManagerMongo/productManager.js';
     break;
 
     case "FILE":
-        pathProductManager = require(__dirname + '/../dao/fileSystem/productManager.js');
+        pathProductManager = __dirname + '../dao/fileSystem/productManager.js';
     break;
 }
 
-module.exports = { pathProductManager }
+module.exports = pathProductManager 

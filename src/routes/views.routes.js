@@ -11,8 +11,15 @@ const MessageManager = require('../controller/messageManager.js')
 const messageManeger = new MessageManager()
 
 const CartService = require('../services/cartService.js')
-const generateProduct = require('../config/mocks/products.mocks.js')
+const generateProduct = require('../config/mocks/products.mocks.js');
 const cartManager = new CartService()
+
+/*const pathProducts = '';
+ process.env.PERSISTANCE == 'MONGO'
+let ProductManager =  
+const config = require('../config/config.js')
+console.log('Persistence:', config.persistence)
+console.log('Process.env.PERSISTENCE:', process.env.PERSISTENCE)*/
 
 routerViews.get('/mockingproducts', (req, res) => {
     const products = [];

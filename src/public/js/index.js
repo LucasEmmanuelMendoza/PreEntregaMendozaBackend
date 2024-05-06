@@ -138,4 +138,6 @@ const addTicket = async(event) => {
 }
 const btnPurchase = document.getElementById('btnPurchase');
 
-btnPurchase.addEventListener('click', addTicket); 
+if(btnPurchase != null){
+    btnPurchase.addEventListener('click', addTicket); 
+}

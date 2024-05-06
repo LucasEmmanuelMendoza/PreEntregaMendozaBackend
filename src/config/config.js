@@ -1,14 +1,18 @@
-const dotenv = require('dotenv').config()
-const { Command } = require('commander')
-const program = new Command()
+const { Command } = require('commander');
+const dotenv = require('dotenv');
 
-program
-    .option('--mode <mode>', 'Ambiente de trabajo', 'prod')
-program.parse()
+const program = new Command();
 
 dotenv.config({
-    path: program.opts().mode == 'dev' ? '.env.dev.MONGO': '.env.prod.FS'
-})
+    path: program.opts().mode == 'dev' ? '.env.dev' : '.env.prod'
+});
+
+program
+    .option('--mode <mode>', 'modo de trabajo', 'dev')
+    .parse();
+
+console.log(program.opts());
+
 
 module.exports = {
     persistence: process.env.PERSISTENCE
