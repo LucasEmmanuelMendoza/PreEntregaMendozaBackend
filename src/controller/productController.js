@@ -1,6 +1,4 @@
-const ProductService = require('../services/productService.js')
 const ProductManagerMongo = require('./productManager.js')
-
 const productManager = new ProductManagerMongo
 
 class ProductController{

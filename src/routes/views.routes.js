@@ -10,16 +10,10 @@ const productManager = new ProductManager()
 const MessageManager = require('../controller/messageManager.js')
 const messageManeger = new MessageManager()
 
-const CartService = require('../services/cartService.js')
-const generateProduct = require('../config/mocks/products.mocks.js');
-const cartManager = new CartService()
+const CartManager = require('../dao/db/ManagerMongo/cartManager.js')
+const cartManager = new CartManager()
 
-/*const pathProducts = '';
- process.env.PERSISTANCE == 'MONGO'
-let ProductManager =  
-const config = require('../config/config.js')
-console.log('Persistence:', config.persistence)
-console.log('Process.env.PERSISTENCE:', process.env.PERSISTENCE)*/
+const generateProduct = require('../config/mocks/products.mocks.js');
 
 routerViews.get('/mockingproducts', (req, res) => {
     const products = [];
@@ -54,7 +48,7 @@ routerViews.get('/home', async(req, res) => {
 
 routerViews.get('/carts/:cid', redirectToLogin, async(req, res) => {
     const cartId = req.params.cid;
-    const cartProds = await cartManager.findCartById(cartId)
+    const cartProds = await cartManager.getCartById(cartId)
 
     const totalPrice = cartProds.products.reduce((acumulador, prod) => acumulador += prod.product.price * prod.quantity, 0);
     const prodsQuantity = cartProds.products.reduce((acumulador, prod) => acumulador += prod.quantity,0)

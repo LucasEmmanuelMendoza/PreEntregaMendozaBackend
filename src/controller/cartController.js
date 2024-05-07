@@ -1,8 +1,4 @@
-const CartService = require('../services/cartService.js');
 const CartManager = require('./cartManager.js');
-
-const ProductManager = require('./productManager.js')
-const productManager = new ProductManager()
  
 const cartManager = new CartManager()
 

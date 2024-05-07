@@ -1,4 +1,3 @@
-const ProductService = require('../../services/productService.js')
 const MessageManager = require('../../controller/messageManager.js')
 const CartManager = require('../db/ManagerMongo/cartManager.js')
 //const CartManager = require('../fileSystem/cartManager.js')
