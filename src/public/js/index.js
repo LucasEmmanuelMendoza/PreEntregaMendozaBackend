@@ -1,4 +1,3 @@
-//cliente
 const socket = io();
 
 //================== Cart ======================
@@ -121,20 +120,26 @@ socket.on('productosServidor', (data) => {
 //================================= Ticket ===================================
 
 const addTicket = async(event) => {
-    const email = document.getElementById('emailPurchaser').value
-    const totalPrice = parseFloat(event.currentTarget.getAttribute('totalPrice-id'));
-    const cartId = event.currentTarget.getAttribute('cartId-id')
+    try{
+        const email = document.getElementById('emailPurchaser').value
+        const totalPrice = parseFloat(event.currentTarget.getAttribute('totalPrice-id'));
+        const cartId = event.currentTarget.getAttribute('cartId-id')
 
-    const date = new Date()
-    const purchase_dateTime = date.toISOString() 
+        const date = new Date()
+        const purchase_dateTime = date.toISOString() 
 
-    const ticket = {
-        cartId,
-        purchase_dateTime,
-        amount: totalPrice,
-        purchaser: email
-    } 
-    socket.emit('addTicket', ticket)  
+        const ticket = {
+            cartId,
+            purchase_dateTime,
+            amount: totalPrice,
+            purchaser: email
+        } 
+
+        socket.emit('addTicket', ticket)}
+    catch(error){
+        console.log('Error:', error.cause)
+        res.status(500).send({error: error.code, message: error.message})
+    }
 }
 const btnPurchase = document.getElementById('btnPurchase');
 

@@ -7,6 +7,10 @@ const CartManager = require('../dao/db/ManagerMongo/cartManager.js')
 const github = require('passport-github2')
 //const { jwt } = require('jsonwebtoken')
 const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt')
+const { CustomError } = require('../services/errors/CustomError.js')
+const { EErrors } = require('../services/errors/errors-enum.js')
+const { userRegisterErrorInfoENG, userRegisterErrorInfoSP, wrongEmailRegisterErrorENG, wrongEmailRegisterErrorSP } = require('../services/errors/messages/user-register-error.message.js')
+const { userLoginErrorInfoSP, userLoginErrorInfoENG } = require('../services/errors/messages/user-login-error.message.js')
 
 const userManager = new UserManager()
 const cartManager = new CartManager()
@@ -71,10 +75,22 @@ const initializePassport = () => {
                     if(isValidPassword(user, userData.password)){
                         return done(null, user)
                     }else{
-                        return done(null, 'Usuario o contraseña incorrectos')
+                        //return done(null, 'Usuario o contraseña incorrectos')
+                        throw CustomError.createError({
+                            name: 'User Login Error',
+                            cause: userLoginErrorInfoSP(userData),
+                            message: 'Usuario o contraseña incorrectos',
+                            code: EErrors.INVALID_TYPES_ERROR
+                        })
                     }
                 }else{
-                    return done(null, 'Usuario o contraseña incorrectos')
+                    //return done(null, 'Usuario o contraseña incorrectos')
+                    throw CustomError.createError({
+                        name: 'User Login Error',
+                        cause: userLoginErrorInfoSP(userData),
+                        message: 'Usuario o contraseña incorrectos',
+                        code: EErrors.INVALID_TYPES_ERROR
+                    })
                 }
             }catch(error){
                 return done(error)
@@ -104,19 +120,32 @@ const initializePassport = () => {
                     for(const key of Object.keys(newUser)){
                         const field = newUser[key];
                         if (typeof field === 'string' && field.trim() === '' || field === null) {
-                            return done('Error, odos los campos son obligatorios');
+                            throw CustomError.createError({
+                                name: 'User Register Error',
+                                cause: userRegisterErrorInfoSP({newUser}),
+                                message: 'Error tratando de registrar un usuario',
+                                code: EErrors.INVALID_TYPES_ERROR
+                            })
                         }
                     }
 
-                    if(!validateEmail(newUser.email)){
-                        return done('Error, el campo "Email" no es válido');
+                    console.log('newUser.email: ', newUser.email)
+                    console.log(validateEmail(newUser.email))
+                    if(!validateEmail(newUser.email)){ 
+                        throw CustomError.createError({
+                            name: 'Wrong Register Email',
+                            cause: wrongEmailRegisterErrorSP(newUser.email),
+                            message: 'Email inválido para el registro',
+                            code: EErrors.INVALID_TYPES_ERROR
+                        })
                     } 
 
                     let result = await userManager.addUser(newUser)
                     return done(null, result)
                 }
             }catch(error){
-                done('Register error: ', error)
+                console.log('Error:', error.cause)
+                res.status(500).send({error: error.code, message: error.message})
             }
         }
     ))

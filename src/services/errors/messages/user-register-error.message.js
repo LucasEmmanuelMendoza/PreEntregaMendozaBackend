@@ -9,7 +9,7 @@ const userRegisterErrorInfoSP = (user) => {
 }
 
 const userRegisterErrorInfoENG = (user) => {
-    `One or more properties were sent incomplete or are not valid. 
+    return `One or more properties were sent incomplete or are not valid. 
     List of required properties: 
     -> first_name: type String, received: ${user.first_name} 
     -> last_name: type String, received: ${user.last_name} 
@@ -17,3 +17,13 @@ const userRegisterErrorInfoENG = (user) => {
     -> password: type String, received: ${user.password} 
     -> age: type Number, received: ${user.age}`;
 }
+
+const wrongEmailRegisterErrorSP = (email) => {
+    return `El email ingresado no es válido: ${email}`
+}
+
+const wrongEmailRegisterErrorENG = (email) => {
+    return `The entered email is not valid: ${email}`;
+}
+
+module.exports = { userRegisterErrorInfoENG, userRegisterErrorInfoSP, wrongEmailRegisterErrorENG, wrongEmailRegisterErrorSP }
