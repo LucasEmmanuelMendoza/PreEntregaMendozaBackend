@@ -6,6 +6,8 @@ const views = require('../src/routes/views.routes.js')
 const routerView = views.routerViews;
 const sessions = require('../src/routes/session.routes.js')
 const routerSession = sessions.routerSession;
+const logger = require('../src/routes/log.routes.js')
+const routerLogger = logger.routerLogger
 
 const Database = require('./dao/db/index.js')
 
@@ -28,6 +30,7 @@ const initializePassport = require('./config/passport.js');
 const passport = require('passport');
 const cors = require('cors');
 const routerMocking = require('./routes/mocking.routes.js');
+const addLogger = require('./config/logger_CUSTOM.js');
 
 //Public
 app.use(express.static(__dirname+'/public'))
@@ -36,6 +39,7 @@ app.set('views', __dirname+'/views')
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(cookieParser())
+app.use(addLogger)
 
 //Motor de plantilla
 app.engine('handlebars', handlebars.engine())
@@ -69,12 +73,11 @@ app.use('/api/sessions', routerSession)
 app.use('/views', routerView)
 app.use('/auth', routerAuth)
 app.use('/routerMocking', routerMocking)
+app.use('/loggerTest', routerLogger)
 
 const io = new Server(server); 
 
 funcionSocket(io);
-
-console.log(process.env.PERSISTENCE)
 
 server.listen(PORT, ()=> {
   console.log('Server run on port', PORT)

@@ -7,10 +7,13 @@ program
     .option('--mode <mode>', 'modo de trabajo', 'dev')
 program.parse();
 
+const environment = program.opts().mode;
+
 dotenv.config({
-    path: program.opts().mode == 'dev' ? '.env.dev' : '.env.prod'
+    path: environment === 'dev' ? '.env.dev.MONGO' : '.env.prod.FS'
 });
 
 module.exports = {
-    persistence: process.env.PERSISTENCE
+    persistence: process.env.PERSISTENCE,
+    environment
 }
