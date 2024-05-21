@@ -1,25 +1,34 @@
 const socket = io();
-//
-
 //================== Email ======================
 //1)Enviar mail
-const btnSendEmail = document.querySelector('btn_email')
-const inputMail = document.getElementById('inputMail') 
+const btnSendEmail = document.getElementById('btn_email')
+const inputMail = document.getElementById('inputMail')
 
-btnSendEmail.addEventListener('click', function(){
-    socket.emit('sendEmail', inputMail.value)}
-)
+if(btnSendEmail, inputMail){
+    btnSendEmail.addEventListener('click', function(){
+        localStorage.setItem('userEmail', inputMail.value)
+        socket.emit('sendEmail', inputMail.value )}
+    )
+}
+
 //2)Cambiar contraseña
-const btnChangePass = document.getElementById('btnChangePassword')
 const pass1 = document.getElementById('newPass1')
 const pass2 = document.getElementById('newPass2')
+const btnChangePass = document.getElementById('btn_ChangePassword')
 
-const data = {pass1, pass2, inputMail}
-
-btnChangePass.addEventListener('click', function(){
-    socket.emit('changePassword', data)
-})
-
+if(btnChangePass){
+    btnChangePass.addEventListener('click', function(){
+        const inputMail = localStorage.getItem('userEmail');
+        if(inputMail){
+            const data = {
+                pass1:pass1.value,
+                pass2:pass2.value, 
+                inputMail: inputMail 
+            }
+            socket.emit('changePassword', data)
+        }
+    })
+}
 
 //================== Cart ======================
 const addToCart = (event) => {

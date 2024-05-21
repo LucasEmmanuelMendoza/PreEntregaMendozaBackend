@@ -8,12 +8,14 @@ const { EErrors } = require('../../services/errors/errors-enum.js');
 const { purchaseCartErrorInfoSP } = require('../../services/errors/messages/purchase-cart-error.message.js')
 const { CustomError } = require('../../services/errors/CustomError.js')
 //const ProductManger = require('../fileSystem/productManager.js')
-const {nodemailer} = require('nodemailer')
+const nodemailer = require('nodemailer');
+const UserManager = require('../../controller/userManager.js');
 
 const productManager = new ProductManager()
 const message = new MessageManager()
 const cartManager = new CartManager()
 const ticketManager = new TicketManager()
+const userManager = new UserManager()
 
 let productos = [];
 (async() => {
@@ -119,36 +121,45 @@ const funcionSocket = (io) => {
     });//fin socket addTicket
 
     socket.on('sendEmail', async(mailUser)=>{
-      const transporter = nodemailer.CreateTransport({
+      const transporter = nodemailer.createTransport({
         service: 'gmail',
         port: 587,
+        secure: false,
         auth:{
             user:'mendozalucas001@gmail.com',
             pass: 'cawpeioqdpuumojh'
-        }
+        },
       })
 
       let mensaje = await transporter.sendMail({
           from: 'ECommerce <ecommerce@gmail.com>',
           to: mailUser,
           subject: 'Recuperación de email',
-          text: 'uwU',
-          html: `
-              <div>
-                  <a href='http://localhost:8080/views/changePasswordView'> Cambiar contraseña </a>
-              </div>
-              `
-      })
+          text: 'Texto email',
+          html: `<div>
+                  <a href='http://localhost:8080/views/changePasswordView' class='btn btn-sucess'> Cambiar contraseña </a>
+                </div>`
+          })
+      if(!!mensaje.messageId){
+        console.log('Mensaje enviado', mensaje.messageId)
+      }
     })
 
     socket.on('changePassword', async(data)=>{
-      /*verificar: 1)pass iguales 2)email existe en la db, es decir, está registrado
-      3)pass distintas a la existente*/
+      //data = {pass1, pass2, inputMail}
+      /*verificar: 1)pass iguales 2)pass distintas a la existente*/
+      //traigo al usuario para verificar la contra y desp setear la nueva
 
-      
+      const user = await userManager.existsUser(data.inputMail)
+      console.log(data)
+      console.log('user:', user)
 
+      if(data.pass1 === data.pass2){
+        
+      }
 
     })
+    
   });
 };
 
