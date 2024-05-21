@@ -10,6 +10,7 @@ const { CustomError } = require('../../services/errors/CustomError.js')
 //const ProductManger = require('../fileSystem/productManager.js')
 const nodemailer = require('nodemailer');
 const UserManager = require('../../controller/userManager.js');
+const { isValidPassword, createHash } = require('../../utils/bcrypt.js');
 
 const productManager = new ProductManager()
 const message = new MessageManager()
@@ -146,18 +147,18 @@ const funcionSocket = (io) => {
     })
 
     socket.on('changePassword', async(data)=>{
-      //data = {pass1, pass2, inputMail}
-      /*verificar: 1)pass iguales 2)pass distintas a la existente*/
-      //traigo al usuario para verificar la contra y desp setear la nueva
-
       const user = await userManager.existsUser(data.inputMail)
-      console.log(data)
-      console.log('user:', user)
-
+      
       if(data.pass1 === data.pass2){
-        
+         if(isValidPassword(user, data.pass1)){//la contra es igual a la anterior
+            console.log('La nueva contraseña no puede ser igual a la anterior')
+         }else{
+          const newPassword = createHash(data.pass1)
+          await userManager.updatePassword(data.inputMail, newPassword)
+         }
+      }else{
+        console.log('Las contraseñas no coinciden')
       }
-
     })
     
   });
