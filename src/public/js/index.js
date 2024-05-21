@@ -1,4 +1,25 @@
 const socket = io();
+//
+
+//================== Email ======================
+//1)Enviar mail
+const btnSendEmail = document.querySelector('btn_email')
+const inputMail = document.getElementById('inputMail') 
+
+btnSendEmail.addEventListener('click', function(){
+    socket.emit('sendEmail', inputMail.value)}
+)
+//2)Cambiar contraseña
+const btnChangePass = document.getElementById('btnChangePassword')
+const pass1 = document.getElementById('newPass1')
+const pass2 = document.getElementById('newPass2')
+
+const data = {pass1, pass2, inputMail}
+
+btnChangePass.addEventListener('click', function(){
+    socket.emit('changePassword', data)
+})
+
 
 //================== Cart ======================
 const addToCart = (event) => {

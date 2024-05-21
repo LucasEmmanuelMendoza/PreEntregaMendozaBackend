@@ -5,7 +5,7 @@
   "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "src/app.js"
+    "start": "nodemon src/app.js"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +26,7 @@
     "mongodb": "^6.5.0",
     "mongoose": "^8.3.2",
     "mongoose-paginate-v2": "^1.8.0",
+    "nodemailer": "^6.9.13",
     "nodemon": "^3.1.0",
     "passport": "^0.7.0",
     "passport-github2": "^0.1.12",

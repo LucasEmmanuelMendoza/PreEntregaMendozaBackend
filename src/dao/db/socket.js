@@ -8,6 +8,7 @@ const { EErrors } = require('../../services/errors/errors-enum.js');
 const { purchaseCartErrorInfoSP } = require('../../services/errors/messages/purchase-cart-error.message.js')
 const { CustomError } = require('../../services/errors/CustomError.js')
 //const ProductManger = require('../fileSystem/productManager.js')
+const {nodemailer} = require('nodemailer')
 
 const productManager = new ProductManager()
 const message = new MessageManager()
@@ -117,6 +118,37 @@ const funcionSocket = (io) => {
       }
     });//fin socket addTicket
 
+    socket.on('sendEmail', async(mailUser)=>{
+      const transporter = nodemailer.CreateTransport({
+        service: 'gmail',
+        port: 587,
+        auth:{
+            user:'mendozalucas001@gmail.com',
+            pass: 'cawpeioqdpuumojh'
+        }
+      })
+
+      let mensaje = await transporter.sendMail({
+          from: 'ECommerce <ecommerce@gmail.com>',
+          to: mailUser,
+          subject: 'Recuperación de email',
+          text: 'uwU',
+          html: `
+              <div>
+                  <a href='http://localhost:8080/views/changePasswordView'> Cambiar contraseña </a>
+              </div>
+              `
+      })
+    })
+
+    socket.on('changePassword', async(data)=>{
+      /*verificar: 1)pass iguales 2)email existe en la db, es decir, está registrado
+      3)pass distintas a la existente*/
+
+      
+
+
+    })
   });
 };
 

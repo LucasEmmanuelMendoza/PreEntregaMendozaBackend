@@ -15,6 +15,18 @@ const cartManager = new CartManager()
 
 const generateProduct = require('../config/mocks/products.mocks.js');
 
+routerViews.get('/changePasswordView', (req, res) => {
+    res.render('changePassword',{
+
+    })
+})
+
+routerViews.get('/changePasswordEmailView', (req, res) => {
+    res.render('changePasswordEmail',{
+
+    })
+})
+
 routerViews.get('/mockingproducts', (req, res) => {
     const products = [];
     for(let i=0; i<100; i++){
