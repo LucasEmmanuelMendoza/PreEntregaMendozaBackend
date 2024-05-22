@@ -28,11 +28,12 @@ routerViews.get('/updateProducts',/*  onlyPremium, onlyAdmin, */ async(req, res)
 
 routerViews.get('/products', redirectToLogin,  async(req, res) => {
     const products = await productManager.getProducts()
+    const role = req.session.passport.user.role
     const userCartId = req.session.passport.user.cartId; 
     if(products){
         res.render('products', { 
             user: req.session.user,
-            products: products.map(product => ({ ...product, cartId: userCartId }))
+            products: products.map(product => ({ ...product, cartId: userCartId, role }))
         })
     } 
 })

@@ -53,9 +53,11 @@ const funcionSocket = (io) => {
     try{
       const prodDelete = await productManager.getProductById(data.idProd);
 
-      if(prodDelete.owner === data.user){
+      console.log('data:',data)
+      if(prodDelete.owner === data.user || data.user === 'adminCoder@coder.com'){
         await productManager.deleteProduct(data.idProd);
         productos = productos.filter((prod) => prod._id != data.isProd);
+        console.log('Producto eliminado')
         socket.emit('productosServidor', productos);
       }else{
         console.log('No tienes permiso para eliminar este producto')
@@ -73,10 +75,16 @@ const funcionSocket = (io) => {
       io.sockets.emit('messagesServidor', messages);
     })
 
-  socket.on('prodToCart', (cart) => { 
+  socket.on('prodToCart', (data) => { 
       (async () => {
-        await cartManager.addProduct(cart.cartId, cart.prod)
-        console.log(`Producto ${cart.prod} agregado al carro`)
+        const prodToCart = await productManager.getProductById(data.prod)
+
+        if(prodToCart.role === data.rol){
+          console.log('No puedes agregar tus propios productos al carro')
+          }else{
+            await cartManager.addProduct(data.cartId, data.prod)
+            console.log(`Producto ${data.prod} agregado al carro`)
+          }
       })();
     })
 

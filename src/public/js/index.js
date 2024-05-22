@@ -34,10 +34,12 @@ if(btnChangePass){
 const addToCart = (event) => {
     const prod = event.currentTarget.getAttribute('data-id')
     const cartId = event.currentTarget.getAttribute('cart-id');
-    
+    const rol = event.currentTarget.getAttribute('role-id')
+
     const cart = {
         cartId,
-        prod
+        prod,
+        rol
     }    
     alert(`Producto ${cart.prod} agregado al carro`)
     socket.emit('prodToCart', cart)
