@@ -159,7 +159,6 @@ const render = (dataProds) => {
                     <h4 class="card-text">$${prod.price}</h4>
                     <h5 class="card-text">Código: ${prod.code}</h5>
                     <p class="card-text">Cant: ${prod.stock}</p>
-                  <input type="button" class="btn btn-success" value="Comprar">
                 </div>
             </div>
             `

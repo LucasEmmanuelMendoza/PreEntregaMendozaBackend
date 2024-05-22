@@ -51,11 +51,11 @@ const funcionSocket = (io) => {
 
   socket.on('deleteProd', async(data) => {
     try{
-      productos = productos.filter((prod) => prod._id != data.isProd);
       const prodDelete = await productManager.getProductById(data.idProd);
 
       if(prodDelete.owner === data.user){
         await productManager.deleteProduct(data.idProd);
+        productos = productos.filter((prod) => prod._id != data.isProd);
         socket.emit('productosServidor', productos);
       }else{
         console.log('No tienes permiso para eliminar este producto')
