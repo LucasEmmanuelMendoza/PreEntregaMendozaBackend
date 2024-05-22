@@ -92,15 +92,21 @@ socket.on('messagesServidor', (data) => {
 })
 
 //=================== Products ==========================
+//updateProd
 
-const deleteProd = () => {
-    const idProd = document.getElementById("inputDelete").value;
 
-    document.getElementById('inputDelete').value = "";
+const deleteProd = (event) => {
+    const idProd = event.currentTarget.getAttribute('delete-id');
 
     socket.emit('deleteProd', idProd)
-    return false
-}
+    return false 
+} 
+
+const deleteButtons = document.querySelectorAll('.btn-delete');  
+
+deleteButtons.forEach(button => {
+    button.addEventListener('click', deleteProd)
+})
 
 const addNewProd = () => {
     const newProd = {
@@ -122,6 +128,8 @@ const render = (dataProds) => {
         return(
             `
             <div class="card" style="width: 18rem;">
+            <input type="button" delete-id="{{prod._id}}" class="btn btn-danger position-absolute m-1 btn-delete" value="X">                        
+
                 <img src=${prod.thumbnail} class="card-img-top" alt="...">
                 <div class="card-body">
 

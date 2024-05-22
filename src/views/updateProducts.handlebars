@@ -1,0 +1,39 @@
+<div class="d-flex gap-5">
+    <form id="addProductForm" onsubmit="addNewProd()" class="d-flex flex-column gap-2 m-3 w-50">
+        <input type="text" name="title" id="title" placeholder="title">
+        <input type="text" name="description" id="description" placeholder="description">
+        <input type="text" name="category" id="category" placeholder="category">
+        <input type="text" name="price" id="price" placeholder="price">
+        <input type="text" name="code" id="code" placeholder="code">
+        <input type="text" name="stock" id="stock" placeholder="stock">
+        <input type="text" name="thumbnail" id="thumbnail" placeholder="thumbnail">
+        <input type="submit" value="Agregar producto">
+    </form>
+
+{{!--     <form id="deleteProductForm" onsubmit="return deleteProd()" >
+        <h1>Eliminar producto</h1>
+        <input type="text" placeholder="Ingrese el id del producto" id="inputDelete">
+        <input type="submit" value="Eliminar">
+    </form> --}}
+</div>
+
+<div class="Container m-2 d-flex flex-wrap gap-2" id="cajaProds">
+            {{#each products}}
+            <div class="card" style="width: 18rem;">
+                <input type="button" delete-id="{{this._id}}" class="btn btn-danger position-absolute m-1 btn-delete" value="X">                        
+                <img src={{this.thumbnail}} class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h1 class="card-title">{{this.title}}</h1>
+                    <small>id: {{this._id}}</small>
+                    <p class="card-text">{{this.description}}</p>
+                    <h3 class="card-text">Categoria: {{this.category}}</h3>
+                    <h4 class="card-text">${{this.price}}</h4>
+                    <h5 class="card-text">Código: {{this.code}}</h5>
+                    <p class="card-text">Cant: {{this.stock}}</p>
+                </div>
+            </div>
+        {{/each}}
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>

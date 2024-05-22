@@ -4,6 +4,14 @@ const UserManager = require('../controller/userManager.js')
 const express = require('express')
 const { generaToken } = require('../utils/token.js')
 const routerAuth = express.Router()
+ 
+function onlyPremium(req, res, next){
+    if(req.session.rol === 'premium'){
+        next()
+    }else{
+        res.redirect('/views/error')
+    }
+}
 
 function onlyAdmin(req, res, next){
     if(req.session.rol === 'admin'){
@@ -85,4 +93,4 @@ routerAuth.get('/logout', async(req, res) => {
     res.redirect('/views/login-view')
 })*/
 
-module.exports = { routerAuth, onlyAdmin, onlyUser, redirectToLogin, redirectToProfile }
+module.exports = { routerAuth, onlyPremium, onlyAdmin, onlyUser, redirectToLogin, redirectToProfile }

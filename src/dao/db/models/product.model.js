@@ -33,6 +33,10 @@ const ProductSchema = new mongoose.Schema({
     status: {
         type: Boolean,
     },
+    owner: {
+        type: String,
+        default: 'admin'
+    }
 })
 
 ProductSchema.plugin(mongoPaginate)

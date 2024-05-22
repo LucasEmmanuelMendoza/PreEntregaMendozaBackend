@@ -1,7 +1,7 @@
 const express = require('express')
 const routerViews = express.Router()
 const passport = require('passport')
-const {onlyAdmin, onlyUser, redirectToLogin, redirectToProfile } = require('./auth.routes.js')
+const {onlyPremium, onlyAdmin, onlyUser, redirectToLogin, redirectToProfile } = require('./auth.routes.js')
 
 const ProductManager = require('../dao/db/ManagerMongo/productManager.js')
 //const ProductManager = require('../dao/fileSystem/productManager.js')
@@ -15,15 +15,23 @@ const cartManager = new CartManager()
 
 const generateProduct = require('../config/mocks/products.mocks.js');
 
+routerViews.get('/updateProducts',/*  onlyPremium, onlyAdmin, */ async(req, res) => {
+    const products = await productManager.getProductsPaginate()
+    
+    if(products){
+        res.render('updateProducts', {
+            products: products.payload
+        })
+    } 
+})
+
 routerViews.get('/changePasswordView', (req, res) => {
     res.render('changePassword',{
-
     })
 })
 
 routerViews.get('/changePasswordEmailView', (req, res) => {
     res.render('changePasswordEmail',{
-
     })
 })
 
@@ -86,7 +94,7 @@ routerViews.get('/products/details/:pid', redirectToLogin, async(req, res) => {
     }
 })
 
-routerViews.get('/realtimeproducts', onlyAdmin, redirectToLogin, async(req, res) => {
+routerViews.get('/realtimeproducts', /* onlyAdmin, */ redirectToLogin, async(req, res) => {
     const limit = req.params.limit;
     const page = req.params.page;
     const category = req.params.category;

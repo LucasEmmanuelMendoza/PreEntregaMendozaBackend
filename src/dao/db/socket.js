@@ -32,21 +32,30 @@ const funcionSocket = (io) => {
   io.on('connection', (socket) => {
     console.log('User connected');
 
+  socket.on('updateProd', async(data) => {
+    try{
+      await productManager.updateProduct(data.id, data.value)
+    }catch(error){
+      console.log(error)
+    }
+  })
+
   socket.on('addProd', (data) => {
     (async() => {  
       await productManager.addProduct(data);
       productos = await productManager.getProducts()
-      productos.payload.push(data);
     })();
     socket.emit('productosServidor', productos.payload);
   })
 
-  socket.on('deleteProd', (data) => {
-    productos = productos.filter((prod) => prod._id != data);
-    (async() => {
+  socket.on('deleteProd', async(data) => {
+    try{
+      productos = productos.filter((prod) => prod._id != data);
       await productManager.deleteProduct(data);
-    })();
-    socket.emit('productosServidor', productos);
+      socket.emit('productosServidor', productos);
+    }catch(error){
+      console.log(error)
+    }
   }) 
 
   socket.on('newMsg', (data) => {
