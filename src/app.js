@@ -30,7 +30,7 @@ const initializePassport = require('./config/passport.js');
 const passport = require('passport');
 const cors = require('cors');
 const routerMocking = require('./routes/mocking.routes.js');
-const addLogger = require('./config/logger_CUSTOM.js');
+//const addLogger = require('./config/logger_CUSTOM.js');
 
 //Public
 app.use(express.static(__dirname+'/public'))
@@ -39,7 +39,7 @@ app.set('views', __dirname+'/views')
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(cookieParser())
-app.use(addLogger)
+//app.use(addLogger)
 
 //Motor de plantilla
 app.engine('handlebars', handlebars.engine())

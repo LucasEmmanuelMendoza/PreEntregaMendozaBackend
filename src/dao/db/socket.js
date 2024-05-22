@@ -44,15 +44,22 @@ const funcionSocket = (io) => {
     (async() => {  
       await productManager.addProduct(data);
       productos = await productManager.getProducts()
+      console.log('Producto Agregado')
     })();
     socket.emit('productosServidor', productos.payload);
   })
 
   socket.on('deleteProd', async(data) => {
     try{
-      productos = productos.filter((prod) => prod._id != data);
-      await productManager.deleteProduct(data);
-      socket.emit('productosServidor', productos);
+      productos = productos.filter((prod) => prod._id != data.isProd);
+      const prodDelete = await productManager.getProductById(data.idProd);
+
+      if(prodDelete.owner === data.user){
+        await productManager.deleteProduct(data.idProd);
+        socket.emit('productosServidor', productos);
+      }else{
+        console.log('No tienes permiso para eliminar este producto')
+      }
     }catch(error){
       console.log(error)
     }

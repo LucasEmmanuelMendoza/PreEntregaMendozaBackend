@@ -16,11 +16,23 @@ const cartManager = new CartManager()
 const generateProduct = require('../config/mocks/products.mocks.js');
 
 routerViews.get('/updateProducts',/*  onlyPremium, onlyAdmin, */ async(req, res) => {
-    const products = await productManager.getProductsPaginate()
+    const products = await productManager.getProducts()
     
     if(products){
-        res.render('updateProducts', {
-            products: products.payload
+        res.render('updateProducts', { 
+            user: req.session.passport.user.email,
+            products: products.map(product => ({...product, user: req.session.passport.user.email}))
+        })
+    } 
+})
+
+routerViews.get('/products', redirectToLogin,  async(req, res) => {
+    const products = await productManager.getProducts()
+    const userCartId = req.session.passport.user.cartId; 
+    if(products){
+        res.render('products', { 
+            user: req.session.user,
+            products: products.map(product => ({ ...product, cartId: userCartId }))
         })
     } 
 })
@@ -45,16 +57,7 @@ routerViews.get('/mockingproducts', (req, res) => {
     })
 })
 
-routerViews.get('/products', redirectToLogin,  async(req, res) => {
-    const products = await productManager.getProducts()
-    const userCartId = req.session.passport.user.cartId; 
-    if(products){
-        res.render('products', { 
-            user: req.session.user,
-            products: products.map(product => ({ ...product, cartId: userCartId }))
-        })
-    } 
-})
+
 
 routerViews.get('/home', async(req, res) => {
     const products = await productManager.getProducts()

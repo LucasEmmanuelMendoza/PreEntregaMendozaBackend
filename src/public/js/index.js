@@ -92,14 +92,18 @@ socket.on('messagesServidor', (data) => {
 })
 
 //=================== Products ==========================
-//updateProd
-
-
+//deleteProd
 const deleteProd = (event) => {
     const idProd = event.currentTarget.getAttribute('delete-id');
+    const user = event.currentTarget.getAttribute('user-id')
 
-    socket.emit('deleteProd', idProd)
-    return false 
+    const deleteObj={
+        idProd,
+        user
+    }
+
+    socket.emit('deleteProd', deleteObj)
+    return false
 } 
 
 const deleteButtons = document.querySelectorAll('.btn-delete');  
@@ -108,20 +112,35 @@ deleteButtons.forEach(button => {
     button.addEventListener('click', deleteProd)
 })
 
-const addNewProd = () => {
-    const newProd = {
-        title: document.getElementById("title").value,
-        description: document.getElementById("description").value,
-        category: document.getElementById("category").value,
-        price: parseInt(document.getElementById("price").value),
-        code: parseInt(document.getElementById("code").value),
-        stock: parseInt(document.getElementById("stock").value),
-        thumbnail: document.getElementById("thumbnail").value,
-        status:true
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('addProductForm')
 
-    socket.emit('addProd', newProd)
-}
+    if (form != null) {
+        form.addEventListener('submit', (event) => {
+            //event.preventDefault()
+
+            const userEmail = form.querySelector('input[type="submit"]').getAttribute('userEmail-id')
+
+            const newProd = {
+                title: document.getElementById("title").value,
+                description: document.getElementById("description").value,
+                category: document.getElementById("category").value,
+                price: parseInt(document.getElementById("price").value),
+                code: parseInt(document.getElementById("code").value),
+                stock: parseInt(document.getElementById("stock").value),
+                thumbnail: document.getElementById("thumbnail").value,
+                status: true,
+                owner: userEmail
+            };
+
+            if (newProd.title && newProd.description && newProd.stock && newProd.thumbnail && newProd.code && newProd.price && newProd.category) {
+                socket.emit('addProd', newProd);
+            } else {
+                console.log('Todos los campos son obligatorios');
+            }
+        });
+    }
+});
 
 const render = (dataProds) => {
     let arrayMap = dataProds.map( prod => {

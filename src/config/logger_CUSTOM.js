@@ -1,4 +1,4 @@
-const winston = require('winston')
+/* const winston = require('winston')
 const config = require('../config/config.js')
 
 const customLevelOptions = {
@@ -65,3 +65,4 @@ const addLogger = (req, res, next) => {
 }
 
 module.exports = addLogger 
+ */
