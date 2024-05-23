@@ -8,6 +8,8 @@ const sessions = require('../src/routes/session.routes.js')
 const routerSession = sessions.routerSession;
 const logger = require('../src/routes/log.routes.js')
 const routerLogger = logger.routerLogger
+const user = require('../src/routes/users.routes.js')
+const routerUser = user.routerUser;
 
 const Database = require('./dao/db/index.js')
 
@@ -74,6 +76,7 @@ app.use('/views', routerView)
 app.use('/auth', routerAuth)
 app.use('/routerMocking', routerMocking)
 app.use('/loggerTest', routerLogger)
+app.use('/api/users', routerUser)
 
 const io = new Server(server); 
 

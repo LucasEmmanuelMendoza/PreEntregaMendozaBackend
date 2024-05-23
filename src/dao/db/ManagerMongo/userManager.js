@@ -20,6 +20,16 @@ class UserManager{
             return error
         }
     }
+
+    async updateUser(userId, newUser){
+        try{
+            await Users.updateOne({_id: userId}, {$set: newUser})
+            return true
+        }catch(error){
+            console.log(error)
+            return error
+        }
+    }
 }
 
 module.exports = UserManager

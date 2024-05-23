@@ -1,4 +1,16 @@
 const socket = io();
+
+//================== Rol ======================
+
+document.addEventListener('DOMContentLoaded', () => {
+        const btnChangeRol = document.getElementById('btnChangeRol')
+
+        if(btnChangeRol != null){
+
+        }
+    }
+);
+
 //================== Email ======================
 //1)Enviar mail
 const btnSendEmail = document.getElementById('btn_email')
