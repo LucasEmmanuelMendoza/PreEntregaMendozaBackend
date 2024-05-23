@@ -49,11 +49,28 @@ const funcionSocket = (io) => {
     socket.emit('productosServidor', productos.payload);
   })
 
+  socket.on('prodToCart', (data) => { 
+      (async () => {
+        const prodToCart = await productManager.getProductById(data.prod)
+
+        /* console.log('data:', data)
+         console.log('prodToCart:', prodToCart)*/
+ /**/
+            
+
+        if(prodToCart.role === data.rol){
+          console.log('No puedes agregar tus propios productos al carro')
+          }else{
+            await cartManager.addProduct(data.cartId, data.prod)
+            console.log(`Producto ${data.prod} agregado al carro`)
+          } 
+      })();
+    })
+
   socket.on('deleteProd', async(data) => {
     try{
       const prodDelete = await productManager.getProductById(data.idProd);
 
-      console.log('data:',data)
       if(prodDelete.owner === data.user || data.user === 'adminCoder@coder.com'){
         await productManager.deleteProduct(data.idProd);
         productos = productos.filter((prod) => prod._id != data.isProd);
@@ -73,19 +90,6 @@ const funcionSocket = (io) => {
       await message.addMessage(data);
     })();
       io.sockets.emit('messagesServidor', messages);
-    })
-
-  socket.on('prodToCart', (data) => { 
-      (async () => {
-        const prodToCart = await productManager.getProductById(data.prod)
-
-        if(prodToCart.role === data.rol){
-          console.log('No puedes agregar tus propios productos al carro')
-          }else{
-            await cartManager.addProduct(data.cartId, data.prod)
-            console.log(`Producto ${data.prod} agregado al carro`)
-          }
-      })();
     })
 
   socket.on('addTicket', async(ticket) => {

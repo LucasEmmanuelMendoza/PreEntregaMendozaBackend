@@ -26,12 +26,13 @@ class CartManager{
     }
 
      async addProduct(cartId, productId){
-        try{
+        try{ 
             //busco el carrito
             const foundCart = await Carts.findOne({_id: cartId})
-            if (foundCart != null){//existe el carrito
-                const indexProd = foundCart.products.findIndex(prod => prod.product._id == productId);
-                //console.log(foundCart.products)
+
+           if (foundCart != null){//existe el carrito
+                const indexProd = foundCart.products.findIndex(prod => (prod.product)._id == productId);
+                console.log('indexProd:', indexProd)
                 if (indexProd != -1){//existe el producto en el carro
                     foundCart.products[indexProd].quantity ++;
                 }else{
@@ -42,8 +43,8 @@ class CartManager{
                     foundCart.products.push(newProd)
                 }
                 await Carts.updateOne({"_id": cartId}, foundCart)
-                return true
-            }
+                return true } /**/
+                
         }catch(error){
             console.log(error)
             return false
