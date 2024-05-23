@@ -32,7 +32,6 @@ class CartManager{
 
            if (foundCart != null){//existe el carrito
                 const indexProd = foundCart.products.findIndex(prod => (prod.product)._id == productId);
-                console.log('indexProd:', indexProd)
                 if (indexProd != -1){//existe el producto en el carro
                     foundCart.products[indexProd].quantity ++;
                 }else{

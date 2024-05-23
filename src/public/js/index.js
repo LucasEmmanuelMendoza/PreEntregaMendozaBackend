@@ -35,13 +35,15 @@ const addToCart = (event) => {
     const prod = event.currentTarget.getAttribute('data-id')
     const cartId = event.currentTarget.getAttribute('cart-id');
     const rol = event.currentTarget.getAttribute('role-id')
+    const email = event.currentTarget.getAttribute('email-id')
 
     const cart = {
         cartId,
         prod,
-        rol
+        rol,
+        email
     }    
-    alert(`Producto ${cart.prod} agregado al carro`)
+    //alert(`Producto ${cart.prod} agregado al carro`)
     socket.emit('prodToCart', cart)
 }
 
@@ -114,6 +116,7 @@ deleteButtons.forEach(button => {
     button.addEventListener('click', deleteProd)
 })
 
+//add
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('addProductForm')
 

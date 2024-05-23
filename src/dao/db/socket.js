@@ -53,17 +53,12 @@ const funcionSocket = (io) => {
       (async () => {
         const prodToCart = await productManager.getProductById(data.prod)
 
-        /* console.log('data:', data)
-         console.log('prodToCart:', prodToCart)*/
- /**/
-            
-
-        if(prodToCart.role === data.rol){
+        if(prodToCart.owner === data.email){
           console.log('No puedes agregar tus propios productos al carro')
-          }else{
-            await cartManager.addProduct(data.cartId, data.prod)
-            console.log(`Producto ${data.prod} agregado al carro`)
-          } 
+        }else{
+          await cartManager.addProduct(data.cartId, data.prod)
+          console.log(`Producto ${data.prod} agregado al carro`)
+        }  
       })();
     })
 
