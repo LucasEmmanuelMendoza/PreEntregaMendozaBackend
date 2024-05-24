@@ -1,7 +1,7 @@
 const express = require('express')
-const routerUser = express.Router();
+const routerUser = express.Router();/* 
 const UserManager = require('../dao/db/ManagerMongo/userManager.js')
-const userManager = new UserManager()
+const userManager = new UserManager() */
 
 routerUser.get('/premium/:uid', async(req,res)=>{
     const userId = req.params.uid

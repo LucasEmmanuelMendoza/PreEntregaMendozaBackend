@@ -58,8 +58,8 @@ class ProductManager{
                 }
             )
     
-            returnPaginate.hasPrevPage ? prevLink = `http://localhost:8080/api/products?page=${returnPaginate.prevPage}&limit=${limit}&query=${category}&sort=${sort}` : null
-            returnPaginate.hasNextPage ? nextLink = `http://localhost:8080/api/products?page=${returnPaginate.nextPage}&limit=${limit}&query=${category}&sort=${sort}` : null
+            returnPaginate.hasPrevPage ? prevLink = `http://localhost:8080/api/products?page=${returnPaginate.prevPage}&limit=${limit}&query=${category}&sort=${priceSort}` : null
+            returnPaginate.hasNextPage ? nextLink = `http://localhost:8080/api/products?page=${returnPaginate.nextPage}&limit=${limit}&query=${category}&sort=${priceSort}` : null
 
             const returnGetProducts = {
                 success: true,
