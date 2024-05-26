@@ -1,0 +1,19 @@
+<div class="bg-success">
+    <h1>MODIFICAR PRODUCTO</h1>
+     <div class="container d-flex flex-wrap gap-3">
+        <div class="card" style="width: 22rem;">
+            <img src={{product.thumbnail}} class="card-img-top" alt="...">
+            <div class="d-flex flex-column flex-wrap card-body">
+                <label for="">Title: </label><input class="card-title" type="text" name="" id="" value={{product.title}}><br>
+                <label for="">Description</label><input class="card-text" type="text" name="" id=""  value={{product.description}}><br>
+                <label for="">Category</label><input class="card-text" type="text" name="" id="" value={{product.category}}><br>
+                <label for="">Price</label><input class="card-text" type="text" name="" id=""  value={{product.price}}><br>
+                <label for="">Code</label><input class="card-text" type="text" name="" id="" value={{product.code}}><br>
+                <label for="">Stock</label><input class="card-text" type="text" name="" id="" value={{product.stock}}> <br>
+                
+                <div class="d-flex justify-content-center gap-3">
+                    <button class="btn btn-success btnModProduct" data-id="{{product._id}}">Modificar</button>
+                </div>
+            </div>
+        </div>
+</div>

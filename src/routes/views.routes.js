@@ -15,16 +15,37 @@ const cartManager = new CartManager()
 
 const generateProduct = require('../config/mocks/products.mocks.js');
 
-routerViews.get('/updateProducts',/*  onlyPremium, onlyAdmin, */ async(req, res) => {
+routerViews.get('/products/details/:pid', async(req, res) => {
+    const productId = req.params.pid 
+    const product = await productManager.getProductById(productId)
+
+    if(product){
+        res.render('productDetails', {
+            product: product
+        })
+    }
+}) 
+
+routerViews.get('/products/mod/:pid', async(req, res) => {
+    const productId = req.params.pid
+    const product = await productManager.getProductById(productId)
+    if(product){
+        res.render('modProd', {
+            product: product
+        })
+    }
+})
+
+routerViews.get('/realtimeproducts',/*  onlyAdmin,  redirectToLogin,*/ async(req, res) => {
     const products = await productManager.getProducts()
     
     if(products){
-        res.render('updateProducts', { 
+        res.render('realtimeproducts', { 
             user: req.session.passport.user.email,
             products: products.map(product => ({...product, user: req.session.passport.user.email}))
         })
     } 
-})
+}) 
 
 routerViews.get('/products', redirectToLogin,  async(req, res) => {
     const products = await productManager.getProducts()
