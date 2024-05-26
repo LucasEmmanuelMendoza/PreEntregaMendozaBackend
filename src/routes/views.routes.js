@@ -29,8 +29,10 @@ routerViews.get('/products/details/:pid', async(req, res) => {
 routerViews.get('/products/mod/:pid', async(req, res) => {
     const productId = req.params.pid
     const product = await productManager.getProductById(productId)
+
     if(product){
         res.render('modProd', {
+            user: req.session.passport.user.email,
             product: product
         })
     }

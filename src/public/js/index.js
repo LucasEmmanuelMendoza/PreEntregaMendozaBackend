@@ -1,6 +1,20 @@
 const socket = io();
 
 //================== Mod Prod ======================
+
+/* const btnModProduct = document.getElementById('btnMod')
+
+if(btnModProduct){
+    btnModProduct.addEventListener('click', () => {
+
+    })
+}
+Agregar al socket.js:
+-socke.emit('goToUpdateProd', )
+-Si el owner del producto es el user actual, redireccionar a modProd,
+si no, alertar
+*/
+
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('modProductForm')
 
@@ -8,7 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
         form.addEventListener('submit', (event) => {
             //event.preventDefault()
             const productId = form.querySelector('input[type="submit"]').getAttribute('product-id')
-
+            const userEmail = form.querySelector('input[type="submit"]').getAttribute('userEmail-id')
+            
             const newProd = {
                 title: document.getElementById("modTitle").value,
                 description: document.getElementById("modDescription").value,
@@ -17,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 code: parseInt(document.getElementById("modCode").value),
                 stock: parseInt(document.getElementById("modStock").value),
                 thumbnail: document.getElementById("modThumbnail").value,
+                owner: userEmail,
                 status: true,
                 _id: productId
             };

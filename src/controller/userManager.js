@@ -33,6 +33,16 @@ class UserManager{
             return error
         }
     }
+
+    async getUserById(id){
+        try{
+            const userFound = await Users.findOne({id})
+            return userFound
+        }catch(error){
+            console.log(error)
+            return error
+        }
+    }
 }
 
 module.exports = UserManager

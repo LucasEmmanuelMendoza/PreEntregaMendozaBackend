@@ -30,11 +30,33 @@ let messages = [];
 
 const funcionSocket = (io) => {
   io.on('connection', (socket) => {
-    console.log('User connected');
+  console.log('User connected');
+
+  socket.on('goToUpdateProd', async(data) => {
+    try{
+
+/*       if(){
+
+      }else{
+
+      } */
+    }catch(error){
+      console.log(error)
+    }
+  })
 
   socket.on('updateProd', async(data) => {
     try{
-      await productManager.updateProduct(data._id, data)
+      const prodMod = await productManager.getProductById(data._id);
+
+      if(prodMod.owner === data.user || data.user === 'adminCoder@coder.com'){
+        await productManager.updateProduct(data._id, data)
+        productos = await productManager.getProducts()
+        console.log('Producto modificado')
+        socket.emit('productosServidor', productos);
+      }else{
+        console.log('No tienes permiso para modificar este producto')
+      }
     }catch(error){
       console.log(error)
     }
