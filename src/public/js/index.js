@@ -1,5 +1,35 @@
 const socket = io();
 
+//================== Mod Prod ======================
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('modProductForm')
+
+    if(form != null){
+        form.addEventListener('submit', (event) => {
+            //event.preventDefault()
+            const productId = form.querySelector('input[type="submit"]').getAttribute('product-id')
+
+            const newProd = {
+                title: document.getElementById("modTitle").value,
+                description: document.getElementById("modDescription").value,
+                category: document.getElementById("modCategory").value,
+                price: parseInt(document.getElementById("modPrice").value),
+                code: parseInt(document.getElementById("modCode").value),
+                stock: parseInt(document.getElementById("modStock").value),
+                thumbnail: document.getElementById("modThumbnail").value,
+                status: true,
+                _id: productId
+            };
+
+            if(newProd.title && newProd.description && newProd.stock && newProd.thumbnail && newProd.code && newProd.price && newProd.category) {
+                socket.emit('updateProd', newProd);
+            }else{
+                console.log('Todos los campos son obligatorios');
+            }
+        });
+    }
+});
+
 //================== Rol ======================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -132,12 +162,10 @@ deleteButtons.forEach(button => {
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('addProductForm')
 
-    if (form != null) {
+    if(form != null) {
         form.addEventListener('submit', (event) => {
             //event.preventDefault()
-
             const userEmail = form.querySelector('input[type="submit"]').getAttribute('userEmail-id')
-
             const newProd = {
                 title: document.getElementById("title").value,
                 description: document.getElementById("description").value,
@@ -150,9 +178,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 owner: userEmail
             };
 
-            if (newProd.title && newProd.description && newProd.stock && newProd.thumbnail && newProd.code && newProd.price && newProd.category) {
+            if(newProd.title && newProd.description && newProd.stock && newProd.thumbnail && newProd.code && newProd.price && newProd.category) {
                 socket.emit('addProd', newProd);
-            } else {
+            }else{
                 console.log('Todos los campos son obligatorios');
             }
         });

@@ -83,6 +83,7 @@ class ProductManager{
     async updateProduct(id, value){
         try{
             await ProductsModel.updateOne({"_id": id}, {$set: value})
+            console.log('Producto modificado')
             return true
         }catch(error){
             console.log(error)

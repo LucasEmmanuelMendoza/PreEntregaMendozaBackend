@@ -34,7 +34,7 @@ const funcionSocket = (io) => {
 
   socket.on('updateProd', async(data) => {
     try{
-      await productManager.updateProduct(data.id, data.value)
+      await productManager.updateProduct(data._id, data)
     }catch(error){
       console.log(error)
     }
