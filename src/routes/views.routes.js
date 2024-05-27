@@ -38,7 +38,7 @@ routerViews.get('/products/mod/:pid', async(req, res) => {
     }
 })
 
-routerViews.get('/realtimeproducts',/*  onlyAdmin,  redirectToLogin,*/ async(req, res) => {
+routerViews.get('/realtimeproducts',/*  onlyAdmin,  */redirectToLogin, async(req, res) => {
     const products = await productManager.getProducts()
     
     if(products){
