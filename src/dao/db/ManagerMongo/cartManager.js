@@ -24,13 +24,14 @@ class CartManager{
         }
     }
 
-     async addProduct(cartId, productId){
+    async addProduct(cartId, productId){
         try{ 
             const foundCart = await Carts.findOne({_id: cartId})//busco el carrito
+            
             if (foundCart != null){//existe el carrito
-                //findIndex no anda
-                const indexProd = foundCart.products.indexOf(prod => (prod.product)._id == productId);
-                if (indexProd != -1){//existe el producto en el carro
+                const indexProd = foundCart.products.findIndex(prod => ((prod.product)._id).toString() === productId);
+
+                if(indexProd != -1){//existe el producto en el carro
                     foundCart.products[indexProd].quantity ++;
                 }else{
                     const newProd = {

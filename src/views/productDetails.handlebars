@@ -15,7 +15,8 @@
             <p class="card-text">Cant: {{product.stock}}</p>
             <p>id:{{product._id}}</p>
             <div class="d-flex justify-content-center gap-3">
-                <button class="btn btn-primary btnAddToCart" data-id="{{product._id}}">Add to cart</button>
+                {{!-- <button class="btn btn-primary btnAddToCart" data-id="{{product._id}}">Add to cart</button> --}}
+                <input type="button" value="Add to cart" class="btn btn-primary btnAddToCart" email-id="{{userEmail}}" cart-id="{{userCartId}}" data-id="{{product._id}}" role-id="{{userRole}}">
             </div>
         </div>
         </div>

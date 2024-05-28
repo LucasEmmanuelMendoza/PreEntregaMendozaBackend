@@ -32,31 +32,13 @@ const funcionSocket = (io) => {
   io.on('connection', (socket) => {
   console.log('User connected');
 
-  socket.on('goToUpdateProd', async(data) => {
-    try{
-
-/*       if(){
-
-      }else{
-
-      } */
-    }catch(error){
-      console.log(error)
-    }
-  })
-
   socket.on('updateProd', async(data) => {
     try{
-      const prodMod = await productManager.getProductById(data._id);
-
-      if(prodMod.owner === data.user || data.user === 'adminCoder@coder.com'){
-        await productManager.updateProduct(data._id, data)
-        productos = await productManager.getProducts()
-        console.log('Producto modificado')
-        socket.emit('productosServidor', productos);
-      }else{
-        console.log('No tienes permiso para modificar este producto')
-      }
+      await productManager.updateProduct(data._id, data)
+    
+      console.log('Producto modificado')
+      productos = await productManager.getProducts()
+      socket.emit('productosServidor', productos);
     }catch(error){
       console.log(error)
     }
@@ -91,6 +73,7 @@ const funcionSocket = (io) => {
       if(prodDelete.owner === data.user || data.user === 'adminCoder@coder.com'){
         await productManager.deleteProduct(data.idProd);
         productos = productos.filter((prod) => prod._id != data.isProd);
+        productos = await productManager.getProducts()
         console.log('Producto eliminado')
         socket.emit('productosServidor', productos);
       }else{

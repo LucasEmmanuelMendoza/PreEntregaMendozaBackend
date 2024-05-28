@@ -18,13 +18,33 @@ const generateProduct = require('../config/mocks/products.mocks.js');
 routerViews.get('/products/details/:pid', async(req, res) => {
     const productId = req.params.pid 
     const product = await productManager.getProductById(productId)
+    const userCartId = req.session.passport.user.cartId
+    const userEmail = req.session.passport.user.email;
+    const userRole = req.session.passport.user.role;
 
     if(product){
         res.render('productDetails', {
-            product: product
+            product,
+            userEmail,
+            userCartId, 
+            userRole
         })
     }
 }) 
+
+routerViews.get('/products', redirectToLogin,  async(req, res) => {
+    const products = await productManager.getProducts()
+    const role = req.session.passport.user.role
+    const userCartId = req.session.passport.user.cartId; 
+    const email = req.session.passport.user.email;
+
+    if(products){
+        res.render('products', {
+            user: req.session.user,
+            products: products.map(product => ({ ...product, cartId: userCartId, role, email}))
+        })
+    } 
+})
 
 routerViews.get('/products/mod/:pid', async(req, res) => {
     const productId = req.params.pid
@@ -48,20 +68,6 @@ routerViews.get('/realtimeproducts',/*  onlyAdmin,  */redirectToLogin, async(req
         })
     } 
 }) 
-
-routerViews.get('/products', redirectToLogin,  async(req, res) => {
-    const products = await productManager.getProducts()
-    const role = req.session.passport.user.role
-    const userCartId = req.session.passport.user.cartId; 
-    const email = req.session.passport.user.email;
-
-    if(products){
-        res.render('products', {
-            user: req.session.user,
-            products: products.map(product => ({ ...product, cartId: userCartId, role, email}))
-        })
-    } 
-})
 
 routerViews.get('/changePasswordView', (req, res) => {
     res.render('changePassword',{

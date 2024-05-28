@@ -8,13 +8,19 @@ Agregar al socket.js:
 si no, alertar
 */
 //ir a modificar producto
-const btnModProduct = document.getElementById('btnGoToMod')
+document.addEventListener('DOMContentLoaded', () =>{
+    document.querySelectorAll('.btnGoToMod').forEach(btn => {
+        btn.addEventListener('click', (event) => {
+            const userEmail = event.currentTarget.getAttribute('user-id') 
+            const owner = event.currentTarget.getAttribute('owner-id')
 
-if(btnModProduct){
-    btnModProduct.addEventListener('click', () => {
-
+            if(owner !== userEmail){
+                alert('No tenés permiso para modificar este producto')
+                event.preventDefault();
+            }
+        })
     })
-}
+}) 
 
 //modificar producto
 document.addEventListener('DOMContentLoaded', () => {
@@ -221,7 +227,7 @@ const render = (dataProds) => {
                     <h3 class="card-text">Categoria: ${prod.category}</h3>
                     <h4 class="card-text">$${prod.price}</h4>
                     <h5 class="card-text">Código: ${prod.code}</h5>
-                    <p class="card-text">Cant: ${prod.stock}</p>
+                    <p class="card-text">Cant: ${prod.stock}</p>                    
                 </div>
             </div>
             `

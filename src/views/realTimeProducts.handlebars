@@ -15,7 +15,7 @@
 <br>
 <h2 class="text-white">Productos</h2>
 <div class="Container m-2 d-flex flex-wrap gap-2" id="cajaProds">
-            {{#each products}}
+        {{#each products}}
             <div class="card" style="width: 18rem;">
                 <input type="button" delete-id="{{this._id}}" user-id="{{this.user}}" class="btn btn-danger position-absolute m-1 btn-delete" value="X">                        
                 <img src={{this.thumbnail}} class="card-img-top" alt="...">
@@ -28,7 +28,7 @@
                     <h5 class="card-text">Código: {{this.code}}</h5>
                     <p class="card-text">Cant: {{this.stock}}</p>
                     
-                    <a class="btn btn-warning" href="http://localhost:8080/views/products/mod/{{this._id}}">Modificar</a>
+                    <a user-id="{{this.user}}" owner-id="{{this.owner}}" class="btn btn-warning btnGoToMod" href="http://localhost:8080/views/products/mod/{{this._id}}">Modificar</a>
                 </div>
             </div>
         {{/each}}
