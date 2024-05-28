@@ -1,13 +1,6 @@
 const socket = io();
 
 //================== Mod Prod ======================
-/* 
-Agregar al socket.js:
--socke.emit('goToUpdateProd', )
--Si el owner del producto es el user actual, redireccionar a modProd,
-si no, alertar
-*/
-//ir a modificar producto
 document.addEventListener('DOMContentLoaded', () =>{
     document.querySelectorAll('.btnGoToMod').forEach(btn => {
         btn.addEventListener('click', (event) => {

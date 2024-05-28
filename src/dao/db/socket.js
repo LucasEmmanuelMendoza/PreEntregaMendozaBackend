@@ -188,7 +188,6 @@ const funcionSocket = (io) => {
         console.log('Las contraseñas no coinciden')
       }
     })
-    
   });
 };
 
