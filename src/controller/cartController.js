@@ -83,14 +83,15 @@ const createCart = async (req, res) => {
 }
 
 const getCartById = async (req, res) => {
-    const cartId = req.params.cid;
-    const cart = await cartManager.getCartById(cartId)
-
-    const totalPrice = cart.products.reduce((acumulador, prod) => acumulador += prod.product.price * prod.quantity, 0);
-    const prodsQuantity = cart.products.reduce((acumulador, prod) => acumulador += prod.quantity,0)
-    
     try{
-        res.render('cart', {
+        const cartId = req.params.cid;
+        const cart = await cartManager.getCartById(cartId)
+    
+        const totalPrice = cart.products.reduce((acumulador, prod) => acumulador += prod.product.price * prod.quantity, 0);
+        const prodsQuantity = cart.products.reduce((acumulador, prod) => acumulador += prod.quantity,0)
+
+        
+        res.status(200).render('cart', {
             cartProducts: cart.products,
             cartId,
             totalPrice,

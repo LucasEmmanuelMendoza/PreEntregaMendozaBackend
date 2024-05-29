@@ -32,7 +32,24 @@ const initializePassport = require('./config/passport.js');
 const passport = require('passport');
 const cors = require('cors');
 const routerMocking = require('./routes/mocking.routes.js');
+
+const swaggerJSDoc  = require('swagger-jsdoc')
+const swaggerUIExpress = require('swagger-ui-express')
 //const addLogger = require('./config/logger_CUSTOM.js');
+
+const swaggerOptions = {
+  definition:{
+    openapi: "3.0.1",
+    info:{
+      title: "Documentación API Adoptme",
+      description: "Documentación API Adoptme - para uso de swagger"
+    }
+  },
+  apis:['./src/docs/**/*.yaml']
+}
+
+const specs = swaggerJSDoc(swaggerOptions)
+app.use('/apidocs', swaggerUIExpress.serve, swaggerUIExpress.setup(specs))
 
 //Public
 app.use(express.static(__dirname+'/public'))

@@ -1,0 +1,27 @@
+paths:
+  /api/carts/{cid}:
+    get:
+      summary: Obtiene un carrito
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: Operación exitosa - Retorna el carrito
+        "500":
+          description: Error inesperado en el servidor
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado de mongo
+        products:
+          type: String
+      example:
+          _id: ObjectId('65cf0d3a5df8ccf53e7d0c6f')
+          products: 
+
+          

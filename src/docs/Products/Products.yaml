@@ -1,0 +1,58 @@
+paths:
+  /api/products/:
+    get:
+      summary: Obtiene todos los usuarios
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Operación exitosa - Retorna los productos
+        "500":
+          description: Error inesperado en el servidor
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado de mongo
+        title:
+          type: String,
+          required: true
+        description:
+          type: String,
+          required: true
+        thumbnail:
+          type: String,
+          required: true
+        category:
+          type: String,
+          required: true
+        stock:
+          type: Number,
+          required: true
+        status:
+          type: Boolean,
+        price:
+          type: Number,
+          required: true
+        owner:
+          type: String,
+          required: true
+          default: 'admin'
+        code:
+          type: Number,
+          required: true
+      example:
+          _id: ObjectId('65cf0d3a5df8ccf53e7d0c6f')
+          title: "ad"
+          description: "asd"
+          price: 25
+          thumbnail: "https://cdn.thingiverse.com/assets/ad/f6/68/50/80/large_display_k9_ang…"
+          code: 113333
+          category: "dasd"
+          stock: 23
+          status: true
+          
