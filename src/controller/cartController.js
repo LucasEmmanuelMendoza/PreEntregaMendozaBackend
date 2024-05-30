@@ -90,13 +90,13 @@ const getCartById = async (req, res) => {
         const totalPrice = cart.products.reduce((acumulador, prod) => acumulador += prod.product.price * prod.quantity, 0);
         const prodsQuantity = cart.products.reduce((acumulador, prod) => acumulador += prod.quantity,0)
 
-        
-        res.status(200).render('cart', {
+        res.status(200).json(cart)
+        /* res.status(200).render('cart', {
             cartProducts: cart.products,
             cartId,
             totalPrice,
             prodsQuantity
-        })
+        }) */
     }catch(error){
         res.status(500).send(error)
     }

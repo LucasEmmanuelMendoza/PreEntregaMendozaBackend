@@ -105,9 +105,11 @@ routerViews.get('/carts/:cid', redirectToLogin, async(req, res) => {
     const cartId = req.params.cid;
     const cartProds = await cartManager.getCartById(cartId)
 
-    const totalPrice = cartProds.products.reduce((acumulador, prod) => acumulador += prod.product.price * prod.quantity, 0);
+    console.log(cartProds.products[0].product.price)
+    const totalPrice = cartProds.products.reduce((acumulador, prod) => acumulador += (prod.product.price * prod.quantity), 0);
+    console.log(totalPrice)
     const prodsQuantity = cartProds.products.reduce((acumulador, prod) => acumulador += prod.quantity,0)
-    
+    console.log(prodsQuantity)
     if(cartProds){
         res.render('cart', {
             cartProducts : cartProds.products,

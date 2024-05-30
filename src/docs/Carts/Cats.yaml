@@ -4,6 +4,13 @@ paths:
       summary: Obtiene un carrito
       tags:
         - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: id del carrito a buscar
+          schema:
+            $type: String
       responses:
         "200":
           description: Operación exitosa - Retorna el carrito
