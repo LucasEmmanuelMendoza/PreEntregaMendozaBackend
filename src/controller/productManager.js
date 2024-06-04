@@ -3,7 +3,8 @@ const ProductModel = require('../dao/db/models/product.model.js')
 class ProductManagerMongo{
     async addProduct(product) {
         try {
-            await ProductModel.create(product)
+            const result = await ProductModel.create(product)
+            console.log(result)
             return true;
         } catch(error) {
             console.log(error)

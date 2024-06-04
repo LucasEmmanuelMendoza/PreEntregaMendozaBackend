@@ -7,7 +7,7 @@ class ProductController{
         try{
             //const product = await ProductService.findProductById(productId)
             const product = await productManager.getProductById(productId)
-            return res.status(200).json(product)
+            return product ? res.status(200).json(product) : res.status(400).send('Error al obtener el producto')
         }catch(error){
             res.status(500).send(error)
         }
@@ -21,7 +21,7 @@ class ProductController{
         try{
             //const products = await ProductService.findProductsPaginate(limit, page, category, priceSort)
             const products = await productManager.getProductsPaginate(limit, page, category, priceSort)
-            return res.status(200).json(products)
+            return products ? res.status(200).json(products) : res.status(400).send('Error al obtener los productos')
         }catch(error){
             res.status(500).send(error)
         }
@@ -30,7 +30,7 @@ class ProductController{
         try{
             //const products = await ProductService.findProducts()
             const products = await productManager.getProducts()
-            return res.status(200).json(products)
+            return products ? res.status(200).json(products) : res.status(400).send('Error al obtener los productos')
         }catch(error){
             res.status(500).send(error)
         }
@@ -40,7 +40,8 @@ class ProductController{
         const productId = req.params.pid
         try{
             //await ProductService.deleteProd(productId)
-            await productManager.deleteProduct(productId)
+            const deleteProd = await productManager.deleteProduct(productId)
+            return deleteProd ?  res.status(200).send('Prod Eliminado') : res.status(400).send('Error al eliminar producto')
         }catch(error){
             res.status(500).send(error)
         }
@@ -51,7 +52,8 @@ class ProductController{
         const value = req.body
         try{
             //await ProductService.updateProd(productId, value)
-            await productManager.updateProduct(productId, value)
+            const result = await productManager.updateProduct(productId, value)
+            return result ? res.status(200).send('Producto actualizado correctamente') : res.status(400).send('Error al actualizar producto')
         }catch(error){
             res.status(500).send(error)
         }
@@ -61,7 +63,8 @@ class ProductController{
         const product = req.body
         try{
             //await ProductService.addProd(product)
-            await productManager.addProduct(product)
+            const result = await productManager.addProduct(product)
+            return result ? res.status(200).send('Producto agregado correctamente') : res.status(400).send('Error al agregar producto')
         }catch(error){
             res.status(500).send(error)
         }
