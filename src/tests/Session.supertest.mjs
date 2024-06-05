@@ -38,8 +38,17 @@ describe('Testing Session Routes', () => {
     //test 01
     it('Session', async() => {
 
-        const result = await requester.get('/api/sessions/current')
-        //const result = await requester.get('/api/sessions/current').send(this.mockUser)
+        //const result = await requester.get('/api/sessions/current')
+        const result = await requester.get('/api/sessions/current').send({
+            "_id": "66303d8835e8143afa9da179",
+            "first_name": "Lucas Emmanuel",
+            "last_name": "Mendoza",
+            "email": "a@gmail.com",
+            "age": 22,
+            "password": "$2b$10$mhZujsMnyUaHHn/2dFx2O.0j/2uzoInkMuc6.lWUUsdnutBeC6iMK",
+            "cartId": "66303d8835e8143afa9da177",
+            "role": "user"
+          })
 
         console.log('result:', result)
         
