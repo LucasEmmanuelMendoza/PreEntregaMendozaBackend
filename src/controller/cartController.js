@@ -22,7 +22,8 @@ const purchaseCart = async(req, res) => {
 const deleteCart = async(req, res) => {
     const cartId = req.params.cid;
     try{
-        return await cartManager.deleteCart(cartId)
+        const result = await cartManager.deleteCart(cartId)
+        return result ? res.status(200).send(result) : res.status(400).send('Error al borrar el carrito')
     }catch(error){
         res.status(500).send(error)
     }
@@ -34,7 +35,8 @@ const updateProductFromCart = async (req, res) => {
     const updatedQuantity = req.body;
     try{
         //return await CartService.updateProdFromCart(cartId, prodId, updatedQuantity)
-        return await cartManager.updateQuantity(cartId, prodId,updatedQuantity)
+        const result = await cartManager.updateQuantity(cartId, prodId,updatedQuantity)
+        return result ? res.status(200).send(result) : res.status(400).send('Error al actualizar el producto del carrito')
     }catch(error){
         res.status(500).send(error)
     }
@@ -45,7 +47,8 @@ const updateCart = async (req, res) => {
     const updatedCart = req.body;//array products
     try{
         //return await CartService.updateOneCart(cartId, updatedCart)
-        return await cartManager.updateCart(cartId, updatedCart)
+        const result = await cartManager.updateCart(cartId, updatedCart)
+        return result ? res.status(200).send(result) : res.status(400).send('Error al actualizar el carrito')
     }catch(error){
         res.status(500).send(error)
     }
@@ -56,7 +59,8 @@ const deleteFromCart = async (req, res) => {
     const prodId = req.params.pid;
     try{
         //return await CartService.deleteProductFromCart(cartId, prodId)
-        return await cartManager.deleteProduct(cartId, prodId)
+        const result = await cartManager.deleteProduct(cartId, prodId)
+        return result ? res.status(200).send(result) : res.status(400).send('Error al eliminar el carrito')
     }catch(error){
         res.status(500).send(error)
     }
@@ -67,7 +71,9 @@ const addToCart = async (req, res) => {
     const prodId = req.params.pid;
     try{
         //return await CartService.addProductToCart(cartId, prodId)
-        return await cartManager.addProduct(cartId, prodId)
+        const result = await cartManager.addProduct(cartId, prodId)
+        console.log('result:', result)
+        return result ? res.status(200).send(result) : res.status(400).send('Error al agregar el producto al carrito')
     }catch(error){
         res.status(500).send(error)
     }
@@ -76,7 +82,8 @@ const addToCart = async (req, res) => {
 const createCart = async (req, res) => {
     try{
         //return await CartService.addCart()
-        return await cartManager.createCart()
+        const result = await cartManager.createCart()
+        return result ? res.status(200).send(result) : res.status(400).send('Error al crear el carrito')
     }catch(error){
         res.status(500).send(error)
     }
@@ -87,16 +94,9 @@ const getCartById = async (req, res) => {
         const cartId = req.params.cid;
         const cart = await cartManager.getCartById(cartId)
     
-        const totalPrice = cart.products.reduce((acumulador, prod) => acumulador += prod.product.price * prod.quantity, 0);
-        const prodsQuantity = cart.products.reduce((acumulador, prod) => acumulador += prod.quantity,0)
+        console.log(cart)
+        return cart ? res.status(200).send(cart) : res.status(400).send('Error al obtener el carrito')
 
-        res.status(200).json(cart)
-        /* res.status(200).render('cart', {
-            cartProducts: cart.products,
-            cartId,
-            totalPrice,
-            prodsQuantity
-        }) */
     }catch(error){
         res.status(500).send(error)
     }

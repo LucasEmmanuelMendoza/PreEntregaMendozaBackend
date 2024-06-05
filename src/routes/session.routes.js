@@ -7,13 +7,13 @@ const ProductManager = require('../controller/productManager.js')
 const productManager = new ProductManager()
 
 routerSession.get('/current', async(req, res)=>{
-    const cart = await cartManager.getCartById(req.session.passport.user.cartId)
-    const user = req.session.passport.user
-    //console.log('cart:', cart)
-    res.render('current',{
-        user: user,
-        cart: cart.products
-    }) 
+    if(req.session.passport){
+        const user = req.session.passport.user
+        const cart = await cartManager.getCartById(req.session.passport.user.cartId)
+        res.status(200).send({user, cart}) 
+    }else{
+        res.status(400).send('No se encontró un usuario en la sesión actual')
+    }
 })
 
 module.exports = { routerSession }

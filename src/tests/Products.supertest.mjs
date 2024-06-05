@@ -11,6 +11,7 @@ describe('Testing Product Routes', () => {
     before(function () {
         this.product = new ProductManagerMongo();
     });
+    
     beforeEach(function(){
         this.timeout(5000)
     })
