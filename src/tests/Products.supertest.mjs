@@ -68,7 +68,8 @@ describe('Testing Product Routes', () => {
         expect(_body).to.have.property('_id')
     })
     
-     it('Eliminar un producto: El API DELETE /api/products/:pid debe eliminar un producto', async() => {
+    //test04
+    it('Eliminar un producto: El API DELETE /api/products/:pid debe eliminar un producto', async() => {
         const productId = '665ec4aacd01f8446910292e'
 
         const retorno = await requester.delete(`/api/products/${productId}`)
