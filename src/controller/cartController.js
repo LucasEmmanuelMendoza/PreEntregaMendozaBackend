@@ -95,7 +95,7 @@ const getCartById = async (req, res) => {
         const cart = await cartManager.getCartById(cartId)
     
         console.log(cart)
-        return cart ? res.status(200).send(cart) : res.status(400).send('Error al obtener el carrito')
+        return cart ? res.status(200).json(cart) : res.status(400).send('Error al obtener el carrito')
 
     }catch(error){
         res.status(500).send(error)

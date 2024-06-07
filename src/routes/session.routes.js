@@ -10,7 +10,7 @@ routerSession.get('/current', async(req, res)=>{
     if(req.session.passport){
         const user = req.session.passport.user
         const cart = await cartManager.getCartById(req.session.passport.user.cartId)
-        res.status(200).send({user, cart}) 
+        res.status(200).json({user, cart}) 
     }else{
         res.status(400).send('No se encontró un usuario en la sesión actual')
     }
