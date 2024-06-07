@@ -39,6 +39,7 @@ describe('Testing Session Routes', () => {
     it('Session', async() => {
 
         //const result = await requester.get('/api/sessions/current')
+        const mockUser = {}
         const result = await requester.get('/api/sessions/current').send({
             "_id": "66303d8835e8143afa9da179",
             "first_name": "Lucas Emmanuel",
@@ -52,7 +53,7 @@ describe('Testing Session Routes', () => {
 
         console.log('result:', result)
         
-        //expect(result.statusCode).is.eql(200)
+        expect(result.statusCode).is.eql(200)
     })
 
     /* npx mocha src/tests/Session.supertest.mjs*/
