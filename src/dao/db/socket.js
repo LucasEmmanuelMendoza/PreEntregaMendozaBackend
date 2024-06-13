@@ -32,6 +32,14 @@ const funcionSocket = (io) => {
   io.on('connection', (socket) => {
   console.log('User connected');
 
+  socket.on('updateRole', async(data) => {
+    try{
+      
+    }catch(error){
+
+    }
+  })
+
   socket.on('updateProd', async(data) => {
     try{
       await productManager.updateProduct(data._id, data)

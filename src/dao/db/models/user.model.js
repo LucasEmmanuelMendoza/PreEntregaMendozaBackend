@@ -1,5 +1,16 @@
 const mongoose = require('mongoose')
 
+const DocumentSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    referece: {
+        type: String,
+        required: true
+    }
+})
+
 const UserSchema = new mongoose.Schema(
     {first_name:{
         type:String
@@ -25,6 +36,14 @@ const UserSchema = new mongoose.Schema(
     role:{
         type:String,
         default:'user'
+    },
+    documents:{
+        type: [DocumentSchema],
+        default: []
+    },
+    last_connection:{
+        type: String,
+        required: true
     }},    
     {
         timestamps:true,
