@@ -1,0 +1,14 @@
+<div class="text-white" style="width: 25rem; margin: 1rem">
+    <form action= '/api/users/{{userId}}/documents' method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+        <label for="pathArchivo">Archivo:</label>
+        <input type="file" name="pathArchivo" id="pathArchivo">
+         
+        <label for="archiveType">Tipo de archivo:</label>
+        <select name="archiveType" id="archivo" class="">
+            <option value="documents">Documento</option>
+            <option value="products">Producto</option>
+            <option value="profiles">Imagen de perfil</option>
+        </select>
+        <input type="submit" value="Subir">
+    </form> 
+</div>
