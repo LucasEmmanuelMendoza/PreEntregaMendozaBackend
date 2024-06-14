@@ -26,8 +26,6 @@ routerUser.get('/:uid/documents', async(req, res) => {
 
 routerUser.post('/:uid/documents', uploader.single('pathArchivo'), async(req, res) => {
     const user = req.session.passport.user
-    //res.redirect('http://localhost:8080/views/profile-view')
-    console.log(req.file)
 })
 
 module.exports = { routerUser }
