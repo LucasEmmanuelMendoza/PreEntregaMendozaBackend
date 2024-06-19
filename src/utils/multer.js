@@ -33,7 +33,7 @@ const storage = multer.diskStorage({
             folder = 'profiles';
         }
         console.log('folder:', folder)
-        const uploadPath = path.join(__dirname, '..', 'public', 'archives', folder);
+        const uploadPath = path.join(__dirname,  folder);
         cb(null, uploadPath);
     },
     filename: (req, file, cb) => {
