@@ -26,6 +26,8 @@ routerUser.get('/:uid/documents', async(req, res) => {
 
 routerUser.post('/:uid/documents', uploader.single('pathArchivo'), async(req, res) => {
     const user = req.session.passport.user
+    console.log(req.file)
+    console.log(req.file.path)
 })
 
 module.exports = { routerUser }

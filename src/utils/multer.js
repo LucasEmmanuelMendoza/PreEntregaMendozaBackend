@@ -22,10 +22,13 @@ const path = require("path");
 
 const storage = multer.diskStorage({
     destination:(req, file, cb) =>{
-        console.log('req.body:', req.body)
-        const archiveType = req.body.archiveType 
+        const archiveType = req.body.archiveType
         let folder = '';
 
+        console.log('req.body:', req.body)
+        console.log('req.body:', archiveType)
+
+        console.log('archiveType: ', archiveType)
         if(archiveType === 'documents'){
             folder = 'documents';
         }else if(archiveType === 'products'){
@@ -33,8 +36,9 @@ const storage = multer.diskStorage({
         }else if(archiveType === 'profiles'){
             folder = 'profiles';
         }
+
         console.log('folder:', folder)
-        const uploadPath = path.join(__dirname, '..', 'public', 'archives', `${folder}`);
+        const uploadPath = path.join(__dirname, '..', 'public', 'archives', folder);
         console.log('uploadPath:', uploadPath)
         cb(null, uploadPath);
     },
@@ -43,6 +47,7 @@ const storage = multer.diskStorage({
     }
 });
 
-const uploader = multer({ storage });
+//const uploader = multer({ storage });
+const uploader = multer({ storage })
 
 module.exports = { uploader };
