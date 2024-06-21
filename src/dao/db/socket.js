@@ -11,6 +11,7 @@ const { CustomError } = require('../../services/errors/CustomError.js')
 const nodemailer = require('nodemailer');
 const UserManager = require('../../controller/userManager.js');
 const { isValidPassword, createHash } = require('../../utils/bcrypt.js');
+const { generaTokenLink } = require('../../utils/token.js'); 
 
 const productManager = new ProductManager()
 const message = new MessageManager()
@@ -168,15 +169,20 @@ const funcionSocket = (io) => {
         },
       })
 
+      const token = generaTokenLink('http://localhost:8080/views/changePasswordView')
+
+      const linkToken = `http://localhost:8080/views/changePasswordView?token=${token}`;
+
       let mensaje = await transporter.sendMail({
-          from: 'ECommerce <ecommerce@gmail.com>',
-          to: mailUser,
-          subject: 'Recuperación de email',
-          text: 'Texto email',
-          html: `<div>
-                  <a href='http://localhost:8080/views/changePasswordView' class='btn btn-sucess'> Cambiar contraseña </a>
-                </div>`
-          })
+        from: 'ECommerce <ecommerce@gmail.com>',
+        to: mailUser,
+        subject: 'Recuperación de email',
+        text: 'Texto email',
+        html: `<div>
+                <a href='${linkToken}' class='btn btn-sucess'> Cambiar contraseña </a>
+              </div>`
+      })
+
       if(!!mensaje.messageId){
         console.log('Mensaje enviado', mensaje.messageId)
       }
@@ -191,6 +197,7 @@ const funcionSocket = (io) => {
          }else{
           const newPassword = createHash(data.pass1)
           await userManager.updatePassword(data.inputMail, newPassword)
+          console.log('Contraseña cambiada')
          }
       }else{
         console.log('Las contraseñas no coinciden')

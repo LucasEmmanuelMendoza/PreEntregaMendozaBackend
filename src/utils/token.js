@@ -1,4 +1,4 @@
-const { jwt } = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 const SECRET_KEY = "coderSecret2";
 
@@ -12,6 +12,12 @@ const generaToken = (usuario) => {
     return token
 }
 
+const generaTokenLink = (link) => {
+    const linkPayload = { link };
+    const token = jwt.sign(linkPayload, 'linkChangePassword', {expiresIn: '1s'})
+    return token
+}
+
 const validaToken = (token) => jwt.verify(token, SECRET_KEY);
 
-module.exports = { generaToken, validaToken }
+module.exports = { generaToken, validaToken, generaTokenLink}

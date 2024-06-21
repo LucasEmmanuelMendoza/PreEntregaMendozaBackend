@@ -42,8 +42,7 @@ const UserSchema = new mongoose.Schema(
         default: []
     },
     last_connection:{
-        type: String,
-        required: true
+        type: String
     }},    
     {
         timestamps:true,

@@ -70,8 +70,15 @@ routerViews.get('/realtimeproducts',/*  onlyAdmin,  */redirectToLogin, async(req
 }) 
 
 routerViews.get('/changePasswordView', (req, res) => {
-    res.render('changePassword',{
-    })
+
+    const token = req.query.token;
+    console.log('token route:', token)
+    if(token){
+        res.render('changePassword',{
+        })
+    }else{
+        return res.status(400)
+    }
 })
 
 routerViews.get('/changePasswordEmailView', (req, res) => {
