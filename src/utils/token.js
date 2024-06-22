@@ -14,7 +14,7 @@ const generaToken = (usuario) => {
 
 const generaTokenLink = (link) => {
     const linkPayload = { link };
-    const token = jwt.sign(linkPayload, 'linkChangePassword', {expiresIn: '1s'})
+    const token = jwt.sign(linkPayload, 'linkChangePassword', {expiresIn: '50s'})
     return token
 }
 

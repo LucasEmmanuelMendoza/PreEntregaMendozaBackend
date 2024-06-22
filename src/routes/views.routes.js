@@ -2,6 +2,7 @@ const express = require('express')
 const routerViews = express.Router()
 const passport = require('passport')
 const {onlyPremium, onlyAdmin, onlyUser, redirectToLogin, redirectToProfile } = require('./auth.routes.js')
+const jwt = require('jsonwebtoken')
 
 const ProductManager = require('../dao/db/ManagerMongo/productManager.js')
 //const ProductManager = require('../dao/fileSystem/productManager.js')
@@ -74,10 +75,19 @@ routerViews.get('/changePasswordView', (req, res) => {
     const token = req.query.token;
     console.log('token route:', token)
     if(token){
-        res.render('changePassword',{
-        })
+        const decoded = jwt.decode(token, { complete: true });
+        if(!decoded){
+            return res.status(400).send('Invalid Token');
+        }
+
+        const currentTime = Math.floor(Date.now() / 1000);
+        if(decoded.payload.exp < currentTime){
+            return res.status(401).send('Token has expired')
+        }
+                
+        res.render('changePassword')
     }else{
-        return res.status(400)
+        return res.status(400).send('Token requerido')
     }
 })
 
