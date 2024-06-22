@@ -48,46 +48,20 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 //================== Rol ======================
+const changeRole = (event) => {
+    const currentRole = event.currentTarget.getAttribute('user-id')
+
+    socket.emit('updateRole', currentRole)
+}
 
 document.addEventListener('DOMContentLoaded', () => {
         const btnChangeRol = document.getElementById('btnChangeRol')
 
         if(btnChangeRol != null){
-
+            btnChangeRol.addEventListener('click', currentRole)
         }
     }
 );
-
-//================== Email ======================
-//1)Enviar mail
-const btnSendEmail = document.getElementById('btn_email')
-const inputMail = document.getElementById('inputMail')
-
-if(btnSendEmail, inputMail){
-    btnSendEmail.addEventListener('click', function(){
-        localStorage.setItem('userEmail', inputMail.value)
-        socket.emit('sendEmail', inputMail.value )}
-    )
-}
-
-//2)Cambiar contraseña
-const pass1 = document.getElementById('newPass1')
-const pass2 = document.getElementById('newPass2')
-const btnChangePass = document.getElementById('btn_ChangePassword')
-
-if(btnChangePass){
-    btnChangePass.addEventListener('click', function(){
-        const inputMail = localStorage.getItem('userEmail');
-        if(inputMail){
-            const data = {
-                pass1:pass1.value,
-                pass2:pass2.value, 
-                inputMail: inputMail 
-            }
-            socket.emit('changePassword', data)
-        }
-    })
-}
 
 //================== Cart ======================
 const addToCart = (event) => {
@@ -124,6 +98,37 @@ const renderCart = (dataCart) => {
 socket.on('cartServidor', (data) => {
     renderCart(data)
 })
+
+//================== Email ======================
+//1)Enviar mail
+const btnSendEmail = document.getElementById('btn_email')
+const inputMail = document.getElementById('inputMail')
+
+if(btnSendEmail, inputMail){
+    btnSendEmail.addEventListener('click', function(){
+        localStorage.setItem('userEmail', inputMail.value)
+        socket.emit('sendEmail', inputMail.value )}
+    )
+}
+
+//2)Cambiar contraseña
+const pass1 = document.getElementById('newPass1')
+const pass2 = document.getElementById('newPass2')
+const btnChangePass = document.getElementById('btn_ChangePassword')
+
+if(btnChangePass){
+    btnChangePass.addEventListener('click', function(){
+        const inputMail = localStorage.getItem('userEmail');
+        if(inputMail){
+            const data = {
+                pass1:pass1.value,
+                pass2:pass2.value, 
+                inputMail: inputMail 
+            }
+            socket.emit('changePassword', data)
+        }
+    })
+}
 
 //================== Messages =======================
 const addMsg = () => {

@@ -36,6 +36,7 @@ const funcionSocket = (io) => {
   socket.on('updateRole', async(data) => {
     try{
       
+      
     }catch(error){
 
     }
