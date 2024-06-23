@@ -195,6 +195,8 @@ routerViews.get('/register-view', redirectToProfile, async(req, res)=> {
 })
 
 routerViews.get('/profile-view', redirectToLogin, async(req, res)=> {
+    console.log(req.session.passport.user.role)
+
     res.render('profile',{
             user: req.session.user,
             rol: req.session.rol

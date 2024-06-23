@@ -49,7 +49,7 @@ class UserManager{
 
     async getUserById(id){
         try{
-            const userFound = await Users.findOne({id})
+            const userFound = await Users.findOne({ _id: id })
             return userFound
         }catch(error){
             console.log(error)

@@ -1,5 +1,19 @@
 const socket = io();
 
+//================== Rol ======================
+const changeRole = (event) => {
+    const currentUserId = event.currentTarget.getAttribute('user-id')
+    socket.emit('updateRole', currentUserId)
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const btnChangeRole = document.getElementById('btnChangeRole')
+    console.log(btnChangeRole)
+    if(btnChangeRole != null){
+        btnChangeRole.addEventListener('click', changeRole)
+    }
+});
+
 //================== Mod Prod ======================
 document.addEventListener('DOMContentLoaded', () =>{
     document.querySelectorAll('.btnGoToMod').forEach(btn => {
@@ -46,22 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
-//================== Rol ======================
-const changeRole = (event) => {
-    const currentRole = event.currentTarget.getAttribute('user-id')
-
-    socket.emit('updateRole', currentRole)
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-        const btnChangeRol = document.getElementById('btnChangeRol')
-
-        if(btnChangeRol != null){
-            btnChangeRol.addEventListener('click', currentRole)
-        }
-    }
-);
 
 //================== Cart ======================
 const addToCart = (event) => {

@@ -1,15 +1,19 @@
 const express = require('express');
 const { uploader } = require('../utils/multer');
-const routerUser = express.Router();/* 
-const UserManager = require('../dao/db/ManagerMongo/userManager.js')
-const userManager = new UserManager() */
+const routerUser = express.Router();/* */
+const UserManager = require('../controller/userManager.js')
+const userManager = new UserManager() 
 
 routerUser.get('/premium/:uid', async(req,res) => {
     const userId = req.params.uid
-    if(req.session.passport.user){
-        const role = req.session.passport.user.role
+    const user = await userManager.getUserById(userId)
+    console.log('user:', user)
+    if(req.session.passport.user){ 
+        console.log('rol userIdSession: ', req.session.passport.user.role)
+        console.log('rol userIdManager: ', user.role)
         res.render('changeRole',{
-            role
+            role: req.session.passport.user.role,
+            userId
         })
     }else{
         res.send('Error')

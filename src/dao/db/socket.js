@@ -33,12 +33,29 @@ const funcionSocket = (io) => {
   io.on('connection', (socket) => {
   console.log('User connected');
 
-  socket.on('updateRole', async(data) => {
+  socket.on('updateRole', async(userId) => {
     try{
+      console.log(userId)
+      const currentUser = await userManager.getUserById(userId);
       
+      console.log('user antes de modificar el rol:', currentUser)
+
+      currentUser.role === 'user' ?
+      currentUser.role = 'premium' : 
+      currentUser.role = 'user'
+
+      console.log('newRole: ', currentUser.role)
+
+      const returnUpdate = await userManager.updateUser(userId, currentUser)
+      
+      if(returnUpdate){
+        console.log('Rol Modificado')
+      }else{
+        console.log('Error al cambiar de rol')
+      }
       
     }catch(error){
-
+      console.log(error)
     }
   })
 
