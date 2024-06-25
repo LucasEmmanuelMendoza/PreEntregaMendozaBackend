@@ -54,14 +54,13 @@ const getCurrentDate = () => {
     console.log('tipo:', typeof(currentDate.getMinutes()))
 
     const day = currentDate.getDate()
-    const month = currentDate.getMonth()
+    const month = currentDate.getMonth() + 1
+    const year = currentDate.getFullYear()
     const hours = currentDate.getHours()
     const minutes = currentDate.getMinutes()
     const seconds = currentDate.getSeconds()
 
-    console.log(day, month)
-
-    const date = [day, month, hours, minutes, seconds]
+    const date = [day, month, year, hours, minutes, seconds]
 
     for(let i = 0; i < date.length; i++){
         if(date[i] < 10){
@@ -69,7 +68,7 @@ const getCurrentDate = () => {
         }
     }
 
-    return `${date[0]}/${parseInt(date[1]) + 1}/${currentDate.getFullYear()} - ${date[2]}:${date[3]}:${date[4]}`
+    return `${date[0]}/${date[1]}/${date[2]} - ${date[3]}:${date[4]}:${date[5]}`
 }
 
 const updateLastConnection = async (email) => {
