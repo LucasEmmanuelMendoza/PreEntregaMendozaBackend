@@ -1,18 +1,18 @@
 const mongoose = require('mongoose')
 
 const DocumentSchema = new mongoose.Schema({
-    name: {
+    name:{
         type: String,
         required: true
     },
-    referece: {
+    referece:{
         type: String,
         required: true
     }
 })
 
-const UserSchema = new mongoose.Schema(
-    {first_name:{
+const UserSchema = new mongoose.Schema({
+    first_name:{
         type:String
     },
     last_name:{

@@ -5,6 +5,8 @@ const express = require('express')
 const { generaToken } = require('../utils/token.js')
 const routerAuth = express.Router()
  
+const userManager = new UserManager()
+
 function onlyPremium(req, res, next){
     if(req.session.rol === 'premium'){
         next()
@@ -47,6 +49,37 @@ function redirectToProfile(req, res, next){
     }
 }
 
+const getCurrentDate = () => {
+    const currentDate = new Date()
+    console.log('tipo:', typeof(currentDate.getMinutes()))
+
+    const day = currentDate.getDate()
+    const month = currentDate.getMonth()
+    const hours = currentDate.getHours()
+    const minutes = currentDate.getMinutes()
+    const seconds = currentDate.getSeconds()
+
+    console.log(day, month)
+
+    const date = [day, month, hours, minutes, seconds]
+
+    for(let i = 0; i < date.length; i++){
+        if(date[i] < 10){
+            date[i] = '0' + date[i];
+        }
+    }
+
+    return `${date[0]}/${parseInt(date[1]) + 1}/${currentDate.getFullYear()} - ${date[2]}:${date[3]}:${date[4]}`
+}
+
+const updateLastConnection = async (email) => {
+    const currentDate = getCurrentDate()
+    const currentUser = await userManager.existsUser(email)
+    currentUser.last_connection = currentDate
+    await userManager.updateUser(currentUser._id, currentUser)
+    return currentDate;
+}
+
 routerAuth.post('/register', passport.authenticate('register', {failureRedirect:'/auth/failRegister'}), async(req, res) => {
     console.log(req.session.user)
     res.redirect('/views/login-view')
@@ -60,9 +93,13 @@ routerAuth.post('/login', passport.authenticate('login', {failureRedirect:'/auth
     res.redirect('/views/products')
 }) 
 
-routerAuth.get('/successLogin', (req, res) => {
+routerAuth.get('/successLogin', async(req, res) => {
+    const currentDate = updateLastConnection(req.session.passport.user.email);
+    
+    req.session.passport.user.last_connection = currentDate
     req.session.user = req.user.first_name
     req.session.rol = 'usuario'
+
     if(req.user.email === 'adminCoder@coder.com'){
         req.session.rol = 'admin'
     }
@@ -73,6 +110,19 @@ routerAuth.get('/failLogin', (req, res) => {
     res.send('Failed login')
 })
 
+routerAuth.get('/logout', async(req, res) => {
+    const currentDate = updateLastConnection(req.session.passport.user.email);
+    req.session.passport.user.last_connection = currentDate
+
+    req.session.destroy(error => {
+        if(error) res.send("Error en logout")
+    })
+
+    res.redirect('/views/login-view')
+}) 
+
+module.exports = { routerAuth, onlyPremium, onlyAdmin, onlyUser, redirectToLogin, redirectToProfile }
+
 /*//login jwt//
  routerAuth.post('/login', passport.authenticate('jwt', { session: false, failureRedirect: '/auth/failLogin' }), async (req, res) => {
     const token = generaToken(req.user);
@@ -80,18 +130,8 @@ routerAuth.get('/failLogin', (req, res) => {
     res.redirect('/views/products')
 })*/
 
-
-routerAuth.get('/logout', async(req, res) => {
-    req.session.destroy(error => {
-        if(error) res.send("Error en logout")
-    })
-    res.redirect('/views/login-view')
-}) 
-
 /*//jwt
 routerAuth.get('/logout', async(req, res) => {
     res.clearCookie('cookieToken').send('Cookie eliminada')
     res.redirect('/views/login-view')
 })*/
-
-module.exports = { routerAuth, onlyPremium, onlyAdmin, onlyUser, redirectToLogin, redirectToProfile }

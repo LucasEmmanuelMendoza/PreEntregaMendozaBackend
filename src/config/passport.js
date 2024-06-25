@@ -72,10 +72,11 @@ const initializePassport = () => {
                 const userData = req.body
                 let user = await userManager.existsUser(username)
                 if(user !== null){
+                    
                     if(isValidPassword(user, userData.password)){
+                        user.last_connection = new Date()
                         return done(null, user)
                     }else{
-                        //return done(null, 'Usuario o contraseña incorrectos')
                         throw CustomError.createError({
                             name: 'User Login Error',
                             cause: userLoginErrorInfoSP(userData),
@@ -84,7 +85,6 @@ const initializePassport = () => {
                         })
                     }
                 }else{
-                    //return done(null, 'Usuario o contraseña incorrectos')
                     throw CustomError.createError({
                         name: 'User Login Error',
                         cause: userLoginErrorInfoSP(userData),
