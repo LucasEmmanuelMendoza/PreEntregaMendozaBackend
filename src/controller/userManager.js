@@ -1,6 +1,20 @@
-const Users = require('../dao/db/models/user.model')
+const Users = require('../dao/db/models/user.model');
+const UserDTO = require('../services/dto/userDTO');
+
 
 class UserManager{
+    async getAllUsers(){
+        try{
+            const foundUsers = await Users.find();
+            if(foundUsers){
+                return foundUsers.map(user => new UserDTO(user))
+            }
+        }catch(error){
+            console.log(error)
+            return error
+        }
+    }
+
     async updateUser(userId, value){
         try{
             const foundUser = await Users.findOne({ _id: userId })

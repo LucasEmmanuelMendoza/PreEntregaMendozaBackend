@@ -51,7 +51,6 @@ function redirectToProfile(req, res, next){
 
 const getCurrentDate = () => {
     const currentDate = new Date()
-    console.log('tipo:', typeof(currentDate.getMinutes()))
 
     const day = currentDate.getDate()
     const month = currentDate.getMonth() + 1

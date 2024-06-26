@@ -4,6 +4,13 @@ const routerUser = express.Router();/* */
 const UserManager = require('../controller/userManager.js')
 const userManager = new UserManager() 
 
+routerUser.get('/allUsers', async(req, res) => {
+    const users = await userManager.getAllUsers()
+    if(users){
+        res.status(200).json(users)
+    }
+})
+
 routerUser.get('/premium/:uid', async(req,res) => {
     const userId = req.params.uid
     const user = await userManager.getUserById(userId)

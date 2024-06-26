@@ -16,6 +16,12 @@ const cartManager = new CartManager()
 
 const generateProduct = require('../config/mocks/products.mocks.js');
 
+routerViews.get('/allUsers', onlyAdmin, async(req, res) => {
+    res.render('', {
+
+    })
+})
+
 routerViews.get('/products/details/:pid', async(req, res) => {
     const productId = req.params.pid 
     const product = await productManager.getProductById(productId)
@@ -59,7 +65,7 @@ routerViews.get('/products/mod/:pid', async(req, res) => {
     }
 })
 
-routerViews.get('/realtimeproducts',/*  onlyAdmin,  */redirectToLogin, async(req, res) => {
+routerViews.get('/realtimeproducts', onlyAdmin, redirectToLogin, async(req, res) => {
     const products = await productManager.getProducts()
     
     if(products){
@@ -106,8 +112,6 @@ routerViews.get('/mockingproducts', (req, res) => {
     })
 })
 
-
-
 routerViews.get('/home', async(req, res) => {
     const products = await productManager.getProducts()
     //console.log(products)
@@ -122,11 +126,11 @@ routerViews.get('/carts/:cid', redirectToLogin, async(req, res) => {
     const cartId = req.params.cid;
     const cartProds = await cartManager.getCartById(cartId)
 
-    console.log(cartProds.products[0].product.price)
+    //console.log(cartProds.products[0].product.price)
     const totalPrice = cartProds.products.reduce((acumulador, prod) => acumulador += (prod.product.price * prod.quantity), 0);
-    console.log(totalPrice)
+    //console.log(totalPrice)
     const prodsQuantity = cartProds.products.reduce((acumulador, prod) => acumulador += prod.quantity,0)
-    console.log(prodsQuantity)
+    //console.log(prodsQuantity)
     if(cartProds){
         res.render('cart', {
             cartProducts : cartProds.products,
@@ -148,7 +152,7 @@ routerViews.get('/products/details/:pid', redirectToLogin, async(req, res) => {
     }
 })
 
-routerViews.get('/realtimeproducts', /* onlyAdmin, */ redirectToLogin, async(req, res) => {
+routerViews.get('/realtimeproducts', onlyAdmin, redirectToLogin, async(req, res) => {
     const limit = req.params.limit;
     const page = req.params.page;
     const category = req.params.category;
@@ -201,6 +205,7 @@ routerViews.get('/profile-view', redirectToLogin, async(req, res)=> {
         }
     )
 })
+
 
 routerViews.get('/github', passport.authenticate('github', {}), (req, res)=>{})
 routerViews.get('/callbackGithub', redirectToProfile, passport.authenticate('github', {successRedirect: '/views/successGithub'}), (req, res) => {
