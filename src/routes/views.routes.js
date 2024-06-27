@@ -14,11 +14,15 @@ const messageManeger = new MessageManager()
 const CartManager = require('../dao/db/ManagerMongo/cartManager.js')
 const cartManager = new CartManager()
 
+const UserManager = require('../controller/userManager.js')
+const userManager = new UserManager()
+
 const generateProduct = require('../config/mocks/products.mocks.js');
 
-routerViews.get('/allUsers', onlyAdmin, async(req, res) => {
-    res.render('', {
-
+routerViews.get('/allUsers', /* onlyAdmin, */ async(req, res) => {
+    const users = await userManager.getAllUsers()
+    res.render('users', {
+        users
     })
 })
 
@@ -90,7 +94,6 @@ routerViews.get('/changePasswordView', (req, res) => {
         if(decoded.payload.exp < currentTime){
             return res.status(401).send('Token has expired')
         }
-                
         res.render('changePassword')
     }else{
         return res.status(400).send('Token requerido')

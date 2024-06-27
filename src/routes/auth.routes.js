@@ -17,11 +17,11 @@ function onlyPremium(req, res, next){
 
 function onlyAdmin(req, res, next){
     if(req.session.rol === 'admin'){
-        next()
+       next() 
     }else{
         res.redirect('/views/error')
     }
-}
+} 
 
 function onlyUser(req, res, next){
     if(req.session.rol === "user"){
@@ -49,29 +49,8 @@ function redirectToProfile(req, res, next){
     }
 }
 
-const getCurrentDate = () => {
-    const currentDate = new Date()
-
-    const day = currentDate.getDate()
-    const month = currentDate.getMonth() + 1
-    const year = currentDate.getFullYear()
-    const hours = currentDate.getHours()
-    const minutes = currentDate.getMinutes()
-    const seconds = currentDate.getSeconds()
-
-    const date = [day, month, year, hours, minutes, seconds]
-
-    for(let i = 0; i < date.length; i++){
-        if(date[i] < 10){
-            date[i] = '0' + date[i];
-        }
-    }
-
-    return `${date[0]}/${date[1]}/${date[2]} - ${date[3]}:${date[4]}:${date[5]}`
-}
-
 const updateLastConnection = async (email) => {
-    const currentDate = getCurrentDate()
+    const currentDate = new Date();
     const currentUser = await userManager.existsUser(email)
     currentUser.last_connection = currentDate
     await userManager.updateUser(currentUser._id, currentUser)

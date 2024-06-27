@@ -1,8 +1,19 @@
 const Users = require('../dao/db/models/user.model');
 const UserDTO = require('../services/dto/userDTO');
 
-
 class UserManager{
+    async deleteOneUser(userId){
+        try{
+            const deleteReturn = await Users.deleteOne({"_id": userId})
+            if(deleteReturn){
+                return true
+            }
+        }catch(error){
+            console.log(error)
+            return error
+        }
+    }
+
     async getAllUsers(){
         try{
             const foundUsers = await Users.find();

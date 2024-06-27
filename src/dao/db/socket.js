@@ -8,7 +8,8 @@ const { EErrors } = require('../../services/errors/errors-enum.js');
 const { purchaseCartErrorInfoSP } = require('../../services/errors/messages/purchase-cart-error.message.js')
 const { CustomError } = require('../../services/errors/CustomError.js')
 //const ProductManger = require('../fileSystem/productManager.js')
-const nodemailer = require('nodemailer');
+//const nodemailer = require('nodemailer');
+const transporter = require('../../config/nodemailer.js')
 const UserManager = require('../../controller/userManager.js');
 const { isValidPassword, createHash } = require('../../utils/bcrypt.js');
 const { generaTokenLink } = require('../../utils/token.js'); 
@@ -177,7 +178,8 @@ const funcionSocket = (io) => {
     });//fin socket addTicket
 
     socket.on('sendEmail', async(mailUser)=>{
-      const transporter = nodemailer.createTransport({
+      
+/*      const transporter = nodemailer.createTransport({
         service: 'gmail',
         port: 587,
         secure: false,
@@ -185,7 +187,7 @@ const funcionSocket = (io) => {
             user:'mendozalucas001@gmail.com',
             pass: 'cawpeioqdpuumojh'
         },
-      })
+      }) */
 
       const token = generaTokenLink('http://localhost:8080/views/changePasswordView')
 
