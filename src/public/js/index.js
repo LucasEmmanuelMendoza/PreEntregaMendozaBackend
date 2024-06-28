@@ -14,6 +14,62 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+//================== User ======================
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.btnEditUser').forEach(btn => {
+        btn.addEventListener('click', (event) => {
+            const idUser = event.currentTarget.getAttribute('id-user');
+            const row = event.currentTarget.closest('tr');
+            const roleCell = row.querySelector('td:nth-child(6)');
+
+            if(event.currentTarget.value === 'Save'){
+                const select = roleCell.querySelector('select');
+                const newRole = select.value;
+                roleCell.textContent = newRole;
+                event.currentTarget.value = 'Editar';
+
+                const deleteBtn = event.currentTarget.parentNode.querySelector('.btnDeleteUser');
+                if(deleteBtn){
+                    deleteBtn.remove();
+                }
+                return;
+            }
+
+            const select = document.createElement('select');
+            const roles = ['user', 'premium', 'admin'];
+            roles.forEach(role => {
+                const option = document.createElement('option');
+                option.value = role;
+                option.textContent = role;
+                if(role === roleCell.textContent.trim()){
+                    option.selected = true;
+                }
+                select.appendChild(option);
+            });
+
+            roleCell.textContent = '';
+            roleCell.appendChild(select);
+
+            event.currentTarget.value = 'Save';
+
+            let deleteBtn = event.currentTarget.parentNode.querySelector('.btnDeleteUser');
+            if(!deleteBtn){
+                deleteBtn = document.createElement('input');
+                deleteBtn.type = 'button';
+                deleteBtn.value = 'Delete';
+                deleteBtn.className = 'btn btn-danger btnDeleteUser'; 
+
+                //event.currentTarget.parentNode.appendChild(deleteBtn);
+                event.currentTarget.insertAdjacentElement('afterend', deleteBtn);
+
+                deleteBtn.addEventListener('click', () => {
+                    
+                });
+            }
+        })
+    })
+})
+
 //================== Mod Prod ======================
 document.addEventListener('DOMContentLoaded', () =>{
     document.querySelectorAll('.btnGoToMod').forEach(btn => {

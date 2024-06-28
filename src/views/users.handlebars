@@ -23,13 +23,8 @@
                 <td>{{this.age}}</td>
                 <td>{{this.role}}</td>
                 <td>{{this.last_connection}}</td>
-                <td><input class="btn btn-warning" type="button" value="Editar"><div class="btnDeleteUser"></div></td>
+                <td class="d-flex flex-row"><input id-user="{{this.id}}" class="btn btn-warning btnEditUser" type="button" value="Editar" id="btnEditUser"><div id="btnDeleteUser"></div></td>
             </tr>
         {{/each}}
-    
     </tbody>
-
-
-
-
 </table>
