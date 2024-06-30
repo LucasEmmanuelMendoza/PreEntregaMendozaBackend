@@ -1,19 +1,5 @@
 const socket = io();
 
-//================== Rol ======================
-const changeRole = (event) => {
-    const currentUserId = event.currentTarget.getAttribute('user-id')
-    socket.emit('updateRole', currentUserId)
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    const btnChangeRole = document.getElementById('btnChangeRole')
-    console.log(btnChangeRole)
-    if(btnChangeRole != null){
-        btnChangeRole.addEventListener('click', changeRole)
-    }
-});
-
 //================== User ======================
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.btnEditUser').forEach(btn => {
@@ -26,6 +12,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 const select = roleCell.querySelector('select');
                 const newRole = select.value;
                 roleCell.textContent = newRole;
+
+                const roleObj = {
+                    idUser,
+                    newRole
+                }
+
+                socket.emit('newRole', roleObj)
+
                 event.currentTarget.value = 'Editar';
 
                 const deleteBtn = event.currentTarget.parentNode.querySelector('.btnDeleteUser');
@@ -59,16 +53,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 deleteBtn.value = 'Delete';
                 deleteBtn.className = 'btn btn-danger btnDeleteUser'; 
 
-                //event.currentTarget.parentNode.appendChild(deleteBtn);
                 event.currentTarget.insertAdjacentElement('afterend', deleteBtn);
 
                 deleteBtn.addEventListener('click', () => {
-                    
+                    socket.emit('deleteUser', idUser)
+                    row.remove();                    
                 });
             }
         })
     })
 })
+
+//================== Rol ======================
+const changeRole = (event) => {
+    const currentUserId = event.currentTarget.getAttribute('user-id')
+    socket.emit('updateRole', currentUserId)
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const btnChangeRole = document.getElementById('btnChangeRole')
+    console.log(btnChangeRole)
+    if(btnChangeRole != null){
+        btnChangeRole.addEventListener('click', changeRole)
+    }
+});
 
 //================== Mod Prod ======================
 document.addEventListener('DOMContentLoaded', () =>{

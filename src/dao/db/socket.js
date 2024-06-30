@@ -34,6 +34,27 @@ const funcionSocket = (io) => {
   io.on('connection', (socket) => {
   console.log('User connected');
 
+  socket.on('newRole', async(newRoleObj) => {
+    const user = await userManager.getUserById(newRoleObj.idUser)
+
+    user.role = newRoleObj.newRole
+
+    const returnUpdate = await userManager.updateUser(newRoleObj.idUser, user)
+
+    if(returnUpdate){
+      console.log('Rol de usuario modificado')
+    }
+
+  })
+
+  socket.on('deleteUser', async(userId) => {
+    const returnDelete = await userManager.deleteOneUser(userId)
+    
+    if(returnDelete){
+      console.log('Usuario eliminado con éxito!')
+    }
+  })
+
   socket.on('updateRole', async(userId) => {
     try{
       console.log(userId)
@@ -178,16 +199,6 @@ const funcionSocket = (io) => {
     });//fin socket addTicket
 
     socket.on('sendEmail', async(mailUser)=>{
-      
-/*      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        port: 587,
-        secure: false,
-        auth:{
-            user:'mendozalucas001@gmail.com',
-            pass: 'cawpeioqdpuumojh'
-        },
-      }) */
 
       const token = generaTokenLink('http://localhost:8080/views/changePasswordView')
 
