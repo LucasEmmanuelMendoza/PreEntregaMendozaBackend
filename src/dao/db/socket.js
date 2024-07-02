@@ -1,5 +1,6 @@
 const MessageManager = require('../../controller/messageManager.js')
-const CartManager = require('../db/ManagerMongo/cartManager.js')
+//const CartManager = require('../db/ManagerMongo/cartManager.js')
+const CartManager = require('../../controller/cartManager.js')
 //const CartManager = require('../fileSystem/cartManager.js')
 const TicketManager = require('../../dao/db/ManagerMongo/ticketManager.js')
 const { v4: uuidv4  } = require('uuid');
@@ -36,9 +37,7 @@ const funcionSocket = (io) => {
 
   socket.on('newRole', async(newRoleObj) => {
     const user = await userManager.getUserById(newRoleObj.idUser)
-
     user.role = newRoleObj.newRole
-
     const returnUpdate = await userManager.updateUser(newRoleObj.idUser, user)
 
     if(returnUpdate){
@@ -51,6 +50,8 @@ const funcionSocket = (io) => {
     const returnDelete = await userManager.deleteOneUser(userId)
 
     if(returnDelete){
+      await cartManager.deleteCart(deletedUser.cartId)
+
       let mensaje = await transporter.sendMail({
         from: 'ECommerce <ecommerce@gmail.com>',
         to: deletedUser.email,
@@ -132,10 +133,16 @@ const funcionSocket = (io) => {
     //data.user = userEmail
     try{
       const prodDelete = await productManager.getProductById(data.idProd);
-
       if(prodDelete.owner === data.user || data.user === 'adminCoder@coder.com'){
+        const carts = await cartManager.getAllCarts();
+
+        for(const cart of carts){
+          await cartManager.deleteProduct(cart._id, prodDelete._id);
+        }
+
         const returnDelete = await productManager.deleteProduct(data.idProd);
-        productos = productos.filter((prod) => prod._id != data.isProd);
+
+        productos = productos.filter((prod) => prod._id != data.idProd);
         productos = await productManager.getProducts()
 
         console.log('Producto eliminado')

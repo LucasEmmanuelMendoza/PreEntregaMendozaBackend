@@ -2,6 +2,17 @@ const Carts = require('../dao/db/models/cart.model')
 
 class CartManager{
 
+    async getAllCarts(){
+        try{
+            const foundCarts = await Carts.find();
+            if(foundCarts){
+                return foundCarts
+            }
+        }catch(error){
+            return error
+        }
+    }
+
     async deleteCart(cid){
         try{
             return await Carts.findByIdAndDelete(cid)
@@ -45,13 +56,12 @@ class CartManager{
         }
     }
 
-     async addProduct(cartId, productId){
+    async addProduct(cartId, productId){
         try{
             //busco el carrito
             const foundCart = await Carts.findOne({_id: cartId})
-            if (foundCart != null){//existe el carrito
+            if(foundCart != null){//existe el carrito
                 const indexProd = foundCart.products.findIndex(prod => prod.product._id == productId);
-
                 if (indexProd != -1){//existe el producto en el carro
                     foundCart.products[indexProd].quantity ++;
                 }else{
@@ -74,10 +84,13 @@ class CartManager{
         try{
             const foundCart = await Carts.findOne({_id:cartId});
             if(foundCart != null){
-                const existeProd = foundCart.products.some(prod => prod.product == productId)
-                if(existeProd != -1){//exite el prod
-                    foundCart.products = foundCart.products.filter(prod => prod.product != productId);
-                    await Carts.updateOne({"_id": cartId}, foundCart);
+                const existeProd = (foundCart.products).some(prod => toString(prod.product) === toString(productId))
+                console.log('existeProd:',existeProd)
+                if(existeProd){//exite el 
+                    console.log('foundCart.products: ', foundCart.products)
+                    //REVISAR ACÁ
+                    foundCart.products = (foundCart.products).filter(prod => toString(prod.product) !== toString(productId));
+                    await Carts.updateOne({"_id": cartId}, {$set: {products: foundCart.products}});
                     return true;
                 }
             }
