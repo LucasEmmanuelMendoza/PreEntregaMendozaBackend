@@ -7,8 +7,9 @@ const routerAuth = express.Router()
  
 const userManager = new UserManager()
 
-function onlyPremium(req, res, next){
-    if(req.session.rol === 'premium'){
+async function onlyPremium (req, res, next){
+    const currentUser = await userManager.getUserById(req.session.passport.user._id)
+    if(currentUser.role === 'premium'){
         next()
     }else{
         res.redirect('/views/error')
@@ -16,7 +17,7 @@ function onlyPremium(req, res, next){
 }
 
 function onlyAdmin(req, res, next){
-    if(req.session.rol === 'admin'){
+    if(req.session.role === 'admin'){
        next() 
     }else{
         res.redirect('/views/error')
@@ -24,7 +25,7 @@ function onlyAdmin(req, res, next){
 } 
 
 function onlyUser(req, res, next){
-    if(req.session.rol === "user"){
+    if(req.session.role === "user"){
         next()
     }else{
         res.redirect('/views/error')
@@ -58,7 +59,6 @@ const updateLastConnection = async (email) => {
 }
 
 routerAuth.post('/register', passport.authenticate('register', {failureRedirect:'/auth/failRegister'}), async(req, res) => {
-    console.log(req.session.user)
     res.redirect('/views/login-view')
 })
 
@@ -71,14 +71,17 @@ routerAuth.post('/login', passport.authenticate('login', {failureRedirect:'/auth
 }) 
 
 routerAuth.get('/successLogin', async(req, res) => {
-    const currentDate = updateLastConnection(req.session.passport.user.email);
-    
+    const currentDate = await updateLastConnection(req.session.passport.user.email);
     req.session.passport.user.last_connection = currentDate
+    
+    req.session.userId = req.session.passport.user._id
     req.session.user = req.user.first_name
-    req.session.rol = 'usuario'
+    req.session.role = 'usuario'
 
-    if(req.user.email === 'adminCoder@coder.com'){
-        req.session.rol = 'admin'
+    if((req.session.passport.user.email).trim() === 'adminCoder@coder.com'){
+        req.session.passport.user.role = 'admin'
+        await userManager.updateUser(req.session.passport.user._id, req.session.passport.user)
+        req.session.role = 'admin'
     }
     res.redirect('/views/profile-view')
 })

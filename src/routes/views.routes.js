@@ -21,6 +21,7 @@ const generateProduct = require('../config/mocks/products.mocks.js');
 
 routerViews.get('/allUsers', /* onlyAdmin, */ async(req, res) => {
     const users = await userManager.getAllUsers()
+
     res.render('users', {
         users
     })
@@ -69,9 +70,9 @@ routerViews.get('/products/mod/:pid', async(req, res) => {
     }
 })
 
-routerViews.get('/realtimeproducts', onlyAdmin, redirectToLogin, async(req, res) => {
+routerViews.get('/realtimeproducts', /* onlyAdmin, onlyPremium,  */redirectToLogin, async(req, res) => {
     const products = await productManager.getProducts()
-    
+
     if(products){
         res.render('realtimeproducts', { 
             user: req.session.passport.user.email,
@@ -81,9 +82,8 @@ routerViews.get('/realtimeproducts', onlyAdmin, redirectToLogin, async(req, res)
 }) 
 
 routerViews.get('/changePasswordView', (req, res) => {
-
     const token = req.query.token;
-    console.log('token route:', token)
+
     if(token){
         const decoded = jwt.decode(token, { complete: true });
         if(!decoded){
@@ -107,6 +107,7 @@ routerViews.get('/changePasswordEmailView', (req, res) => {
 
 routerViews.get('/mockingproducts', (req, res) => {
     const products = [];
+
     for(let i=0; i<100; i++){
         products.push(generateProduct())
     }
@@ -117,7 +118,7 @@ routerViews.get('/mockingproducts', (req, res) => {
 
 routerViews.get('/home', async(req, res) => {
     const products = await productManager.getProducts()
-    //console.log(products)
+    
     if(products != false){
         res.send({
             data: products
@@ -128,12 +129,9 @@ routerViews.get('/home', async(req, res) => {
 routerViews.get('/carts/:cid', redirectToLogin, async(req, res) => {
     const cartId = req.params.cid;
     const cartProds = await cartManager.getCartById(cartId)
-
-    //console.log(cartProds.products[0].product.price)
     const totalPrice = cartProds.products.reduce((acumulador, prod) => acumulador += (prod.product.price * prod.quantity), 0);
-    //console.log(totalPrice)
     const prodsQuantity = cartProds.products.reduce((acumulador, prod) => acumulador += prod.quantity,0)
-    //console.log(prodsQuantity)
+
     if(cartProds){
         res.render('cart', {
             cartProducts : cartProds.products,
@@ -155,7 +153,7 @@ routerViews.get('/products/details/:pid', redirectToLogin, async(req, res) => {
     }
 })
 
-routerViews.get('/realtimeproducts', onlyAdmin, redirectToLogin, async(req, res) => {
+routerViews.get('/realtimeproducts',/*  onlyAdmin,  */redirectToLogin, async(req, res) => {
     const limit = req.params.limit;
     const page = req.params.page;
     const category = req.params.category;

@@ -44,13 +44,26 @@ const funcionSocket = (io) => {
     if(returnUpdate){
       console.log('Rol de usuario modificado')
     }
-
   })
 
   socket.on('deleteUser', async(userId) => {
+    const deletedUser = await userManager.getUserById(userId)
     const returnDelete = await userManager.deleteOneUser(userId)
-    
+
     if(returnDelete){
+      let mensaje = await transporter.sendMail({
+        from: 'ECommerce <ecommerce@gmail.com>',
+        to: deletedUser.email,
+        subject: 'Cuenta eliminada',
+        html: `<div>
+                <h1>¡Su cuenta ha sido eliminada por inactividad!</h1>
+                <img src='https://static.vecteezy.com/system/resources/previews/014/482/396/non_2x/desktop-with-face-error-free-vector.jpg' alt='imgError'>
+              </div>`
+      })
+
+      if(!!mensaje.messageId){
+        console.log('Mensaje enviado', mensaje.messageId)
+      }
       console.log('Usuario eliminado con éxito!')
     }
   })
@@ -116,15 +129,36 @@ const funcionSocket = (io) => {
     })
 
   socket.on('deleteProd', async(data) => {
+    //data.user = userEmail
     try{
       const prodDelete = await productManager.getProductById(data.idProd);
 
       if(prodDelete.owner === data.user || data.user === 'adminCoder@coder.com'){
-        await productManager.deleteProduct(data.idProd);
+        const returnDelete = await productManager.deleteProduct(data.idProd);
         productos = productos.filter((prod) => prod._id != data.isProd);
         productos = await productManager.getProducts()
+
         console.log('Producto eliminado')
         socket.emit('productosServidor', productos);
+
+        if(data.user === 'adminCoder@coder.com'){
+          if(returnDelete){
+            let mensaje = await transporter.sendMail({
+              from: 'ECommerce <ecommerce@gmail.com>',
+              to: prodDelete.owner,
+              subject: 'Producto eliminado',
+              html: `<div>
+                      <h1>¡Su producto ha sido eliminado del Ecommerce!</h1>
+                      <img src='https://static.vecteezy.com/system/resources/previews/014/482/396/non_2x/desktop-with-face-error-free-vector.jpg' alt='imgError'>
+                    </div>`
+            })
+      
+            if(!!mensaje.messageId){
+              console.log('Mensaje enviado', mensaje.messageId)
+            }
+          }
+        }
+        
       }else{
         console.log('No tienes permiso para eliminar este producto')
       }
