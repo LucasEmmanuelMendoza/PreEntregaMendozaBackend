@@ -17,7 +17,7 @@
 <div class="Container m-2 d-flex flex-wrap gap-2" id="cajaProds">
         {{#each products}}
             <div class="card" style="width: 18rem;">
-                <input type="button" delete-id="{{this._id}}" user-id="{{this.user}}" class="btn btn-danger position-absolute m-1 btn-delete" value="X">                        
+                <input type="submit" delete-id="{{this._id}}" user-id="{{this.user}}" class="btn btn-danger position-absolute m-1 btn-delete" value="X">                        
                 <img src={{this.thumbnail}} class="card-img-top" alt="...">
                 <div class="card-body">
                     <h1 class="card-title">{{this.title}}</h1>
@@ -32,4 +32,5 @@
                 </div>
             </div>
         {{/each}}
+
 </div>

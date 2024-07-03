@@ -142,11 +142,14 @@ const funcionSocket = (io) => {
 
         const returnDelete = await productManager.deleteProduct(data.idProd);
 
-        productos = productos.filter((prod) => prod._id != data.idProd);
+        //productos = productos.filter((prod) => prod._id != data.idProd);
+        productos = productos.map(product => ({ ...product, user: data.user }));
+        
         productos = await productManager.getProducts()
 
         console.log('Producto eliminado')
         socket.emit('productosServidor', productos);
+        socket.emit('confirmDelete', returnDelete)
 
         if(data.user === 'adminCoder@coder.com'){
           if(returnDelete){

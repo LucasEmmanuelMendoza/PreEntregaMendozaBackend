@@ -1,4 +1,5 @@
 const socket = io();
+//const Swal = require('sweetalert2')
 
 //================== User ======================
 document.addEventListener('DOMContentLoaded', () => {
@@ -72,7 +73,7 @@ const changeRole = (event) => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const btnChangeRole = document.getElementById('btnChangeRole')
-    console.log(btnChangeRole)
+    //console.log(btnChangeRole)
     if(btnChangeRole != null){
         btnChangeRole.addEventListener('click', changeRole)
     }
@@ -242,6 +243,17 @@ deleteButtons.forEach(button => {
     button.addEventListener('click', deleteProd)
 })
 
+socket.on('confirmDelete', (data) => {
+    if(data){
+        Swal.fire({
+            icon: 'success',
+            title: 'Producto Eliminado',
+            text: 'El producto ha sido eliminado exitosamente.',
+            confirmButtonText: 'Aceptar'
+        });
+    }
+})
+ 
 //add
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('addProductForm')
@@ -273,24 +285,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const render = (dataProds) => {
     let arrayMap = dataProds.map( prod => {
-        return(
-            `
+        return(`
             <div class="card" style="width: 18rem;">
-            <input type="button" delete-id="{{prod._id}}" class="btn btn-danger position-absolute m-1 btn-delete" value="X">                        
-
+            <input type="submit" delete-id="${prod._id}" user-id="${prod.user}" class="btn btn-danger position-absolute m-1 btn-delete" value="X">                        
                 <img src=${prod.thumbnail} class="card-img-top" alt="...">
                 <div class="card-body">
-
                     <h1 class="card-title">${prod.title}</h1>
                     <small>id: ${prod._id}</small>
                     <p class="card-text">${prod.description}</p>
                     <h3 class="card-text">Categoria: ${prod.category}</h3>
                     <h4 class="card-text">$${prod.price}</h4>
                     <h5 class="card-text">Código: ${prod.code}</h5>
-                    <p class="card-text">Cant: ${prod.stock}</p>                    
+                    <p class="card-text">Cant: ${prod.stock}</p>         
+                    <a user-id="${prod.user}" owner-id="${prod.owner}" class="btn btn-warning btnGoToMod" href="http://localhost:8080/views/products/mod/${prod._id}">Modificar</a>
                 </div>
-            </div>
-            `
+            </div>`
         )
     }).join(' ')
     

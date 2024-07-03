@@ -88,8 +88,7 @@ class CartManager{
                 console.log('existeProd:',existeProd)
                 if(existeProd){//exite el 
                     console.log('foundCart.products: ', foundCart.products)
-                    //REVISAR ACÁ
-                    foundCart.products = (foundCart.products).filter(prod => toString(prod.product) !== toString(productId));
+                    foundCart.products = (foundCart.products).filter(prod => String(prod.product._id) !== String(productId));
                     await Carts.updateOne({"_id": cartId}, {$set: {products: foundCart.products}});
                     return true;
                 }
