@@ -203,13 +203,15 @@ routerViews.get('/register-view', redirectToProfile, async(req, res)=> {
 })
 
 routerViews.get('/profile-view', redirectToLogin, async(req, res)=> {
-    res.render('profile',{
-            user: req.session.user,
-            rol: req.session.rol
-        }
-    )
+    const currentUserId = req.session.passport.user._id
+    if(currentUserId){
+        const currentUser = await userManager.getUserById(currentUserId)
+        res.render('profile',{
+                user: currentUser.toJSON()
+            }
+        )
+    }
 })
-
 
 routerViews.get('/github', passport.authenticate('github', {}), (req, res)=>{})
 routerViews.get('/callbackGithub', redirectToProfile, passport.authenticate('github', {successRedirect: '/views/successGithub'}), (req, res) => {
