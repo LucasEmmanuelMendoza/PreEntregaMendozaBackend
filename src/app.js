@@ -98,7 +98,7 @@ const io = new Server(server);
 
 funcionSocket(io);
 
-const PORT = 8080
+const PORT = process.env.PORT || 9090
 
 server.listen(PORT, ()=> {
   console.log('Server run on port', PORT)

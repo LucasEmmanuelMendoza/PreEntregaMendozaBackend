@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 module.exports = {
     connect: () => {
-        return mongoose.connect("mongodb+srv://lucas:123@clustermendoza.0fsgvex.mongodb.net/ecommerce")
+        //return mongoose.connect("mongodb+srv://lucas:123@clustermendoza.0fsgvex.mongodb.net/ecommerce")
+        return mongoose.connect(process.env.MONGO_URL)
         .then(() => {
             console.log("Base de datos conectada")
         }).catch((error) => {
