@@ -16,7 +16,6 @@ const Database = require('./dao/db/index.js')
 const { Server } = require("socket.io");
 const http = require('http')
 const express = require("express");
-const PORT = 8080
 const app = express();
 const server = http.createServer(app)
 const handlebars = require('express-handlebars');
@@ -98,6 +97,8 @@ app.use('/api/users', routerUser)
 const io = new Server(server); 
 
 funcionSocket(io);
+
+const PORT = 8080
 
 server.listen(PORT, ()=> {
   console.log('Server run on port', PORT)
