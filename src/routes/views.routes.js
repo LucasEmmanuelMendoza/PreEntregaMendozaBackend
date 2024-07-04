@@ -156,6 +156,20 @@ routerViews.get('/products/details/:pid', redirectToLogin, async(req, res) => {
     }
 })
 
+/* routerViews.get('/products', redirectToLogin,  async(req, res) => {
+    const products = await productManager.getProducts()
+    const role = req.session.passport.user.role
+    const userCartId = req.session.passport.user.cartId; 
+    const email = req.session.passport.user.email;
+
+    if(products){
+        res.render('products', {
+            user: req.session.user,
+            products: products.map(product => ({ ...product, cartId: userCartId, role, email}))
+        })
+    } 
+})
+
 routerViews.get('/', redirectToLogin, async(req, res) => {
     const products = await productManager.getProductsPaginate()
     const userCartId = req.session.passport.user.cartId;
@@ -165,7 +179,22 @@ routerViews.get('/', redirectToLogin, async(req, res) => {
             products : products.payload
         })
     }
-})
+}) */
+
+routerViews.get('/', redirectToLogin, async(req, res) => {
+    const products = await productManager.getProducts()
+    const role = req.session.passport.user.role
+    const userCartId = req.session.passport.user.cartId; 
+    const email = req.session.passport.user.email;
+
+    if(products){
+        res.render('products', {
+            user: req.session.user,
+            products: products.map(product => ({ ...product, cartId: userCartId, role, email}))
+        })
+    } 
+}) 
+
 
 routerViews.get('/chat', redirectToLogin, async(req, res) => {
     const messages = await messageManeger.getMessages()
