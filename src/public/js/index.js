@@ -74,7 +74,13 @@ socket.on('successRoleChange', () => {
         confirmButtonText: 'Aceptar'
     });
 })
-
+socket.on('failedRoleChange', () => {
+    Swal.fire({
+        icon: 'error',
+        title: 'Primero debe cargar toda la documentación',
+        confirmButtonText: 'Aceptar'
+    });
+})
 const changeRole = (event) => {
     const currentUserId = event.currentTarget.getAttribute('user-id')
     socket.emit('updateRole', currentUserId)

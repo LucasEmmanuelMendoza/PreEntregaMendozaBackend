@@ -100,14 +100,21 @@ const funcionSocket = (io) => {
       if(currentUser.role === 'user'){
         if(identificacion && domicilio && estadoCuenta){
           currentUser.role = 'premium'
+          const returnUpdate = await userManager.updateUser(userId, currentUser)
+          if(returnUpdate){
+            socket.emit('successRoleChange')
+          }   
+        }else{
+          socket.emit('failedRoleChange')
         }
       }else{
-        currentUser.role = 'user'
+        currentUser.role = 'user';
+        const returnUpdate = await userManager.updateUser(userId, currentUser)
+        if(returnUpdate){
+          socket.emit('successRoleChange')
+        }   
       }
-      const returnUpdate = await userManager.updateUser(userId, currentUser)
-      if(returnUpdate){
-        socket.emit('successRoleChange')
-      }      
+   
     }catch(error){
       console.log(error)
     }

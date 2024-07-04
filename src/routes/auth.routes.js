@@ -7,6 +7,15 @@ const routerAuth = express.Router()
  
 const userManager = new UserManager()
 
+async function onlyPremiumYAdmin (req, res, next){
+    const currentUser = await userManager.getUserById(req.session.passport.user._id)
+    if(currentUser.role === 'premium' || currentUser.role === 'admin'){
+        next()
+    }else{
+        res.redirect('/views/error')
+    }
+}
+
 async function onlyPremium (req, res, next){
     const currentUser = await userManager.getUserById(req.session.passport.user._id)
     if(currentUser.role === 'premium'){
@@ -16,8 +25,9 @@ async function onlyPremium (req, res, next){
     }
 }
 
-function onlyAdmin(req, res, next){
-    if(req.session.role === 'admin'){
+async function onlyAdmin(req, res, next){
+    const currentUser = await userManager.getUserById(req.session.passport.user._id)
+    if(currentUser.role === 'admin'){
        next() 
     }else{
         res.redirect('/views/error')
@@ -101,17 +111,4 @@ routerAuth.get('/logout', async(req, res) => {
     res.redirect('/views/login-view')
 }) 
 
-module.exports = { routerAuth, onlyPremium, onlyAdmin, onlyUser, redirectToLogin, redirectToProfile }
-
-/*//login jwt//
- routerAuth.post('/login', passport.authenticate('jwt', { session: false, failureRedirect: '/auth/failLogin' }), async (req, res) => {
-    const token = generaToken(req.user);
-    res.cookie("coderSecret2", token, { httpOnly: true})    
-    res.redirect('/views/products')
-})*/
-
-/*//jwt
-routerAuth.get('/logout', async(req, res) => {
-    res.clearCookie('cookieToken').send('Cookie eliminada')
-    res.redirect('/views/login-view')
-})*/
+module.exports = { routerAuth, onlyPremium, onlyAdmin, onlyUser, redirectToLogin, redirectToProfile, onlyPremiumYAdmin }

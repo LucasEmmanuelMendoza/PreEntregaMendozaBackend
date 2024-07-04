@@ -1,7 +1,7 @@
 const express = require('express')
 const routerViews = express.Router()
 const passport = require('passport')
-const {onlyPremium, onlyAdmin, onlyUser, redirectToLogin, redirectToProfile } = require('./auth.routes.js')
+const {onlyPremium, onlyAdmin, onlyUser, onlyPremiumYAdmin, redirectToLogin, redirectToProfile } = require('./auth.routes.js')
 const jwt = require('jsonwebtoken')
 
 const ProductManager = require('../dao/db/ManagerMongo/productManager.js')
@@ -19,7 +19,7 @@ const userManager = new UserManager()
 
 const generateProduct = require('../config/mocks/products.mocks.js');
 
-routerViews.get('/allUsers', /* onlyAdmin, */ async(req, res) => {
+routerViews.get('/allUsers', onlyAdmin, async(req, res) => {
     const users = await userManager.getAllUsers()
 
     res.render('users', {
@@ -27,7 +27,7 @@ routerViews.get('/allUsers', /* onlyAdmin, */ async(req, res) => {
     })
 })
 
-routerViews.get('/products/details/:pid', async(req, res) => {
+routerViews.get('/products/details/:pid', redirectToLogin, async(req, res) => {
     const productId = req.params.pid 
     const product = await productManager.getProductById(productId)
     const userCartId = req.session.passport.user.cartId
@@ -58,7 +58,7 @@ routerViews.get('/products', redirectToLogin,  async(req, res) => {
     } 
 })
 
-routerViews.get('/products/mod/:pid', async(req, res) => {
+routerViews.get('/products/mod/:pid', onlyPremiumYAdmin, async(req, res) => {
     const productId = req.params.pid
     const product = await productManager.getProductById(productId)
 
@@ -70,7 +70,7 @@ routerViews.get('/products/mod/:pid', async(req, res) => {
     }
 })
 
-routerViews.get('/realtimeproducts', /* onlyAdmin, onlyPremium,  */redirectToLogin, async(req, res) => {
+routerViews.get('/realtimeproducts', onlyPremiumYAdmin, redirectToLogin, async(req, res) => {
     const products = await productManager.getProducts()
 
     if(products){
@@ -152,20 +152,6 @@ routerViews.get('/products/details/:pid', redirectToLogin, async(req, res) => {
     if(product){
         res.render('productDetails', {
             product: product
-        })
-    }
-})
-
-routerViews.get('/realtimeproducts',/*  onlyAdmin,  */redirectToLogin, async(req, res) => {
-    const limit = req.params.limit;
-    const page = req.params.page;
-    const category = req.params.category;
-    const priceSort = req.params.priceSort;
-    const products = await productManager.getProductsPaginate(limit, page, category, priceSort)
-    
-    if(products){
-        res.render('realTimeProducts', {
-            products: products.payload
         })
     }
 })

@@ -33,7 +33,6 @@ const updateProductFromCart = async (req, res) => {
     const prodId = req.params.pid;
     const updatedQuantity = req.body;
     try{
-        //return await CartService.updateProdFromCart(cartId, prodId, updatedQuantity)
         const result = await cartManager.updateQuantity(cartId, prodId,updatedQuantity)
         return result ? res.status(200).send(result) : res.status(400).send('Error al actualizar el producto del carrito')
     }catch(error){
@@ -43,9 +42,8 @@ const updateProductFromCart = async (req, res) => {
 
 const updateCart = async (req, res) => {
     const cartId = req.params.cid;
-    const updatedCart = req.body;//array products
+    const updatedCart = req.body;
     try{
-        //return await CartService.updateOneCart(cartId, updatedCart)
         const result = await cartManager.updateCart(cartId, updatedCart)
         return result ? res.status(200).send(result) : res.status(400).send('Error al actualizar el carrito')
     }catch(error){
@@ -57,7 +55,6 @@ const deleteFromCart = async (req, res) => {
     const cartId = req.params.cid;
     const prodId = req.params.pid;
     try{
-        //return await CartService.deleteProductFromCart(cartId, prodId)
         const result = await cartManager.deleteProduct(cartId, prodId)
         return result ? res.status(200).send(result) : res.status(400).send('Error al eliminar el carrito')
     }catch(error){
@@ -69,7 +66,6 @@ const addToCart = async (req, res) => {
     const cartId = req.params.cid;
     const prodId = req.params.pid;
     try{
-        //return await CartService.addProductToCart(cartId, prodId)
         const result = await cartManager.addProduct(cartId, prodId)
         return result ? res.status(200).send(result) : res.status(400).send('Error al agregar el producto al carrito')
     }catch(error){
@@ -79,7 +75,6 @@ const addToCart = async (req, res) => {
 
 const createCart = async (req, res) => {
     try{
-        //return await CartService.addCart()
         const result = await cartManager.createCart()
         return result ? res.status(200).send(result) : res.status(400).send('Error al crear el carrito')
     }catch(error){
