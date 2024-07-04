@@ -1,8 +1,7 @@
 <div class="bg-success">
-    <h1>DETALLES DEL PRODUCTO</h1>
+    <h1 class="text-center">DETALLES DEL PRODUCTO</h1>
 
-    <input type="text" placeholder="id carrito" class="m-2" id="cartId">
-     <div class="container d-flex flex-wrap gap-3">
+    <div class="container d-flex flex-wrap gap-3 justify-content-center text-center align-items-center">
         <div class="card" style="width: 18rem;">
         <img src={{product.thumbnail}} class="card-img-top" alt="...">
 
@@ -10,14 +9,14 @@
             <h1 class="card-title">{{product.title}}</h1>
             <p class="card-text">{{product.description}}</p>
             <h3 class="card-text">Categoria: {{product.category}}</h3>
-            <h4 class="card-text">${{product.price}}</h4>
+            <h4 class="card-text">${{product.price}}</h4>{{!-- 
             <h5 class="card-text">Código: {{product.code}}</h5>
-            <p class="card-text">Cant: {{product.stock}}</p>
-            <p>id:{{product._id}}</p>
+            <p>id:{{product._id}}</p> --}}
+            <p class="card-text">Stock: {{product.stock}}</p>
+            
             <div class="d-flex justify-content-center gap-3">
-                {{!-- <button class="btn btn-primary btnAddToCart" data-id="{{product._id}}">Add to cart</button> --}}
                 <input type="button" value="Add to cart" class="btn btn-primary btnAddToCart" email-id="{{userEmail}}" cart-id="{{userCartId}}" data-id="{{product._id}}" role-id="{{userRole}}">
             </div>
         </div>
-        </div>
+    </div>
 </div>

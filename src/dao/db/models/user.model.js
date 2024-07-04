@@ -5,7 +5,7 @@ const DocumentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    referece:{
+    reference:{
         type: String,
         required: true
     }

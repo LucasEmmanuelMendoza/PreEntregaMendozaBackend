@@ -45,6 +45,20 @@ const funcionSocket = (io) => {
     }
   })
 
+  socket.on('deleteFromCart', async(data)=> {
+    const returnDeleteFromCart = await cartManager.deleteProduct(data.cartId, data.productId)
+    if(returnDeleteFromCart){
+      socket.emit('successDeleteFromCart')
+     }
+  })
+
+  socket.on('deleteCart', async(cartId) => {
+    const returnDeleteProducts = await cartManager.deleteAllProducts(cartId)
+    if(returnDeleteProducts){
+      socket.emit('successDeleteCart')
+    }
+  })
+
   socket.on('deleteUser', async(userId) => {
     const deletedUser = await userManager.getUserById(userId)
     const returnDelete = await userManager.deleteOneUser(userId)
@@ -73,23 +87,27 @@ const funcionSocket = (io) => {
     try{
       console.log(userId)
       const currentUser = await userManager.getUserById(userId);
+      let identificacion = false;
+      let domicilio = false;
+      let estadoCuenta = false;
+
+      (currentUser.documents).forEach(document => {
+        if(document.name === 'identificacion'){identificacion=true}
+        if(document.name === 'domicilio'){domicilio=true}
+        if(document.name === 'estadoCuenta'){estadoCuenta=true}
+      });
       
-      console.log('user antes de modificar el rol:', currentUser)
-
-      currentUser.role === 'user' ?
-      currentUser.role = 'premium' : 
-      currentUser.role = 'user'
-
-      console.log('newRole: ', currentUser.role)
-
-      const returnUpdate = await userManager.updateUser(userId, currentUser)
-      
-      if(returnUpdate){
-        console.log('Rol Modificado')
+      if(currentUser.role === 'user'){
+        if(identificacion && domicilio && estadoCuenta){
+          currentUser.role = 'premium'
+        }
       }else{
-        console.log('Error al cambiar de rol')
+        currentUser.role = 'user'
       }
-      
+      const returnUpdate = await userManager.updateUser(userId, currentUser)
+      if(returnUpdate){
+        socket.emit('successRoleChange')
+      }      
     }catch(error){
       console.log(error)
     }
@@ -191,21 +209,8 @@ const funcionSocket = (io) => {
           const cart = await cartManager.getCartById(ticket.cartId);
           const products = await productManager.getProducts();
   
-          let newAmount = 0
-          const cartPurchase = []
-        
-          //arreglar que se descuenten si el ticket llega con todos los datos verificados abajo
-          for(prodCart of cart.products){
-            for(prod of products){
-                if((prodCart.product._id.toString() === prod._id.toString()) && (prodCart.quantity <= prod.stock)){
-                prod.stock -= prodCart.quantity;
-                await productManager.updateProduct(prod._id, prod)
-                cartPurchase.push(prodCart);
-                newAmount += prodCart.quantity * prodCart.product.price
-                await cartManager.deleteProduct(cart._id, prodCart.product._id)
-              }
-            }
-          };
+          let newAmount = 0;
+          const cartPurchase = [];
   
           const newTicket = {
             code,
@@ -213,12 +218,22 @@ const funcionSocket = (io) => {
             amount: newAmount,
             purchaser: ticket.purchaser,
           }
-                      
-          console.log('newTicket.purchaser:',newTicket.purchaser)
-          console.log('newTicket.purchaser.trim(): ', newTicket.purchaser.trim())
+
+          for(prodCart of cart.products){
+            for(prod of products){
+                if((prodCart.product._id.toString() === prod._id.toString()) && (prodCart.quantity <= prod.stock)){
+                prod.stock -= prodCart.quantity;
+                await productManager.updateProduct(prod._id, prod)
+                cartPurchase.push(prodCart);
+                newTicket.amount += prodCart.quantity * prodCart.product.price
+                await cartManager.deleteProduct(cart._id, prodCart.product._id)
+              }
+            }
+          };
+
+          console.log('newTicket:', newTicket)
 
           if (!newTicket.purchaser || newTicket.purchaser.trim() === '' || newTicket.purchaser === '') {
-            console.log('estoy acá')
             throw CustomError.createError({
               name: 'Invalid Ticket Data',
               cause: purchaseCartErrorInfoSP({newTicket}),
@@ -229,18 +244,33 @@ const funcionSocket = (io) => {
   
         if(newTicket.amount > 0){
           const addTicket = await ticketManager.addTicket(newTicket)
-          
+
           if(addTicket){
-            console.log('Ticket de compra generado con éxito')
-            alert('Ticket Agregado')
+            let mensaje = await transporter.sendMail({
+              from: 'ECommerce <ecommerce@gmail.com>',
+              to: newTicket.purchaser,
+              subject: 'Ticket de compra ',
+              html: `<div>
+                      <h1>¡Gracias por su compra!</h1>
+                      <h2>Código: ${newTicket.code}</h2>
+                      <h2>Total: $${newTicket.amount}</h2>
+                      <h3>Fecha: ${newTicket.purchase_dateTime}</h3>
+                    </div>`
+            })
+      
+            if(!!mensaje.messageId){
+              console.log('Mensaje enviado', mensaje.messageId)
+            }
+            
+            socket.emit('successTicket')
           }
           }else{
-            console.log('No hay productos en stock para el carrito seleccionado')
+            socket.emit('failedTicket')
           }
       }catch(error){
         console.log('Error:', error) 
       }
-    });//fin socket addTicket
+    });
 
     socket.on('sendEmail', async(mailUser)=>{
 

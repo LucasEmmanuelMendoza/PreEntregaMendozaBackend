@@ -71,7 +71,6 @@ const addToCart = async (req, res) => {
     try{
         //return await CartService.addProductToCart(cartId, prodId)
         const result = await cartManager.addProduct(cartId, prodId)
-        console.log('result:', result)
         return result ? res.status(200).send(result) : res.status(400).send('Error al agregar el producto al carrito')
     }catch(error){
         res.status(500).send(error)
@@ -93,7 +92,6 @@ const getCartById = async (req, res) => {
         const cartId = req.params.cid;
         const cart = await cartManager.getCartById(cartId)
     
-        console.log(cart)
         return cart ? res.status(200).json(cart) : res.status(400).send('Error al obtener el carrito')
 
     }catch(error){

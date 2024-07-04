@@ -135,7 +135,7 @@ routerViews.get('/carts/:cid', redirectToLogin, async(req, res) => {
         const prodsQuantity = cartProds.products.reduce((acumulador, prod) => acumulador += prod.quantity,0)
     
         res.render('cart', {
-            cartProducts : cartProds.products,
+            cartProducts: (cartProds.products).map(product => ({...product, cartId: cartId})),
             cartId,
             totalPrice,
             prodsQuantity
@@ -181,7 +181,7 @@ routerViews.get('/', redirectToLogin, async(req, res) => {
     }
 })
 
-routerViews.get('/chat', onlyUser, redirectToLogin, async(req, res) => {
+routerViews.get('/chat', redirectToLogin, async(req, res) => {
     const messages = await messageManeger.getMessages()
     if(messages){
         res.render('chat', {
@@ -206,9 +206,9 @@ routerViews.get('/profile-view', redirectToLogin, async(req, res)=> {
     const currentUserId = req.session.passport.user._id
     if(currentUserId){
         const currentUser = await userManager.getUserById(currentUserId)
-        res.render('profile',{
-                user: currentUser.toJSON()
-            }
+        console.log(currentUser.role)
+        res.render(`profile${currentUser.role}`,{
+            user: currentUser.toJSON()}
         )
     }
 })

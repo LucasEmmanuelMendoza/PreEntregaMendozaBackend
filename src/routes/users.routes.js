@@ -49,12 +49,10 @@ routerUser.get('/allUsers', async(req, res) => {
 routerUser.get('/premium/:uid', async(req,res) => {
     const userId = req.params.uid
     const user = await userManager.getUserById(userId)
-    console.log('user:', user)
+
     if(req.session.passport.user){ 
-        console.log('rol userIdSession: ', req.session.passport.user.role)
-        console.log('rol userIdManager: ', user.role)
         res.render('changeRole',{
-            role: req.session.passport.user.role,
+            role: user.role,
             userId
         })
     }else{
@@ -63,17 +61,48 @@ routerUser.get('/premium/:uid', async(req,res) => {
 })
 
 routerUser.get('/:uid/documents', async(req, res) => {
-    //const user = req.session.passport.user
     const userId = req.params.uid  
     res.render('documents', {
         userId
     })
 })
+//uploader.single('pathArchivo')
+routerUser.post('/:uid/documents', uploader.fields([
+    { name: 'identificacion', maxCount: 1 },
+    { name: 'domicilio', maxCount: 1 },
+    { name: 'estadoCuenta', maxCount: 1 }]), 
 
-routerUser.post('/:uid/documents', uploader.single('pathArchivo'), async(req, res) => {
+    async(req, res) => {
     const user = req.session.passport.user
-    console.log(req.file)
-    console.log(req.file.path)
+    const userActual = await userManager.getUserById(user._id)
+   console.log(userActual)
+
+    if(req.files.identificacion){
+        const newDoc = {
+            name: 'identificacion',
+            reference: req.files.identificacion[0].path
+        }
+        userActual.documents.push(newDoc)
+        await userManager.updateUser(user._id, userActual)
+    }
+    if(req.files.domicilio){
+        const newDoc = {
+            name: 'domicilio',
+            reference: req.files.domicilio[0].path
+        }
+        userActual.documents.push(newDoc)
+        
+        await userManager.updateUser(user._id, userActual)
+    }
+    if(req.files.estadoCuenta){
+        const newDoc = {
+            name: 'estadoCuenta',
+            reference: req.files.estadoCuenta[0].path
+        }
+        userActual.documents.push(newDoc)
+        
+        await userManager.updateUser(user._id, userActual)
+    }
 })
 
 module.exports = { routerUser }

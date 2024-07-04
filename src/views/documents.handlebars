@@ -1,14 +1,21 @@
-<div class="text-white" style="width: 25rem; margin: 1rem">
+<div class="container text-white d-flex flex-column gap-4" style="width: 25rem; margin: 1rem">
     <form action= '/api/users/{{userId}}/documents' method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
-        <label for="pathArchivo">Archivo:</label>
-        <input type="file" name="pathArchivo" id="pathArchivo">
-         
-        <label for="archiveType">Tipo de archivo:</label>
-        <select name="archiveType" id="archiveType" class="">
-            <option value="documents">Documento</option>
-            <option value="products">Producto</option>
-            <option value="profiles">Imagen de perfil</option>
-        </select>
+        <div class="d-flex flex-column flex-wrap gap-3 border border-white p-2">
+            <h2>Identificación:</h2><input type="file" name="identificacion" id="identificacion">
+        </div>
         <input type="submit" value="Subir">
     </form> 
+    <form action= '/api/users/{{userId}}/documents' method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+        <div class="d-flex flex-column flex-wrap gap-3 border border-white p-2">
+            <h2>Comprobante de domicilio:</h2><input type="file" name="domicilio" id="domicilio">
+        </div>
+        <input type="submit" value="Subir">
+    </form> 
+    <form action= '/api/users/{{userId}}/documents' method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+        <div class="d-flex flex-column flex-wrap gap-3 border border-white p-2">
+            <h2>Comprobante de estado de cuenta:</h2><input type="file" name="estadoCuenta" id="estadoCuenta">
+        </div>
+        <input type="submit" value="Subir">
+    </form> 
+
 </div>

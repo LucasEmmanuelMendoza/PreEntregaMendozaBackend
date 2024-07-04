@@ -84,10 +84,8 @@ class CartManager{
         try{
             const foundCart = await Carts.findOne({_id:cartId});
             if(foundCart != null){
-                const existeProd = (foundCart.products).some(prod => toString(prod.product) === toString(productId))
-                console.log('existeProd:',existeProd)
+                const existeProd = (foundCart.products).some(prod => toString(prod.product) === toString(productId.trim))
                 if(existeProd){//exite el 
-                    console.log('foundCart.products: ', foundCart.products)
                     foundCart.products = (foundCart.products).filter(prod => String(prod.product._id) !== String(productId));
                     await Carts.updateOne({"_id": cartId}, {$set: {products: foundCart.products}});
                     return true;

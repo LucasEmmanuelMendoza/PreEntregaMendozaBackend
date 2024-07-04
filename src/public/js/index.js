@@ -1,7 +1,7 @@
 const socket = io();
 //const Swal = require('sweetalert2')
 
-//================== User ======================
+//================== User (Admin) ======================
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.btnEditUser').forEach(btn => {
         btn.addEventListener('click', (event) => {
@@ -66,6 +66,15 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 //================== Rol ======================
+
+socket.on('successRoleChange', () => {
+    Swal.fire({
+        icon: 'success',
+        title: 'Rol cambiado con éxito',
+        confirmButtonText: 'Aceptar'
+    });
+})
+
 const changeRole = (event) => {
     const currentUserId = event.currentTarget.getAttribute('user-id')
     socket.emit('updateRole', currentUserId)
@@ -127,6 +136,54 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 //================== Cart ======================
+
+socket.on('successDeleteCart', () => {
+    Swal.fire({
+        icon: 'success',
+        title: 'Carrito Vaciado',
+        confirmButtonText: 'Aceptar'
+    });
+})
+
+const btnDeleteCart = document.getElementById('btnDeletecart')
+
+const deleteCart = (event) => {
+    const cartId = event.currentTarget.getAttribute('cart-id');
+    socket.emit('deleteCart', cartId);
+}
+
+if(btnDeleteCart != null){
+    btnDeleteCart.addEventListener('click',deleteCart )
+}
+
+const deleteFromCart = (event) => {
+    const cartId = event.currentTarget.getAttribute('cart-id');
+    const productId = event.currentTarget.getAttribute('product-id')
+
+    const data = {
+        cartId,
+        productId
+    }
+
+    socket.emit('deleteFromCart', data)
+}
+
+const btnsDeleteFromCart = document.querySelectorAll('.btnDeleteFromCart')
+
+if(btnsDeleteFromCart != null ){
+    btnsDeleteFromCart.forEach(button => {
+        button.addEventListener('click', deleteFromCart);
+    });
+}
+
+socket.on('successDeleteFromCart', () => {
+    Swal.fire({
+        icon: 'success',
+        title: 'Producto eliminado del carro',
+        confirmButtonText: 'Aceptar'
+    });
+})
+
 const addToCart = (event) => {
     const prod = event.currentTarget.getAttribute('data-id')
     const cartId = event.currentTarget.getAttribute('cart-id');
@@ -340,3 +397,12 @@ const btnPurchase = document.getElementById('btnPurchase');
 if(btnPurchase != null){
     btnPurchase.addEventListener('click', addTicket); 
 }
+
+socket.on('successTicket', () => {
+    Swal.fire({
+        icon: 'success',
+        title: 'Compra realizada con éxito',
+        text: 'Recibirá un email con los datos de la compra',
+        confirmButtonText: 'Aceptar'
+    })
+})

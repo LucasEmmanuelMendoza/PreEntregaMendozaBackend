@@ -2,6 +2,25 @@
     margin:0;
     padding:0;
     box-sizing: border-box;
+    color: rgb(196, 184, 204);
+}
+
+/*<<<<<<< HEAD
+=======
+    color: rgb(255, 0, 0);
+>>>>>>> 367df746af458daf7b8332dfe8a9aaa57bb06ea0
+}*/
+
+.profileDiv {
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+    justify-content: center;
+    text-align: center;
+    gap: 5rem;
+    flex-flow: wrap;
+    overflow-wrap: break-word; 
+    padding: 2rem; 
 }
 
 .cartLogo{
@@ -20,12 +39,6 @@ body{
     min-height: 100vh;
 
 }
-/*<<<<<<< HEAD
-    color: rgb(89, 12, 141);
-=======
-    color: rgb(255, 0, 0);
->>>>>>> 367df746af458daf7b8332dfe8a9aaa57bb06ea0
-}*/
 
 main{
     flex-grow: 1;

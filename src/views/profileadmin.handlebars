@@ -1,0 +1,17 @@
+<div class="container profileDiv">
+    <div> 
+        <h1>Perfil de usuario</h1>
+        <h3>Usuario: {{user.first_name}} {{user.last_name}}</h3>
+        <h3>Dirección de correo electrónico: <br> {{user.email}}</h3>
+        <h3>Edad: {{user.age}}</h3>
+        <h3>Rol: {{user.role}}</h3>
+        <h3><a href="http://localhost:8080/views/allUsers" class="text-white">Administrador de usuarios<img src="https://cdn.pixabay.com/photo/2017/07/18/23/23/user-2517433_960_720.png" class="cartLogo" alt="cartLogo"></a></h3>
+        <h3><a href="http://localhost:8080/views/realtimeproducts" class="text-white">Administrador de productos <img src="https://www.nicepng.com/png/full/242-2424592_transparent-objects-3d-printed-3d-printing.png" class="cartLogo" alt="cartLogo"></a></h3>
+
+    {{!--<h2><a href="https://preentregamendozabackend-production.up.railway.app/views/carts/{{user.cartId}}" class="text-white">Carrito <img src="https://banner2.cleanpng.com/20180406/zaw/kisspng-shopping-cart-abandonment-rate-online-shopping-glory-5ac7838e1c0e78.9131208015230247821149.jpg" class="cartLogo" alt="cartLogo"></a></h2> --}}
+
+        <form action="/auth/logout" method="get">
+            <input class="btn btn-danger mb-2" type="submit" value="Cerrar sesión">
+        </form>
+    </div>
+</div> 
