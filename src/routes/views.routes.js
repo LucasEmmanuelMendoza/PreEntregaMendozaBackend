@@ -5,7 +5,6 @@ const {onlyPremium, onlyAdmin, onlyUser, onlyPremiumYAdmin, redirectToLogin, red
 const jwt = require('jsonwebtoken')
 
 const ProductManager = require('../dao/db/ManagerMongo/productManager.js')
-//const ProductManager = require('../dao/fileSystem/productManager.js')
 const productManager = new ProductManager()
 
 const MessageManager = require('../controller/messageManager.js')
@@ -155,31 +154,6 @@ routerViews.get('/products/details/:pid', redirectToLogin, async(req, res) => {
         })
     }
 })
-
-/* routerViews.get('/products', redirectToLogin,  async(req, res) => {
-    const products = await productManager.getProducts()
-    const role = req.session.passport.user.role
-    const userCartId = req.session.passport.user.cartId; 
-    const email = req.session.passport.user.email;
-
-    if(products){
-        res.render('products', {
-            user: req.session.user,
-            products: products.map(product => ({ ...product, cartId: userCartId, role, email}))
-        })
-    } 
-})
-
-routerViews.get('/', redirectToLogin, async(req, res) => {
-    const products = await productManager.getProductsPaginate()
-    const userCartId = req.session.passport.user.cartId;
-    if(products){
-        res.render('home', {
-            cartId: userCartId,
-            products : products.payload
-        })
-    }
-}) */
 
 routerViews.get('/', redirectToLogin, async(req, res) => {
     const products = await productManager.getProducts()
