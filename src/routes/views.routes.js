@@ -73,7 +73,7 @@ routerViews.get('/realtimeproducts', onlyPremiumYAdmin, redirectToLogin, async(r
     const products = await productManager.getProducts()
 
     if(products){
-        res.render('realtimeproducts', { 
+        res.render('realTimeProducts', { 
             user: req.session.passport.user.email,
             products: products.map(product => ({...product, user: req.session.passport.user.email}))
         })
