@@ -208,7 +208,7 @@ routerViews.get('/callbackGithub', redirectToProfile, passport.authenticate('git
 
 routerViews.get('/successGithub', (req, res)=>{
     req.session.user = req.user.usuario
-    req.session.rol = 'usuario'
+    req.session.rol = 'user'
     if(req.user.usuario === 'adminCoder@coder.com'){
         req.session.rol = 'admin'
     }
